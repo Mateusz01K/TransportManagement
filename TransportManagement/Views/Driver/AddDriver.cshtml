@@ -1,0 +1,45 @@
+﻿@model TransportManagement.Models.Drivers.DriverViewModel
+@{
+    ViewData["Title"] = "Kierowcy";
+}
+<form method="post" asp-controller="Driver" asp-action="AddNewDriver">
+    <div class="form-group">
+        <label for="name">Imię: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="name" placeholder="Imie" name="name" />
+    </div>
+
+    <div class="form-group">
+        <label for="lastname">Nazwisko: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="lastname" placeholder="Nazwisko" name="lastname" />
+    </div>
+
+    <div class="form-group">
+        <label for="dateofbirth">Data Urodzenia: <span style="color: red">*</span></label>
+        <input type="datetime" class="form-control" id="dateofbirth" placeholder="Data Urodzenia" name="dateofbirth" />
+    </div>
+
+    <div class="form-group">
+        <label for="phonenumber">Nr Telefonu: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="phonenumber" placeholder="Nr Telefonu" name="phonenumber" />
+    </div>
+
+    <div class="form-group">
+        <label for="email">E-mail: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="email" placeholder="E-mail" name="email" />
+    </div>
+
+    <div class="form-group">
+        <label for="address">Address: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="address" placeholder="Address" name="address" />
+    </div>
+
+    <div class="form-group">
+        <label for="experience">Doświadczenie: <span style="color: red">*</span></label>
+        <input type="number" class="form-control" id="experience" placeholder="Doświadczenie" name="experience" />
+    </div>
+
+    <div class="text-center m-5">
+        <button type="submit" class="btn btn-success">Dodaj</button>
+        <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
+    </div>
+</form>
