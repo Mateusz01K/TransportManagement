@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using TransportManagement;
 using TransportManagement.Services.Driver;
+using TransportManagement.Services.Trailer;
+using TransportManagement.Services.Truck;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddDbContext<TransportManagementDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDriverService, DriverService>();
+builder.Services.AddScoped<ITruckService, TruckService>();
+builder.Services.AddScoped<ITrailerService, TrailerService>();
 
 var app = builder.Build();
 
