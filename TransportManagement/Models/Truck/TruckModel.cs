@@ -1,4 +1,6 @@
-﻿namespace TransportManagement.Models.Truck
+﻿using TransportManagement.Models.AssignTruck;
+
+namespace TransportManagement.Models.Truck
 {
     public class TruckModel
     {
@@ -13,5 +15,6 @@
         public string LicensePlate { get; set; }
         public bool IsAssignedDriver { get; set; }
         public bool IsAssignedTrailer { get; set; }
+        public ICollection<AssignTruckModel> AssignTruck { get; set; }
     }
 }

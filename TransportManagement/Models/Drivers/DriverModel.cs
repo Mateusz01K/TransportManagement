@@ -1,4 +1,6 @@
-﻿namespace TransportManagement.Models.Drivers
+﻿using TransportManagement.Models.AssignTruck;
+
+namespace TransportManagement.Models.Drivers
 {
     public class DriverModel
     {
@@ -11,5 +13,7 @@
         public string Email { get; set; }
         public string Address { get; set; }
         public int Experience { get; set; }
+        public bool IsAssignedTruck { get; set; }
+        public ICollection<AssignTruckModel> AssignTruck { get; set; }
     }
 }
