@@ -11,12 +11,15 @@ namespace TransportManagement.Controllers
         private readonly IAssignTruckService _assignTruckService;
         private readonly ITruckService _truckService;
         private readonly IDriverService _driverService;
+        private readonly TransportManagementDbContext _context;
 
-        public AssignTruckController(IAssignTruckService assignTruckService, ITruckService truckService, IDriverService driverService)
+        public AssignTruckController(IAssignTruckService assignTruckService, ITruckService truckService, IDriverService driverService,
+                                        TransportManagementDbContext context)
         {
             _assignTruckService = assignTruckService;
             _truckService = truckService;
             _driverService = driverService;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -43,14 +46,17 @@ namespace TransportManagement.Controllers
 
         public IActionResult AssignmentThisTruck(int truckId, int driverId)
         {
-            if(truckId != 0 && driverId != 0)
+            try
             {
                 _assignTruckService.AssignmentTruck(truckId, driverId);
                 return RedirectToAction("Index");
             }
-
-            TempData["message"] = "Popraw dane.";
+            catch (ArgumentException e)
+            {
+                TempData["message"] = e.Message;
+            }
             return RedirectToAction("Index");
+
         }
 
         public IActionResult DeleteAssignment()

@@ -14,19 +14,25 @@ namespace TransportManagement.Services.AssignTruck
         {
             var truck = _context.Trucks.FirstOrDefault(x => x.Id == truckId);
             var driver = _context.Drivers.FirstOrDefault(x => x.Id == driverId);
-            if(truck != null && driver != null && !truck.IsAssignedDriver && !driver.IsAssignedTruck)
+            if(truck == null || driver == null)
             {
-                truck.IsAssignedDriver = true;
-                driver.IsAssignedTruck = true;
-                _context.AssignTrucks.Add(new AssignTruckModel
-                {
-                    Truck = truck,
-                    Driver = driver,
-                    AssignmentDate = DateTime.Now,
-                    ReturnDate = DateTime.Now.AddDays(365)
-                });
-                _context.SaveChanges();
+                throw new ArgumentException("Ciezarowka lub kierowca nie istnieja.");
             }
+            else if(truck.IsAssignedDriver == true || driver.IsAssignedTruck == true)
+            {
+                throw new ArgumentException("Ciezarowka lub kierowca sa juz przypisani.");
+            }
+
+            truck.IsAssignedDriver = true;
+            driver.IsAssignedTruck = true;
+            _context.AssignTrucks.Add(new AssignTruckModel
+            {
+                Truck = truck,
+                Driver = driver,
+                AssignmentDate = DateTime.Now,
+                ReturnDate = DateTime.Now.AddDays(365)
+            });
+            _context.SaveChanges();
         }
 
         public void DeleteAssignment(int id)
