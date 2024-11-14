@@ -1,0 +1,50 @@
+﻿@model TransportManagement.Models.AssignTruck.AssignTruckViewModel
+@{
+    ViewData["Title"] = "Przypisania Ciężarówki";
+}
+@if (TempData["message"] != null)
+{
+    <script>
+        alert('@TempData["message"]');
+    </script>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista Ciężarówek</h1>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Marka i Model</th>
+                <th scope="col">Imię i Nazwisko</th>
+                <th scope="col">Data przypisania</th>
+                <th scope="col">Data zwrotu</th>
+                <th scope="col">Czy zwrózono?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AssignTrucks)
+            {
+                <tr>
+                    <td scope="row">@item.Id</td>
+                    <td scope="row">@item.Truck.Brand @item.Truck.Model</td>
+                    <td scope="row">@item.Driver.Name @item.Driver.LastName</td>
+                    <td scope="row">@item.AssignmentDate.ToShortDateString()</td>
+                    <td scope="row">@item.ReturnDate.ToShortDateString()</td>
+                    <td scope="row">@(item.IsReturned ? "Zwrócono" : "Nie zwrócono")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<form method="post" asp-controller="AssignTruck" asp-action="ReturnThisAssignmnet">
+    <div class="form-group">
+        <label for="id">Id przypisania: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="id" placeholder="Id przypisania" name="id" />
+    </div>
+
+    <div class="text-center m-5">
+        <button type="submit" class="btn btn-danger">Usuń</button>
+        <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
+    </div>
+</form>

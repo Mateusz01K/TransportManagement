@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TransportManagement;
+using TransportManagement.Services.AssignTrailer;
+using TransportManagement.Services.AssignTruck;
 using TransportManagement.Services.Driver;
 using TransportManagement.Services.Trailer;
 using TransportManagement.Services.Truck;
@@ -15,6 +17,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<ITruckService, TruckService>();
 builder.Services.AddScoped<ITrailerService, TrailerService>();
+builder.Services.AddScoped<IAssignTruckService, AssignTruckService>();
+builder.Services.AddScoped<IAssignTrailerService, AssignTrailerService>();
 
 var app = builder.Build();
 

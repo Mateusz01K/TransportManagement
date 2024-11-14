@@ -1,0 +1,50 @@
+﻿@model TransportManagement.Models.AssignTrailer.AssignTrailerViewModel
+@{
+    ViewData["Title"] = "Przypisania Ciężarówki";
+}
+@if (TempData["message"] != null)
+{
+        <script>
+            alert('@TempData["message"]');
+        </script>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista Ciężarówek</h1>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Model ciężarówki</th>
+                <th scope="col">Model naczepy</th>
+                <th scope="col">Data przypisania</th>
+                <th scope="col">Data zwrotu</th>
+                <th scope="col">Czy zwrózono?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AssignTrailer)
+            {
+                    <tr>
+                        <td scope="row">@item.Id</td>
+                        <td scope="row">@item.Truck.Model</td>
+                        <td scope="row">@item.Trailer.Model</td>
+                        <td scope="row">@item.AssignmentDate.ToShortDateString()</td>
+                        <td scope="row">@item.ReturnDate.ToShortDateString()</td>
+                        <td scope="row">@(item.IsReturned ? "Zwrócono" : "Nie zwrócono")</td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<form method="delete" asp-controller="AssignTrailer" asp-action="DeleteThisAssignment">
+    <div class="form-group">
+        <label for="id">Id: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="id" placeholder="Id przypisania" name="id" />
+    </div>
+
+    <div class="text-center m-5">
+        <button type="submit" class="btn btn-danger">Usuń</button>
+        <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
+    </div>
+</form>

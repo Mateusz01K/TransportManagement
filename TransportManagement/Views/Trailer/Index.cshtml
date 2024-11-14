@@ -1,0 +1,49 @@
+﻿@model TransportManagement.Models.Trailer.TrailerViewModel
+@{
+    ViewData["Title"] = "Naczepy";
+}
+@if (TempData["message"] != null)
+{
+    <script>
+        alert('@TempData["message"]');
+    </script>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista Naczepy</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Marka</th>
+                <th scope="col">Model</th>
+                <th scope="col">Typ</th>
+                <th scope="col">Przebieg</th>
+                <th scope="col">Maksymalna Ładowność</th>
+                <th scope="col">Nr Rejestracyjny</th>
+                <th scope="col">Rok produkcji</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Trailers)
+            {
+                <tr>
+                    <td scope="row">@item.Id</td>
+                    <td scope="row">@item.Brand</td>
+                    <td scope="row">@item.Model</td>
+                    <td scope="row">@item.Type</td>
+                    <td scope="row">@item.Mileage</td>
+                    <td scope="row">@item.MaxLoad</td>
+                    <td scope="row">@item.LicensePlate</td>
+                    <td scope="row">@item.YearOfProduction</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center m-5">
+        <a class="btn btn-outline-success" asp-area="" asp-controller="Trailer" asp-action="AddTrailer" role="button">Dodaj naczepę</a>
+        <a class="btn btn-outline-warning" asp-area="" asp-controller="Trailer" asp-action="UpdateTrailer" role="button">Edytuj naczepę</a>
+        <a class="btn btn-outline-danger" asp-area="" asp-controller="Trailer" asp-action="DeleteTrailer" role="button">Usuń naczepę</a>
+    </div>
+</div>

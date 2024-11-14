@@ -1,5 +1,4 @@
-﻿using TransportManagement.Models.AssignTrailer;
-using TransportManagement.Models.AssignTruck;
+﻿using TransportManagement.Models.AssignTruck;
 
 namespace TransportManagement.Services.AssignTruck
 {

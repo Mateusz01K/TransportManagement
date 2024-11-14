@@ -30,7 +30,7 @@ namespace TransportManagement.Controllers
             return View(model);
         }
 
-        public IActionResult AssignmentTrucks()
+        public IActionResult AssignmentTrailers()
         {
             var model = new AssignTrailerViewModel()
             {

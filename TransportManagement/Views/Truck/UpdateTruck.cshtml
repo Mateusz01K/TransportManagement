@@ -1,0 +1,89 @@
+﻿@model TransportManagement.Models.Truck.TruckViewModel
+@{
+    ViewData["Title"] = "Ciężarówki";
+}
+@if (TempData["message"] != null)
+{
+    <script>
+        alert('@TempData["message"]');
+    </script>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista Ciężarówek</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Marka</th>
+                <th scope="col">Model</th>
+                <th scope="col">Rok produkcji</th>
+                <th scope="col">Moc</th>
+                <th scope="col">Przebieg</th>
+                <th scope="col">Waga</th>
+                <th scope="col">Nr Rejestracyjny</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Trucks)
+            {
+                <tr>
+                    <td scope="row">@item.Id</td>
+                    <td scope="row">@item.Brand</td>
+                    <td scope="row">@item.Model</td>
+                    <td scope="row">@item.YearOfProduction</td>
+                    <td scope="row">@item.Power</td>
+                    <td scope="row">@item.Mileage</td>
+                    <td scope="row">@item.Weight</td>
+                    <td scope="row">@item.LicensePlate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<form method="put" asp-controller="Truck" asp-action="UpdateTruck">
+    <div class="form-group">
+        <label for="id">Id: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="id" placeholder="Id" name="id" />
+    </div>
+
+    <div class="form-group">
+        <label for="brand">Marka: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="brand" placeholder="Marka" name="brand" />
+    </div>
+
+    <div class="form-group">
+        <label for="model">Model: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="model" placeholder="Model" name="model" />
+    </div>
+
+    <div class="form-group">
+        <label for="yearofproduction">Rok produkcji: <span style="color: red">*</span></label>
+        <input type="number" class="form-control" id="yearofproduction" placeholder="Rok produkcji" name="yearofproduction" />
+    </div>
+
+    <div class="form-group">
+        <label for="power">Moc: <span style="color: red">*</span></label>
+        <input type="datetime" class="form-control" id="power" placeholder="Moc" name="power" />
+    </div>
+
+    <div class="form-group">
+        <label for="mileage">Przebieg: <span style="color: red">*</span></label>
+        <input type="number" class="form-control" id="mileage" placeholder="Przebieg" name="mileage" />
+    </div>
+
+    <div class="form-group">
+        <label for="weight">Waga: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="weight" placeholder="Waga" name="weight" />
+    </div>
+
+    <div class="form-group">
+        <label for="licenseplate">Nr Rejestracyjny: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="licenseplate" placeholder="Nr Rejestracyjny" name="licenseplate" />
+    </div>
+
+    <div class="text-center m-5">
+        <button type="submit" class="btn btn-success">Dodaj</button>
+        <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
+    </div>
+</form>
