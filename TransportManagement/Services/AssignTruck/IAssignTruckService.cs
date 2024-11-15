@@ -8,6 +8,6 @@ namespace TransportManagement.Services.AssignTruck
         public AssignTruckModel GetAssignment(int id);
         public List<AssignTruckModel> GetAssignments();
         public void DeleteAssignment(int id);
-        public void ReturTruck(int id);
+        public void ReturnTruck(int id);
     }
 }

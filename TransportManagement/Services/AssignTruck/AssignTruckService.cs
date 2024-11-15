@@ -39,7 +39,27 @@ namespace TransportManagement.Services.AssignTruck
         {
             var assign = _context.AssignTrucks.FirstOrDefault(x => x.Id == id);
 
-            if(assign != null)
+            if (assign == null)
+            {
+                throw new ArgumentException("Ciezarowka lub kierowca nie istnieja.");
+            }
+            else if (assign.IsReturned == true)
+            {
+                throw new ArgumentException("Ciezarowka lub kierowca sa juz przypisani.");
+            }
+
+            var truck = _context.Trucks.FirstOrDefault(x => x.Id == assign.TruckId);
+            var driver = _context.Drivers.FirstOrDefault(x => x.Id == assign.DriverId);
+            if (truck != null && driver != null)
+            {
+                truck.IsAssignedDriver = false;
+                driver.IsAssignedTruck = false;
+            }
+            _context.AssignTrucks.Remove(assign);
+            _context.SaveChanges();
+
+            /*
+            if (assign != null)
             {
                 var truck = _context.Trucks.FirstOrDefault(x=>x.Id == assign.TruckId);
                 var driver = _context.Drivers.FirstOrDefault(x=>x.Id == assign.DriverId);
@@ -51,6 +71,7 @@ namespace TransportManagement.Services.AssignTruck
                 _context.AssignTrucks.Remove(assign);
                 _context.SaveChanges();
             }
+            */
         }
 
         public AssignTruckModel GetAssignment(int id)
@@ -64,10 +85,32 @@ namespace TransportManagement.Services.AssignTruck
             return _context.AssignTrucks.ToList();
         }
 
-        public void ReturTruck(int id)
+        public void ReturnTruck(int id)
         {
             var assign = _context.AssignTrucks.FirstOrDefault(x=> x.Id == id);
-            if(assign != null)
+
+            if (assign == null)
+            {
+                throw new ArgumentException("Ciezarowka lub kierowca nie istnieja.");
+            }
+            else if (assign.IsReturned == true)
+            {
+                throw new ArgumentException("Ciezarowka lub kierowca nie sa przypisani.");
+            }
+
+            assign.IsReturned = true;
+            assign.ReturnDate = DateTime.Now;
+            var truck = _context.Trucks.FirstOrDefault(x => x.Id == assign.TruckId);
+            var driver = _context.Drivers.FirstOrDefault(x => x.Id == assign.DriverId);
+            if (truck != null && driver != null)
+            {
+                truck.IsAssignedDriver = false;
+                driver.IsAssignedTruck = false;
+            }
+            _context.SaveChanges();
+
+            /*
+            if (assign != null)
             {
                 assign.IsReturned = true;
                 assign.ReturnDate = DateTime.Now;
@@ -80,6 +123,7 @@ namespace TransportManagement.Services.AssignTruck
                 }
                 _context.SaveChanges();
             }
+            */
         }
     }
 }

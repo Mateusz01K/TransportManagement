@@ -43,13 +43,15 @@ namespace TransportManagement.Controllers
 
         public IActionResult AssignmentThisTrailer(int truckId, int trailerId)
         {
-            if (truckId != 0 && trailerId != 0)
+            try
             {
                 _assignTrailerService.AssignmentTrailer(truckId, trailerId);
                 return RedirectToAction("Index");
             }
-
-            TempData["message"] = "Popraw dane.";
+            catch(ArgumentException e)
+            {
+                TempData["message"] = e.Message;
+            }
             return RedirectToAction("Index");
         }
 
@@ -66,7 +68,22 @@ namespace TransportManagement.Controllers
 
         public IActionResult DeleteThisAssignment(int id)
         {
+
+            try
+            {
+                _assignTrailerService.DeleteAssignment(id);
+                return RedirectToAction("Index");
+            }
+            catch (ArgumentException e)
+            {
+                TempData["message"] = e.Message;
+            }
+            return RedirectToAction("Index");
+
+
+            /*
             var items = _assignTrailerService.GetAssignments().Count();
+            
             if (id != 0)
             {
                 _assignTrailerService.DeleteAssignment(id);
@@ -75,6 +92,7 @@ namespace TransportManagement.Controllers
 
             TempData["message"] = "Popraw dane.";
             return RedirectToAction("Index");
+            */
         }
 
         public IActionResult ReturnAssignment()
@@ -90,6 +108,18 @@ namespace TransportManagement.Controllers
 
         public IActionResult ReturnThisAssignmnet(int id)
         {
+            try
+            {
+                _assignTrailerService.ReturnTrailer(id);
+                return RedirectToAction("Index");
+            }
+            catch (ArgumentException e)
+            {
+                TempData["message"] = e.Message;
+            }
+            return RedirectToAction("Index");
+
+            /*
             if (id != 0)
             {
                 _assignTrailerService.ReturnTrailer(id);
@@ -98,6 +128,7 @@ namespace TransportManagement.Controllers
 
             TempData["message"] = "Popraw dane.";
             return RedirectToAction("Index");
+            */
         }
     }
 }

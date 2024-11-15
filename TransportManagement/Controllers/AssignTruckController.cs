@@ -72,6 +72,18 @@ namespace TransportManagement.Controllers
 
         public IActionResult DeleteThisAssignment(int id)
         {
+            try
+            {
+                _assignTruckService.DeleteAssignment(id);
+                return RedirectToAction("Index");
+            }
+            catch (ArgumentException e)
+            {
+                TempData["message"] = e.Message;
+            }
+            return RedirectToAction("Index");
+
+            /*
             var items = _assignTruckService.GetAssignments().Count();
             if(id != 0)
             {
@@ -81,6 +93,7 @@ namespace TransportManagement.Controllers
 
             TempData["message"] = "Popraw dane.";
             return RedirectToAction("Index");
+            */
         }
 
         public IActionResult ReturnAssignment()
@@ -96,14 +109,27 @@ namespace TransportManagement.Controllers
 
         public IActionResult ReturnThisAssignmnet(int id)
         {
-            if(id != 0)
+            try
             {
-                _assignTruckService.ReturTruck(id);
+                _assignTruckService.DeleteAssignment(id);
+                return RedirectToAction("Index");
+            }
+            catch (ArgumentException e)
+            {
+                TempData["message"] = e.Message;
+            }
+            return RedirectToAction("Index");
+
+            /*
+            if (id != 0)
+            {
+                _assignTruckService.ReturnTruck(id);
                 return RedirectToAction("Index");
             }
 
             TempData["message"] = "Popraw dane.";
             return RedirectToAction("Index");
+            */
         }
     }
 }

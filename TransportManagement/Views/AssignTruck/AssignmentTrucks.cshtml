@@ -34,8 +34,7 @@
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Imię</th>
-                <th scope="col">Nazwisko</th>
+                <th scope="col">Imię i Nazwisko</th>
                 <th scope="col">Przypisana ciężarówka</th>
             </tr>
         </thead>
@@ -44,7 +43,7 @@
             {
                 <tr>
                     <td scope="row">@item.Id</td>
-                    <td scope="row">@item.LastName</td>
+                    <td scope="row">@item.Name @item.LastName</td>
                     <td scope="row">@item.IsAssignedTruck</td>
                 </tr>
             }
