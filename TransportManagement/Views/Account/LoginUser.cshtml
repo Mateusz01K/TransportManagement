@@ -1,0 +1,32 @@
+﻿@model TransportManagement.Models.User.LoginViewModel
+
+<h2>Logowanie</h2>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="validation-summary-errors">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+<form asp-action="LoginUser" method="post">
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email"/>
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <label asp-for="RememberMe"></label>
+        <input asp-for="RememberMe" />
+        <span asp-validation-for="RememberMe"></span>
+    </div>
+    <button type="submit">Zaloguj</button>
+</form>

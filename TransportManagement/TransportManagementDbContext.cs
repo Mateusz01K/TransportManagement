@@ -1,13 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.AssignTrailer;
 using TransportManagement.Models.AssignTruck;
 using TransportManagement.Models.Drivers;
 using TransportManagement.Models.Trailer;
 using TransportManagement.Models.Truck;
+using TransportManagement.Models.User;
 
 namespace TransportManagement
 {
-    public class TransportManagementDbContext : DbContext
+    public class TransportManagementDbContext : IdentityDbContext<ApplicationUser>//DbContext
     {
         public TransportManagementDbContext(DbContextOptions<TransportManagementDbContext> options) : base(options) { }
 
