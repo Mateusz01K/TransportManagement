@@ -1,3 +1,7 @@
+* {
+    background-color: lightblue;
+}
+
 html {
   font-size: 14px;
 }
@@ -15,4 +19,20 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+div {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.text-center {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.border{
+    border-color: black !important;
 }
