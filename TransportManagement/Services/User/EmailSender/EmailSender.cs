@@ -15,24 +15,36 @@ namespace TransportManagement.Services.User.EmailSender
         {
             var smtpSettings = _configuration.GetSection("EmailSettings");
 
-            using var client = new SmtpClient
+            try
             {
-                Host = smtpSettings["SmtpServer"],
-                Port = int.Parse(smtpSettings["SmtpPort"]),
-                Credentials = new NetworkCredential(smtpSettings["SmtpUsername"], smtpSettings["SmtpPassword"]),
-                EnableSsl = true
-            };
+                Console.WriteLine($"Adres e-mail: {email}");
+                using var client = new SmtpClient
+                {
+                    Host = smtpSettings["SmtpServer"],
+                    Port = int.Parse(smtpSettings["SmtpPort"]),
+                    Credentials = new NetworkCredential(smtpSettings["SmtpUsername"], smtpSettings["SmtpPassword"]),
+                    EnableSsl = true
+                };
 
-            var mailMessage = new MailMessage
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(smtpSettings["FromEmail"]),
+                    Subject = subject,
+                    Body = message,
+                    IsBodyHtml = true
+                };
+                mailMessage.To.Add(email);
+
+                await client.SendMailAsync(mailMessage);
+
+                Console.WriteLine("E-mail został wysłany.");
+            }
+            catch (Exception ex)
             {
-                From = new MailAddress(smtpSettings["FromEmail"]),
-                Subject = subject,
-                Body = message,
-                IsBodyHtml = true
-            };
-            mailMessage.To.Add(email);
-
-            await client.SendMailAsync(mailMessage);
+                Console.WriteLine($"Błąd wysyłania e-maiala:{ex.Message}");
+                throw;
+            }
+            
         }
     }
 }

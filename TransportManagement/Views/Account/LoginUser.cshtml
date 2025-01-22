@@ -12,7 +12,7 @@
         </ul>
     </div>
 }
-<form asp-action="LoginUser" method="post">
+<form asp-action="LoginUser" method="post" asp-controller="Account">
     <div>
         <label asp-for="Email"></label>
         <input asp-for="Email"/>
@@ -29,4 +29,7 @@
         <span asp-validation-for="RememberMe"></span>
     </div>
     <button type="submit">Zaloguj</button>
+    <div>
+        <a asp-action="ForgotPassword" asp-controller="Account" class="btn btn-link">Zapomniałem hasła.</a>
+    </div>
 </form>

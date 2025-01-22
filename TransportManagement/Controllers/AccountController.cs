@@ -76,7 +76,7 @@ namespace TransportManagement.Controllers
         }
 
 
-        public IActionResult ForgotPassword()
+        public IActionResult ForgotPasswordView()
         {
             return View();
         }
@@ -85,7 +85,7 @@ namespace TransportManagement.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("ForgotPassword", model);
             }
 
             var resetUrlBase = Url.Action("ResetPassword", "Account", null, Request.Scheme);
@@ -99,7 +99,7 @@ namespace TransportManagement.Controllers
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult ResetPassword(string userId, string token)
         {
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
@@ -110,7 +110,7 @@ namespace TransportManagement.Controllers
             var model = new ResetPasswordViewModel { UserId = userId, Token = token };
             return View(model);
         }
-
+        [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
