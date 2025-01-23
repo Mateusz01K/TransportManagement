@@ -1,4 +1,5 @@
 ﻿using TransportManagement.Models.Drivers;
+using TransportManagement.Models.User;
 
 namespace TransportManagement.Models.Orders
 {
@@ -15,6 +16,12 @@ namespace TransportManagement.Models.Orders
 
         public int DriverId { get; set; }
         public DriverModel Driver { get; set; }
+
+        public string AssignedBy { get; set; }
+        public ApplicationUser Dispatcher { get; set; }
+
+
+        public int? SequenceNumber { get; set; }
     }
 
     public enum OrderStatus

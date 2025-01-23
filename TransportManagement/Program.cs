@@ -5,6 +5,7 @@ using TransportManagement.Models.User;
 using TransportManagement.Services.AssignTrailer;
 using TransportManagement.Services.AssignTruck;
 using TransportManagement.Services.Driver;
+using TransportManagement.Services.Order;
 using TransportManagement.Services.Trailer;
 using TransportManagement.Services.Truck;
 using TransportManagement.Services.User;
@@ -41,6 +42,7 @@ builder.Services.AddScoped<ITrailerService, TrailerService>();
 builder.Services.AddScoped<IAssignTruckService, AssignTruckService>();
 builder.Services.AddScoped<IAssignTrailerService, AssignTrailerService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();

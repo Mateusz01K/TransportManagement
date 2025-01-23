@@ -1,5 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model TransportManagement.Models.Orders.OrderViewModel
+    ViewData["Title"] = "Kierowcy";
 }
+@if (TempData["message"] != null)
+{
+    <script>
+        alert('@TempData["message"]');
+    </script>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista Kierowców</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nr</th>
+                <th scope="col">Data załadunku</th>
+                <th scope="col">Data dostawy</th>
+                <th scope="col">Lokalizacja załadunku</th>
+                <th scope="col">Lokalizacja rozładunku</th>
+                <th scope="col">Status</th>
+                <th scope="col">Kierowca</th>
+                <th scope="col">Kolejka</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Orders)
+            {
+                <tr>
+                    <td scope="row">@item.Id</td>
+                    <td scope="row">@item.OrderNumber</td>
+                    <td scope="row">@item.StartDate</td>
+                    <td scope="row">@item.EndDate</td>
+                    <td scope="row">@item.PickupLocation</td>
+                    <td scope="row">@item.DeliveryLocation</td>
+                    <td scope="row">@item.Status</td>
+                    <td scope="row">@item.DriverId</td>
+                    <td scope="row">@item.SequenceNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center m-5">
+        <a class="btn btn-outline-success" asp-area="" asp-controller="Order" asp-action="Create" role="button">Dodaj zlecenie</a>
+        <a class="btn btn-outline-warning" asp-area="" asp-controller="Order" asp-action="Edit" role="button">Edytuj zlecenie</a>
+    </div>
+</div>

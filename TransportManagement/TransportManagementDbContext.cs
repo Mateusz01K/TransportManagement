@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.AssignTrailer;
 using TransportManagement.Models.AssignTruck;
 using TransportManagement.Models.Drivers;
+using TransportManagement.Models.Orders;
 using TransportManagement.Models.Trailer;
 using TransportManagement.Models.Truck;
 using TransportManagement.Models.User;
@@ -18,5 +19,6 @@ namespace TransportManagement
         public DbSet<TrailerModel> Trailers { get; set; }
         public DbSet<AssignTruckModel> AssignTrucks { get; set;}
         public DbSet<AssignTrailerModel> AssignTrailers { get; set; }
+        public DbSet<OrderModel> Orders { get; set; }
     }
 }

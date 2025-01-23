@@ -1,0 +1,90 @@
+﻿@model TransportManagement.Models.Orders.OrderViewModel
+    ViewData["Title"] = "Kierowcy";
+}
+@if (TempData["message"] != null)
+{
+    <script>
+        alert('@TempData["message"]');
+    </script>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista Zleceń</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nr</th>
+                <th scope="col">Data załadunku</th>
+                <th scope="col">Data dostawy</th>
+                <th scope="col">Lokalizacja załadunku</th>
+                <th scope="col">Lokalizacja rozładunku</th>
+                <th scope="col">Status</th>
+                <th scope="col">Kierowca</th>
+                <th scope="col">Kolejka</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Orders)
+            {
+                <tr>
+                    <td scope="row">@item.Id</td>
+                    <td scope="row">@item.OrderNumber</td>
+                    <td scope="row">@item.StartDate</td>
+                    <td scope="row">@item.EndDate</td>
+                    <td scope="row">@item.PickupLocation</td>
+                    <td scope="row">@item.DeliveryLocation</td>
+                    <td scope="row">@item.Status</td>
+                    <td scope="row">@item.DriverId</td>
+                    <td scope="row">@item.SequenceNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<form method="post" asp-controller="Order" asp-action="Edit">
+    <div class="form-group">
+        <label for="orderNumber">Imię: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="orderNumber" placeholder="Nr" name="orderNumber" />
+    </div>
+
+    <div class="form-group">
+        <label for="startDate">Nazwisko: <span style="color: red">*</span></label>
+        <input type="datetime" class="form-control" id="startDate" placeholder="Data załadunku" name="startDate" />
+    </div>
+
+    <div class="form-group">
+        <label for="endDate">Data Urodzenia: <span style="color: red">*</span></label>
+        <input type="datetime" class="form-control" id="endDate" placeholder="Data dostawy" name="endDate" />
+    </div>
+
+    <div class="form-group">
+        <label for="pickupLocation">Nr Telefonu: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="pickupLocation" placeholder="Lokalizacja załadunku" name="pickupLocation" />
+    </div>
+
+    <div class="form-group">
+        <label for="deliveryLocation">E-mail: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="deliveryLocation" placeholder="Lokalizacja rozładunku" name="deliveryLocation" />
+    </div>
+
+    <div class="form-group">
+        <label for="status">Address: <span style="color: red">*</span></label>
+        <input type="text" class="form-control" id="status" placeholder="Status" name="status" />
+    </div>
+
+    <div class="form-group">
+        <label for="driverId">Doświadczenie: <span style="color: red">*</span></label>
+        <input type="number" class="form-control" id="driverId" placeholder="Kierowca" name="driverId" />
+    </div>
+
+    <div class="form-group">
+        <label for="sequenceNumber">Doświadczenie: <span style="color: red">*</span></label>
+        <input type="number" class="form-control" id="sequenceNumber" placeholder="Kolejka" name="sequenceNumber" />
+    </div>
+
+    <div class="text-center m-5">
+        <button type="submit" class="btn btn-success">Edytuj</button>
+        <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
+    </div>
+</form>
