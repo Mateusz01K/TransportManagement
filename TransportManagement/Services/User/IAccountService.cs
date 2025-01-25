@@ -9,5 +9,8 @@ namespace TransportManagement.Services.User
         Task LogoutAsync();
         Task<bool> ResetPasswordAsync(string userId, string token, string newPassword);
         Task SendPasswordResetEmailAsync(string email, string resetUrlBase);
+        Task<bool> AssignRoleAsync(string userId, string roleName);
+        Task<bool> UnAssignRoleAsync(string userId, string roleName);
+        Task<List<UserDto>> GetUserAsync();
     }
 }

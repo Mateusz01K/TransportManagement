@@ -18,6 +18,7 @@ builder.Services.AddDbContext<TransportManagementDbContext>(options =>
         new MySqlServerVersion(new Version(8, 0, 21))));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<TransportManagementDbContext>()
     .AddDefaultTokenProviders();
 
@@ -62,5 +63,21 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+using(var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    var roles = new[] { "Admin", "Dispatcher", "Driver" };
+
+    foreach(var role in roles)
+    {
+        if(!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
 
 app.Run();

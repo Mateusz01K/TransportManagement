@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TransportManagement.Models.User;
 using TransportManagement.Models.User.ResetPassword;
@@ -71,7 +72,7 @@ namespace TransportManagement.Controllers
         public async Task<IActionResult> Logout()
         {
             await _accountService.LogoutAsync();
-            TempData["message"] = "wylogowano pomyslnie.";
+            TempData["message"] = "Wylogowano pomyslnie.";
             return RedirectToAction("LoginUser");
         }
 
@@ -127,6 +128,62 @@ namespace TransportManagement.Controllers
 
             ModelState.AddModelError(string.Empty, "Resetowanie hasła nie powiodło sie. Sprawdź poprawność adresu e-mail.");
             return View(model);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> AssignRole(string userId, string roleName)
+        {
+            if(string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(roleName))
+            {
+                TempData["Message"] = "Użytkownik/Rola są wymagane.";
+                return RedirectToAction("Index");
+            }
+
+            var result = await _accountService.AssignRoleAsync(userId, roleName);
+            if (result)
+            {
+                TempData["Message"] = $"Rola '{roleName}' została dodana użytkownikowi {userId}.";
+            }
+            else
+            {
+                TempData["Message"] = $"Nie udało się dodać roli '{roleName}' użytkownikowi {userId}";
+            }
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ManageRole()
+        {
+            var users = await _accountService.GetUserAsync();
+            var userViewModel = new UserViewModel
+            {
+                Users = users
+            };
+            return View(userViewModel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> UnAssignRole(string email, string roleName)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(roleName))
+            {
+                TempData["Message"] = "Użytkownik/Rola są wymagane.";
+                return RedirectToAction("Index");
+            }
+
+            var result = await _accountService.AssignRoleAsync(email, roleName);
+            if (result)
+            {
+                TempData["Message"] = $"Rola '{roleName}' została usunięta użytkownikowi {email}.";
+            }
+            else
+            {
+                TempData["Message"] = $"Nie udało się usunąć roli '{roleName}' użytkownikowi {email}";
+            }
+            return RedirectToAction("Index");
         }
 
         public IActionResult ResetPasswordConfirmation()

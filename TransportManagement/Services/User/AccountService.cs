@@ -87,6 +87,50 @@ namespace TransportManagement.Services.User
             return result.Succeeded;
         }
 
+        public async Task<bool> AssignRoleAsync(string email, string roleName)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return false;
+            }
+
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> UnAssignRoleAsync(string email, string roleName)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return false;
+            }
+
+            var result = await _userManager.RemoveFromRoleAsync(user, roleName);
+            return result.Succeeded;
+        }
+
+
+        public async Task<List<UserDto>> GetUserAsync()
+        {
+            var users = _userManager.Users.ToList();
+            var userList = new List<UserDto>();
+
+            foreach(var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                userList.Add(new UserDto
+                {
+                    Name = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Role = user.Role
+                });
+            }
+            return userList;
+        }
+
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
