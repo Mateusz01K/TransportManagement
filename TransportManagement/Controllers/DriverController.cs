@@ -27,8 +27,8 @@ namespace TransportManagement.Controllers
 
         public IActionResult AddNewDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
         {
-            if(string.IsNullOrEmpty(Name) && string.IsNullOrEmpty(LastName) && (DateOfBirth < DateTime.Now) && string.IsNullOrEmpty(PhoneNumber)
-                && string.IsNullOrEmpty(Email) && string.IsNullOrEmpty(Address) && (Experience < 0))
+            if(string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(LastName) || (DateOfBirth >= DateTime.Now) || string.IsNullOrEmpty(PhoneNumber)
+                || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Address) || (Experience < 0))
             {
                 TempData["message"] = "Popraw dane.";
                 return RedirectToAction("Index");
@@ -70,7 +70,7 @@ namespace TransportManagement.Controllers
                                                 string PhoneNumber, string Email, string Address, int Experience)
         {
             var items = _driverService.GetDrivers().Count();
-            if(id != 0 && Name != "" && LastName != "" && DateOfBirth < DateTime.Now && PhoneNumber != "" && Email != "" && Address != "" && Experience != 0)
+            if(id != 0)//|| Name != "" || LastName != "" || DateOfBirth < DateTime.Now || PhoneNumber != "" || Email != "" || Address != "" || Experience != 0
             {
                 _driverService.UpdateDriver(id, Name, LastName, DateOfBirth, PhoneNumber, Email, Address, Experience);
                 return RedirectToAction("Index");

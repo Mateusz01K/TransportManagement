@@ -362,9 +362,8 @@ namespace TransportManagement.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Power")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Power")
+                        .HasColumnType("int");
 
                     b.Property<int>("Weight")
                         .HasColumnType("int");

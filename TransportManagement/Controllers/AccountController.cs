@@ -65,14 +65,14 @@ namespace TransportManagement.Controllers
                 ModelState.AddModelError(string.Empty, "Nieprawidłowe hasło lub e-mail.");
                 return View(model);
             }
-            TempData["message"] = "Zostales zalogowany.";
+            TempData["message"] = "Zostaleś zalogowany.";
             return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Logout()
         {
             await _accountService.LogoutAsync();
-            TempData["message"] = "Wylogowano pomyslnie.";
+            TempData["message"] = "Wylogowano pomyślnie.";
             return RedirectToAction("LoginUser");
         }
 
@@ -132,29 +132,56 @@ namespace TransportManagement.Controllers
 
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> AssignRole(string userId, string roleName)
+        public async Task<IActionResult> ManageRole()
         {
-            if(string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(roleName))
+            var users = await _accountService.GetUserAsync();
+            var userViewModel = new UserViewModel
+            {
+                Users = users
+            };
+            return View(userViewModel);
+        }
+
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> AssignRole()
+        {
+            var users = await _accountService.GetUserAsync();
+            var userViewModel = new UserViewModel
+            {
+                Users = users
+            };
+            return View(userViewModel);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> AssignRole(string email, string roleName)
+        {
+            if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(roleName))
             {
                 TempData["Message"] = "Użytkownik/Rola są wymagane.";
-                return RedirectToAction("Index");
+                return RedirectToAction("ManageRole");
             }
 
-            var result = await _accountService.AssignRoleAsync(userId, roleName);
+            var result = await _accountService.AssignRoleAsync(email, roleName);
             if (result)
             {
-                TempData["Message"] = $"Rola '{roleName}' została dodana użytkownikowi {userId}.";
+                TempData["Message"] = $"Rola '{roleName}' została dodana użytkownikowi {email}.";
             }
             else
             {
-                TempData["Message"] = $"Nie udało się dodać roli '{roleName}' użytkownikowi {userId}";
+                TempData["Message"] = $"Nie udało się dodać roli '{roleName}' użytkownikowi {email}";
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ManageRole");
         }
 
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ManageRole()
+        [HttpGet]
+        public async Task<IActionResult> UnAssignRole()
         {
             var users = await _accountService.GetUserAsync();
             var userViewModel = new UserViewModel
@@ -171,7 +198,7 @@ namespace TransportManagement.Controllers
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(roleName))
             {
                 TempData["Message"] = "Użytkownik/Rola są wymagane.";
-                return RedirectToAction("Index");
+                return RedirectToAction("ManageRole");
             }
 
             var result = await _accountService.AssignRoleAsync(email, roleName);
@@ -183,7 +210,7 @@ namespace TransportManagement.Controllers
             {
                 TempData["Message"] = $"Nie udało się usunąć roli '{roleName}' użytkownikowi {email}";
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ManageRole");
         }
 
         public IActionResult ResetPasswordConfirmation()

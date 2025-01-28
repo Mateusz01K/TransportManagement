@@ -9,7 +9,7 @@ namespace TransportManagement.Models.Truck
         public string Brand { get; set; }
         public string Model { get; set; }
         public int YearOfProduction { get; set; }
-        public string Power { get; set; }
+        public int Power { get; set; }
         public float Mileage { get; set; }
         public int Weight { get; set; }
         public string LicensePlate { get; set; }

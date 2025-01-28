@@ -27,8 +27,8 @@ namespace TransportManagement.Controllers
 
         public IActionResult AddNewTrailer(string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
         {
-            if (string.IsNullOrEmpty(Brand) && string.IsNullOrEmpty(Model) && string.IsNullOrEmpty(Type) && (Mileage == 0)
-                && (MaxLoad < -1) && string.IsNullOrEmpty(LicensePlate) && (YearOfProduction < -1))
+            if (string.IsNullOrEmpty(Brand) || string.IsNullOrEmpty(Model) || string.IsNullOrEmpty(Type) || (Mileage == 0)
+                || (MaxLoad < -1) || string.IsNullOrEmpty(LicensePlate) || (YearOfProduction < -1))
             {
                 TempData["message"] = "Popraw dane.";
                 return RedirectToAction("Index");
@@ -69,7 +69,7 @@ namespace TransportManagement.Controllers
         public IActionResult UpdateThisTrailer(int id, string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
         {
             var items = _trailerService.GetTrailers().Count();
-            if (id != 0 && Brand != "" && Model != "" && Type != "" && Mileage < -1 && LicensePlate != "" && YearOfProduction < -1)
+            if (id != 0)// && Brand != "" && Model != "" && Type != "" && Mileage < -1 && LicensePlate != "" && YearOfProduction < -1)
             {
                 _trailerService.UpdateTrailer(id, Brand, Model, Type, Mileage, MaxLoad, LicensePlate, YearOfProduction);
                 return RedirectToAction("Index");

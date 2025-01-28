@@ -80,7 +80,8 @@ namespace TransportManagement.Services.User
                 UserName = model.Email,
                 Email = model.Email,
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                Role = ""
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -125,7 +126,7 @@ namespace TransportManagement.Services.User
                     Name = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
-                    Role = user.Role
+                    Role = roles.Any() ? string.Join(", ", roles) : "Brak"
                 });
             }
             return userList;

@@ -11,8 +11,8 @@ using TransportManagement;
 namespace TransportManagement.Migrations
 {
     [DbContext(typeof(TransportManagementDbContext))]
-    [Migration("20241213113257_Login")]
-    partial class Login
+    [Migration("20250128135956_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -249,6 +249,55 @@ namespace TransportManagement.Migrations
                     b.ToTable("Drivers");
                 });
 
+            modelBuilder.Entity("TransportManagement.Models.Orders.OrderModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("AssignedBy")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("DeliveryLocation")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("DispatcherId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PickupLocation")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("SequenceNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DispatcherId");
+
+                    b.HasIndex("DriverId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("TransportManagement.Models.Trailer.TrailerModel", b =>
                 {
                     b.Property<int>("Id")
@@ -315,9 +364,8 @@ namespace TransportManagement.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Power")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Power")
+                        .HasColumnType("int");
 
                     b.Property<int>("Weight")
                         .HasColumnType("int");
@@ -379,6 +427,10 @@ namespace TransportManagement.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
@@ -489,6 +541,23 @@ namespace TransportManagement.Migrations
                     b.Navigation("Driver");
 
                     b.Navigation("Truck");
+                });
+
+            modelBuilder.Entity("TransportManagement.Models.Orders.OrderModel", b =>
+                {
+                    b.HasOne("TransportManagement.Models.User.ApplicationUser", "Dispatcher")
+                        .WithMany()
+                        .HasForeignKey("DispatcherId");
+
+                    b.HasOne("TransportManagement.Models.Drivers.DriverModel", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dispatcher");
+
+                    b.Navigation("Driver");
                 });
 
             modelBuilder.Entity("TransportManagement.Models.Drivers.DriverModel", b =>

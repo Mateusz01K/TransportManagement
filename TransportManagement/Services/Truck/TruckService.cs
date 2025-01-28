@@ -10,7 +10,7 @@ namespace TransportManagement.Services.Truck
         {
             _context = context;
         }
-        public void AddTruck(string Brand, string Model, int YearOfProduction, string Power, float Mileage, int Weight, string LicensePlate)
+        public void AddTruck(string Brand, string Model, int YearOfProduction, int Power, float Mileage, int Weight, string LicensePlate)
         {
             var truck = new TruckModel
             {
@@ -47,18 +47,18 @@ namespace TransportManagement.Services.Truck
             return _context.Trucks.ToList();
         }
 
-        public void UpdateTruck(int id, string Brand, string Model, int YearOfProduction, string Power, float Mileage, int Weight, string LicensePlate)
+        public void UpdateTruck(int id, string Brand, string Model, int YearOfProduction, int Power, float Mileage, int Weight, string LicensePlate)
         {
             var truck = _context.Trucks.FirstOrDefault(x => x.Id == id);
             if (truck != null)
             {
-                truck.Brand = Brand;
-                truck.Model = Model;
-                truck.YearOfProduction = YearOfProduction;
-                truck.Power = Power;
-                truck.Mileage = Mileage;
-                truck.Weight = Weight;
-                truck.LicensePlate = LicensePlate;
+                truck.Brand = !string.IsNullOrEmpty(Brand) ? Brand : truck.Brand;
+                truck.Model = !string.IsNullOrEmpty(Model) ? Model : truck.Model;
+                truck.YearOfProduction = YearOfProduction > 0 ? YearOfProduction : truck.YearOfProduction;
+                truck.Power = Power >= 0 ? Power : truck.Power;
+                truck.Mileage = Mileage >= 0 ? Mileage : truck.Mileage;
+                truck.Weight = Weight >= 0 ? Weight : truck.Weight;
+                truck.LicensePlate = !string.IsNullOrEmpty(LicensePlate) ? LicensePlate : truck.LicensePlate;
                 _context.SaveChanges();
             }
         }

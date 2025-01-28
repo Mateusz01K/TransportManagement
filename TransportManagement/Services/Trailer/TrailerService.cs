@@ -51,13 +51,13 @@ namespace TransportManagement.Services.Trailer
             var trailer = _context.Trailers.FirstOrDefault(x => x.Id == id);
             if (trailer != null)
             {
-                trailer.Brand = Brand;
-                trailer.Model = Model;
-                trailer.Type = Type;
-                trailer.Mileage = Mileage;
-                trailer.MaxLoad = MaxLoad;
-                trailer.LicensePlate = LicensePlate;
-                trailer.YearOfProduction = YearOfProduction;
+                trailer.Brand = !string.IsNullOrEmpty(Brand) ? Brand : trailer.Brand;
+                trailer.Model = !string.IsNullOrEmpty(Model) ? Model : trailer.Model;
+                trailer.Type = !string.IsNullOrEmpty(Type) ? Type : trailer.Type;
+                trailer.Mileage = Mileage >= 0 ? Mileage : trailer.Mileage;
+                trailer.MaxLoad = MaxLoad >= 0 ? MaxLoad : trailer.MaxLoad;
+                trailer.LicensePlate = !string.IsNullOrEmpty(LicensePlate) ? LicensePlate : trailer.LicensePlate;
+                trailer.YearOfProduction = YearOfProduction >= 0 ? YearOfProduction : trailer.YearOfProduction;
                 _context.SaveChanges();
             }
         }

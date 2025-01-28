@@ -25,10 +25,10 @@ namespace TransportManagement.Controllers
             return View();
         }
 
-        public IActionResult AddNewTruck(string Brand, string Model, int YearOfProduction, string Power, float Mileage, int Weight, string LicensePlate)
+        public IActionResult AddNewTruck(string Brand, string Model, int YearOfProduction, int Power, float Mileage, int Weight, string LicensePlate)
         {
-            if (string.IsNullOrEmpty(Brand) && string.IsNullOrEmpty(Model) && (YearOfProduction < -1) && string.IsNullOrEmpty(Power)
-                && (Mileage < -1) && (Weight < -1) && string.IsNullOrEmpty(LicensePlate))
+            if (string.IsNullOrEmpty(Brand) && string.IsNullOrEmpty(Model) && (YearOfProduction < -1) && (Power > -1)
+                && (Mileage > -1) && (Weight > -1) && string.IsNullOrEmpty(LicensePlate))
             {
                 TempData["message"] = "Popraw dane.";
                 return RedirectToAction("Index");
@@ -66,10 +66,10 @@ namespace TransportManagement.Controllers
             return View(model);
         }
 
-        public IActionResult UpdateThisTruck(int id, string Brand, string Model, int YearOfProduction, string Power, float Mileage, int Weight, string LicensePlate)
+        public IActionResult UpdateThisTruck(int id, string Brand, string Model, int YearOfProduction, int Power, float Mileage, int Weight, string LicensePlate)
         {
             var items = _truckService.GetTrucks().Count();
-            if (id != 0 && Brand != "" && Model != "" && YearOfProduction < -1 && Power != "" && Mileage < -1 && Weight < -1 && LicensePlate != "")
+            if (id != 0)// && Brand != "" && Model != "" && YearOfProduction < -1 && Power != "" && Mileage < -1 && Weight < -1 && LicensePlate != "")
             {
                 _truckService.UpdateTruck(id, Brand, Model, YearOfProduction, Power, Mileage, Weight, LicensePlate);
                 return RedirectToAction("Index");

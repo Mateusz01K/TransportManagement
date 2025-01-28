@@ -5,37 +5,37 @@
 <form method="post" asp-controller="Trailer" asp-action="AddNewTrailer">
     <div class="form-group">
         <label for="brand">Marka: <span style="color: red">*</span></label>
-        <input type="text" class="form-control" id="brand" placeholder="Marka" name="brand" />
+        <input type="text" class="form-control" id="brand" placeholder="Marka" name="brand" required />
     </div>
 
     <div class="form-group">
         <label for="model">Model: <span style="color: red">*</span></label>
-        <input type="text" class="form-control" id="model" placeholder="Model" name="model" />
+        <input type="text" class="form-control" id="model" placeholder="Model" name="model" required />
     </div>
 
     <div class="form-group">
         <label for="type">Typ: <span style="color: red">*</span></label>
-        <input type="datetime" class="form-control" id="type" placeholder="Typ" name="type" />
+        <input type="text" class="form-control" id="type" placeholder="Typ" name="type" required />
     </div>
 
     <div class="form-group">
         <label for="mileage">Przebieg: <span style="color: red">*</span></label>
-        <input type="number" class="form-control" id="mileage" placeholder="Przebieg" name="mileage" />
+        <input type="number" class="form-control" id="mileage" placeholder="Przebieg" name="mileage" required />
     </div>
 
     <div class="form-group">
         <label for="maxload">Maksymalna ładowność: <span style="color: red">*</span></label>
-        <input type="text" class="form-control" id="maxload" placeholder="Maksymalna ładowność" name="maxload" />
+        <input type="text" class="form-control" id="maxload" placeholder="Maksymalna ładowność" name="maxload" required />
     </div>
 
     <div class="form-group">
         <label for="licenseplate">Nr Rejestracyjny: <span style="color: red">*</span></label>
-        <input type="text" class="form-control" id="licenseplate" placeholder="Nr Rejestracyjny" name="licenseplate" />
+        <input type="text" class="form-control" id="licenseplate" placeholder="Nr Rejestracyjny" name="licenseplate" required />
     </div>
 
     <div class="form-group">
         <label for="yearofproduction">Rok produkcji: <span style="color: red">*</span></label>
-        <input type="number" class="form-control" id="yearofproduction" placeholder="Rok produkcji" name="yearofproduction" />
+        <input type="number" class="form-control" id="yearofproduction" placeholder="Rok produkcji" name="yearofproduction" required />
     </div>
 
     <div class="text-center m-5">
