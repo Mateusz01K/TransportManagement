@@ -4,10 +4,10 @@ namespace TransportManagement.Services.AssignTruck
 {
     public interface IAssignTruckService
     {
-        public void AssignmentTruck(int truckId, int driverId);
-        public AssignTruckModel GetAssignment(int id);
-        public List<AssignTruckModel> GetAssignments();
-        public void DeleteAssignment(int id);
-        public void ReturnTruck(int id);
+        Task AssignmentTruck(int truckId, int driverId);
+        Task<AssignTruckModel> GetAssignment(int id);
+        Task<List<AssignTruckModel>> GetAssignments();
+        Task DeleteAssignment(int id);
+        Task ReturnTruck(int id);
     }
 }

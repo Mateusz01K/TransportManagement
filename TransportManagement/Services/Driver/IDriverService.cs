@@ -4,11 +4,12 @@ namespace TransportManagement.Services.Driver
 {
     public interface IDriverService
     {
-        List<DriverModel> GetDrivers();
-        public DriverModel GetDriver(int id);
-        public void AddDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience);
-        public void UpdateDriver(int id, string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience);
-        public void DeleteDriver(int id);
+        Task<List<DriverModel>> GetDrivers();
+        Task<DriverModel> GetDriver(int id);
+        Task<bool> AddDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience);
+        //public void AddDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience);
+        Task<bool> UpdateDriver(int id, string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience);
+        Task<bool> DeleteDriver(int id);
 
 
         /*

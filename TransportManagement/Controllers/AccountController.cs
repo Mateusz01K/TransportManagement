@@ -65,14 +65,12 @@ namespace TransportManagement.Controllers
                 ModelState.AddModelError(string.Empty, "Nieprawidłowe hasło lub e-mail.");
                 return View(model);
             }
-            TempData["message"] = "Zostaleś zalogowany.";
             return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Logout()
         {
             await _accountService.LogoutAsync();
-            TempData["message"] = "Wylogowano pomyślnie.";
             return RedirectToAction("LoginUser");
         }
 

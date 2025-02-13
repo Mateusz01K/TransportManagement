@@ -1,19 +1,37 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.Drivers;
+using TransportManagement.Models.User;
 
 namespace TransportManagement.Services.Driver
 {
     public class DriverService : IDriverService
     {
         private readonly TransportManagementDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DriverService(TransportManagementDbContext context)
+        public DriverService(TransportManagementDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public void AddDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
+        public async Task<bool> AddDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
         {
+            var existingUser = await _userManager.FindByEmailAsync(Email);
+            if (existingUser != null)
+            {
+                if (!await _userManager.IsInRoleAsync(existingUser, "Driver"))
+                {
+                    await _userManager.AddToRoleAsync(existingUser, "Driver");
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+
             var driver = new DriverModel
             {
                 Name = Name,
@@ -24,32 +42,46 @@ namespace TransportManagement.Services.Driver
                 Address = Address,
                 Experience = Experience
             };
+
+
             _context.Drivers.Add(driver);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public void DeleteDriver(int id)
+        public async Task<bool> DeleteDriver(int id)
         {
-            var driver = _context.Drivers.FirstOrDefault(x => x.Id == id);
+            var driver = await _context.Drivers.FirstOrDefaultAsync(x => x.Id == id);
             if (driver != null)
             {
+                var existingUser = await _userManager.FindByEmailAsync(driver.Email);
+                if (existingUser != null)
+                {
+                    if (await _userManager.IsInRoleAsync(existingUser, "Driver"))
+                    {
+                        await _userManager.RemoveFromRoleAsync(existingUser, "Driver");
+                    }
+                }
                 _context.Drivers.Remove(driver);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                return true;
             }
+
+            return false;
         }
 
-        public DriverModel GetDriver(int id)
+        public async Task<DriverModel> GetDriver(int id)
         {
-            var driver = _context.Drivers.FirstOrDefault(x => x.Id == id);
-            return driver ?? new DriverModel();
+            return await _context.Drivers.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<DriverModel> GetDrivers()
+        public async Task<List<DriverModel>> GetDrivers()
         {
-            return _context.Drivers.ToList();
+            return await _context.Drivers.ToListAsync();
         }
 
-        public void UpdateDriver(int id, string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
+        public async Task<bool> UpdateDriver(int id, string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
         {
             var driver = _context.Drivers.FirstOrDefault(x => x.Id == id);
             if (driver != null)
@@ -61,8 +93,10 @@ namespace TransportManagement.Services.Driver
                 driver.Email = !string.IsNullOrEmpty(Email) ? Email : driver.Email;
                 driver.Address = !string.IsNullOrEmpty(Address) ? Address : driver.Address;
                 driver.Experience = Experience >= 0 ? Experience : driver.Experience;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
     }
 }

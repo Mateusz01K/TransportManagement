@@ -19,33 +19,33 @@ namespace TransportManagement.Controllers
             _trailerService = trailerService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var model = new AssignTrailerViewModel()
             {
-                AssignTrailer = _assignTrailerService.GetAssignments(),
-                Truck = _truckService.GetTrucks(),
-                Trailer = _trailerService.GetTrailers()
+                AssignTrailer = await _assignTrailerService.GetAssignments(),
+                Truck = await _truckService.GetTrucks(),
+                Trailer = await _trailerService.GetTrailers()
             };
             return View(model);
         }
 
-        public IActionResult AssignmentTrailers()
+        public async Task<IActionResult> AssignmentTrailers()
         {
             var model = new AssignTrailerViewModel()
             {
-                AssignTrailer = _assignTrailerService.GetAssignments(),
-                Truck = _truckService.GetTrucks(),
-                Trailer = _trailerService.GetTrailers()
+                AssignTrailer = await _assignTrailerService.GetAssignments(),
+                Truck = await _truckService.GetTrucks(),
+                Trailer = await _trailerService.GetTrailers()
             };
             return View(model);
         }
 
-        public IActionResult AssignmentThisTrailer(int truckId, int trailerId)
+        public async Task<IActionResult> AssignmentThisTrailer(int truckId, int trailerId)
         {
             try
             {
-                _assignTrailerService.AssignmentTrailer(truckId, trailerId);
+                await _assignTrailerService.AssignmentTrailer(truckId, trailerId);
                 return RedirectToAction("Index");
             }
             catch(ArgumentException e)
@@ -55,23 +55,23 @@ namespace TransportManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteAssignment()
+        public async Task<IActionResult> DeleteAssignment()
         {
             var model = new AssignTrailerViewModel()
             {
-                AssignTrailer = _assignTrailerService.GetAssignments(),
-                Truck = _truckService.GetTrucks(),
-                Trailer = _trailerService.GetTrailers()
+                AssignTrailer = await _assignTrailerService.GetAssignments(),
+                Truck = await _truckService.GetTrucks(),
+                Trailer = await _trailerService.GetTrailers()
             };
             return View(model);
         }
 
-        public IActionResult DeleteThisAssignment(int id)
+        public async Task<IActionResult> DeleteThisAssignment(int id)
         {
 
             try
             {
-                _assignTrailerService.DeleteAssignment(id);
+                await _assignTrailerService.DeleteAssignment(id);
                 return RedirectToAction("Index");
             }
             catch (ArgumentException e)
@@ -95,22 +95,22 @@ namespace TransportManagement.Controllers
             */
         }
 
-        public IActionResult ReturnAssignment()
+        public async Task<IActionResult> ReturnAssignment()
         {
             var model = new AssignTrailerViewModel()
             {
-                AssignTrailer = _assignTrailerService.GetAssignments(),
-                Truck = _truckService.GetTrucks(),
-                Trailer = _trailerService.GetTrailers()
+                AssignTrailer = await _assignTrailerService.GetAssignments(),
+                Truck = await _truckService.GetTrucks(),
+                Trailer = await _trailerService.GetTrailers()
             };
             return View(model);
         }
 
-        public IActionResult ReturnThisAssignmnet(int id)
+        public async Task<IActionResult> ReturnThisAssignmnet(int id)
         {
             try
             {
-                _assignTrailerService.ReturnTrailer(id);
+                await _assignTrailerService.ReturnTrailer(id);
                 return RedirectToAction("Index");
             }
             catch (ArgumentException e)

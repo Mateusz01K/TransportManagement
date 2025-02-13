@@ -1,4 +1,5 @@
-﻿using TransportManagement.Models.AssignTruck;
+﻿using Microsoft.EntityFrameworkCore;
+using TransportManagement.Models.AssignTruck;
 
 namespace TransportManagement.Services.AssignTruck
 {
@@ -10,10 +11,10 @@ namespace TransportManagement.Services.AssignTruck
             _context = context;
         }
 
-        public void AssignmentTruck(int truckId, int driverId)
+        public async Task AssignmentTruck(int truckId, int driverId)
         {
-            var truck = _context.Trucks.FirstOrDefault(x => x.Id == truckId);
-            var driver = _context.Drivers.FirstOrDefault(x => x.Id == driverId);
+            var truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Id == truckId);
+            var driver = await _context.Drivers.FirstOrDefaultAsync(x => x.Id == driverId);
             if(truck == null || driver == null)
             {
                 throw new ArgumentException("Ciezarowka lub kierowca nie istnieja.");
@@ -32,31 +33,31 @@ namespace TransportManagement.Services.AssignTruck
                 AssignmentDate = DateTime.Now,
                 ReturnDate = DateTime.Now.AddDays(365)
             });
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteAssignment(int id)
+        public async Task DeleteAssignment(int id)
         {
-            var assign = _context.AssignTrucks.FirstOrDefault(x => x.Id == id);
+            var assign = await _context.AssignTrucks.FirstOrDefaultAsync(x => x.Id == id);
 
             if (assign == null)
             {
                 throw new ArgumentException("Ciezarowka lub kierowca nie istnieja.");
             }
-            else if (assign.IsReturned == true)
+            else if (assign.IsReturned)
             {
                 throw new ArgumentException("Ciezarowka lub kierowca sa juz przypisani.");
             }
 
-            var truck = _context.Trucks.FirstOrDefault(x => x.Id == assign.TruckId);
-            var driver = _context.Drivers.FirstOrDefault(x => x.Id == assign.DriverId);
+            var truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Id == assign.TruckId);
+            var driver = await _context.Drivers.FirstOrDefaultAsync(x => x.Id == assign.DriverId);
             if (truck != null && driver != null)
             {
                 truck.IsAssignedDriver = false;
                 driver.IsAssignedTruck = false;
             }
             _context.AssignTrucks.Remove(assign);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             /*
             if (assign != null)
@@ -74,20 +75,19 @@ namespace TransportManagement.Services.AssignTruck
             */
         }
 
-        public AssignTruckModel GetAssignment(int id)
+        public async Task<AssignTruckModel> GetAssignment(int id)
         {
-            var assign = _context.AssignTrucks.FirstOrDefault(x => x.Id == id);
-            return assign ?? new AssignTruckModel();
+            return await _context.AssignTrucks.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<AssignTruckModel> GetAssignments()
+        public async Task<List<AssignTruckModel>> GetAssignments()
         {
-            return _context.AssignTrucks.ToList();
+            return await _context.AssignTrucks.ToListAsync();
         }
 
-        public void ReturnTruck(int id)
+        public async Task ReturnTruck(int id)
         {
-            var assign = _context.AssignTrucks.FirstOrDefault(x=> x.Id == id);
+            var assign = await _context.AssignTrucks.FirstOrDefaultAsync(x=> x.Id == id);
 
             if (assign == null)
             {
@@ -100,14 +100,14 @@ namespace TransportManagement.Services.AssignTruck
 
             assign.IsReturned = true;
             assign.ReturnDate = DateTime.Now;
-            var truck = _context.Trucks.FirstOrDefault(x => x.Id == assign.TruckId);
-            var driver = _context.Drivers.FirstOrDefault(x => x.Id == assign.DriverId);
+            var truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Id == assign.TruckId);
+            var driver = await _context.Drivers.FirstOrDefaultAsync(x => x.Id == assign.DriverId);
             if (truck != null && driver != null)
             {
                 truck.IsAssignedDriver = false;
                 driver.IsAssignedTruck = false;
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             /*
             if (assign != null)

@@ -11,13 +11,14 @@ namespace TransportManagement.Controllers
         {
             _driverService = driverService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = new DriverViewModel()
+            var drivers = await _driverService.GetDrivers();
+            var driverViewModel = new DriverViewModel
             {
-                Drivers = _driverService.GetDrivers()
+                Drivers = drivers
             };
-            return View(model);
+            return View(driverViewModel);
         }
 
         public IActionResult AddDriver()
@@ -25,7 +26,7 @@ namespace TransportManagement.Controllers
             return View();
         }
 
-        public IActionResult AddNewDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
+        public async Task<IActionResult> AddNewDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
         {
             if(string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(LastName) || (DateOfBirth >= DateTime.Now) || string.IsNullOrEmpty(PhoneNumber)
                 || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Address) || (Experience < 0))
@@ -33,46 +34,55 @@ namespace TransportManagement.Controllers
                 TempData["message"] = "Popraw dane.";
                 return RedirectToAction("Index");
             }
-            _driverService.AddDriver(Name, LastName, DateOfBirth, PhoneNumber, Email, Address, Experience);
+
+            var result = await _driverService.AddDriver(Name, LastName, DateOfBirth, PhoneNumber, Email, Address, Experience);
+
+            if (!result)
+            {
+                TempData["message"] = "Nie udało się dodać kierowcy.";
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteDriver()
+        public async Task<IActionResult> DeleteDriver()
         {
-            var model = new DriverViewModel()
+            var drivers = await _driverService.GetDrivers();
+            var driverViewModel = new DriverViewModel
             {
-                Drivers = _driverService.GetDrivers()
+                Drivers = drivers
             };
-            return View(model);
+            return View(driverViewModel);
         }
 
-        public IActionResult DeleteThisDriver(int id)
+        public async Task<IActionResult> DeleteThisDriver(int id)
         {
             if(id != 0)
             {
-                _driverService.DeleteDriver(id);
+                await _driverService.DeleteDriver(id);
                 return RedirectToAction("Index");
             }
             TempData["message"] = "Popraw dane.";
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdateDriver()
+        public async Task<IActionResult> UpdateDriver()
         {
-            var model = new DriverViewModel()
+            var drivers = await _driverService.GetDrivers();
+            var driverViewModel = new DriverViewModel
             {
-                Drivers = _driverService.GetDrivers()
+                Drivers = drivers
             };
-            return View(model);
+            return View(driverViewModel);
         }
 
-        public IActionResult UpdateThisDriver(int id, string Name, string LastName, DateTime DateOfBirth,
+        public async Task<IActionResult> UpdateThisDriver(int id, string Name, string LastName, DateTime DateOfBirth,
                                                 string PhoneNumber, string Email, string Address, int Experience)
         {
-            var items = _driverService.GetDrivers().Count();
-            if(id != 0)//|| Name != "" || LastName != "" || DateOfBirth < DateTime.Now || PhoneNumber != "" || Email != "" || Address != "" || Experience != 0
+            //var items = _driverService.GetDrivers();
+            if(id != 0)
             {
-                _driverService.UpdateDriver(id, Name, LastName, DateOfBirth, PhoneNumber, Email, Address, Experience);
+                await _driverService.UpdateDriver(id, Name, LastName, DateOfBirth, PhoneNumber, Email, Address, Experience);
                 return RedirectToAction("Index");
             }
             TempData["message"] = "Popraw dane.";

@@ -22,33 +22,33 @@ namespace TransportManagement.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var model = new AssignTruckViewModel()
             {
-                AssignTrucks = _assignTruckService.GetAssignments(),
-                Trucks = _truckService.GetTrucks(),
-                Drivers = _driverService.GetDrivers()
+                AssignTrucks = await _assignTruckService.GetAssignments(),
+                Trucks = await _truckService.GetTrucks(),
+                Drivers = await _driverService.GetDrivers()
             };
             return View(model);
         }
 
-        public IActionResult AssignmentTrucks()
+        public async Task<IActionResult> AssignmentTrucks()
         {
             var model = new AssignTruckViewModel()
             {
-                AssignTrucks = _assignTruckService.GetAssignments(),
-                Trucks = _truckService.GetTrucks(),
-                Drivers = _driverService.GetDrivers()
+                AssignTrucks = await _assignTruckService.GetAssignments(),
+                Trucks = await _truckService.GetTrucks(),
+                Drivers = await _driverService.GetDrivers()
             };
             return View(model);
         }
 
-        public IActionResult AssignmentThisTruck(int truckId, int driverId)
+        public async Task<IActionResult> AssignmentThisTruck(int truckId, int driverId)
         {
             try
             {
-                _assignTruckService.AssignmentTruck(truckId, driverId);
+                await _assignTruckService.AssignmentTruck(truckId, driverId);
                 return RedirectToAction("Index");
             }
             catch (ArgumentException e)
@@ -59,22 +59,22 @@ namespace TransportManagement.Controllers
 
         }
 
-        public IActionResult DeleteAssignment()
+        public async Task<IActionResult> DeleteAssignment()
         {
             var model = new AssignTruckViewModel()
             {
-                AssignTrucks = _assignTruckService.GetAssignments(),
-                Trucks = _truckService.GetTrucks(),
-                Drivers = _driverService.GetDrivers()
+                AssignTrucks = await _assignTruckService.GetAssignments(),
+                Trucks = await _truckService.GetTrucks(),
+                Drivers = await _driverService.GetDrivers()
             };
             return View(model);
         }
 
-        public IActionResult DeleteThisAssignment(int id)
+        public async Task<IActionResult> DeleteThisAssignment(int id)
         {
             try
             {
-                _assignTruckService.DeleteAssignment(id);
+                await _assignTruckService.DeleteAssignment(id);
                 return RedirectToAction("Index");
             }
             catch (ArgumentException e)
@@ -96,22 +96,22 @@ namespace TransportManagement.Controllers
             */
         }
 
-        public IActionResult ReturnAssignment()
+        public async Task<IActionResult> ReturnAssignment()
         {
             var model = new AssignTruckViewModel()
             {
-                AssignTrucks = _assignTruckService.GetAssignments(),
-                Trucks = _truckService.GetTrucks(),
-                Drivers = _driverService.GetDrivers()
+                AssignTrucks = await _assignTruckService.GetAssignments(),
+                Trucks = await _truckService.GetTrucks(),
+                Drivers = await _driverService.GetDrivers()
             };
             return View(model);
         }
 
-        public IActionResult ReturnThisAssignmnet(int id)
+        public async Task<IActionResult> ReturnThisAssignmnet(int id)
         {
             try
             {
-                _assignTruckService.DeleteAssignment(id);
+                await _assignTruckService.DeleteAssignment(id);
                 return RedirectToAction("Index");
             }
             catch (ArgumentException e)

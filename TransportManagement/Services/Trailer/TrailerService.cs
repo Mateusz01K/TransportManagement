@@ -1,4 +1,5 @@
-﻿using TransportManagement.Models.Trailer;
+﻿using Microsoft.EntityFrameworkCore;
+using TransportManagement.Models.Trailer;
 
 namespace TransportManagement.Services.Trailer
 {
@@ -9,7 +10,7 @@ namespace TransportManagement.Services.Trailer
         {
             _context = context;
         }
-        public void AddTrailer(string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
+        public async Task AddTrailer(string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
         {
             var trailer = new TrailerModel
             {
@@ -22,33 +23,32 @@ namespace TransportManagement.Services.Trailer
                 YearOfProduction= YearOfProduction
             };
             _context.Trailers.Add(trailer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteTrailer(int id)
+        public async Task DeleteTrailer(int id)
         {
-            var trailer = _context.Trailers.FirstOrDefault(x => x.Id == id);
+            var trailer = await _context.Trailers.FirstOrDefaultAsync(x => x.Id == id);
             if (trailer != null)
             {
                 _context.Trailers.Remove(trailer);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        public TrailerModel GetTrailer(int id)
+        public async Task<TrailerModel> GetTrailer(int id)
         {
-            var trailer = _context.Trailers.FirstOrDefault(x => x.Id == id);
-            return trailer ?? new TrailerModel();
+            return await _context.Trailers.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<TrailerModel> GetTrailers()
+        public async Task<List<TrailerModel>> GetTrailers()
         {
-            return _context.Trailers.ToList();
+            return await _context.Trailers.ToListAsync();
         }
 
-        public void UpdateTrailer(int id, string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
+        public async Task UpdateTrailer(int id, string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
         {
-            var trailer = _context.Trailers.FirstOrDefault(x => x.Id == id);
+            var trailer = await _context.Trailers.FirstOrDefaultAsync(x => x.Id == id);
             if (trailer != null)
             {
                 trailer.Brand = !string.IsNullOrEmpty(Brand) ? Brand : trailer.Brand;
@@ -57,8 +57,8 @@ namespace TransportManagement.Services.Trailer
                 trailer.Mileage = Mileage >= 0 ? Mileage : trailer.Mileage;
                 trailer.MaxLoad = MaxLoad >= 0 ? MaxLoad : trailer.MaxLoad;
                 trailer.LicensePlate = !string.IsNullOrEmpty(LicensePlate) ? LicensePlate : trailer.LicensePlate;
-                trailer.YearOfProduction = YearOfProduction >= 0 ? YearOfProduction : trailer.YearOfProduction;
-                _context.SaveChanges();
+                trailer.YearOfProduction = YearOfProduction > 1900 ? YearOfProduction : trailer.YearOfProduction;
+                await _context.SaveChangesAsync();
             }
         }
     }

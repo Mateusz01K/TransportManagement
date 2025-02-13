@@ -11,13 +11,14 @@ namespace TransportManagement.Controllers
         {
             _trailerService = trailerService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = new TrailerViewModel()
+            var trailers = await _trailerService.GetTrailers();
+            var trailerViewModel = new TrailerViewModel()
             {
-                Trailers = _trailerService.GetTrailers()
+                Trailers = trailers
             };
-            return View(model);
+            return View(trailerViewModel);
         }
 
         public IActionResult AddTrailer()
@@ -25,53 +26,55 @@ namespace TransportManagement.Controllers
             return View();
         }
 
-        public IActionResult AddNewTrailer(string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
+        public async Task<IActionResult> AddNewTrailer(string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
         {
             if (string.IsNullOrEmpty(Brand) || string.IsNullOrEmpty(Model) || string.IsNullOrEmpty(Type) || (Mileage == 0)
-                || (MaxLoad < -1) || string.IsNullOrEmpty(LicensePlate) || (YearOfProduction < -1))
+                || (MaxLoad <= 0) || string.IsNullOrEmpty(LicensePlate) || (YearOfProduction < 1900))
             {
                 TempData["message"] = "Popraw dane.";
                 return RedirectToAction("Index");
             }
-            _trailerService.AddTrailer(Brand, Model, Type, Mileage, MaxLoad, LicensePlate, YearOfProduction);
+            await _trailerService.AddTrailer(Brand, Model, Type, Mileage, MaxLoad, LicensePlate, YearOfProduction);
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteTrailer()
+        public async Task<IActionResult> DeleteTrailer()
         {
-            var model = new TrailerViewModel()
+            var trailers = await _trailerService.GetTrailers();
+            var trailerViewModel = new TrailerViewModel()
             {
-                Trailers = _trailerService.GetTrailers()
+                Trailers = trailers
             };
-            return View(model);
+            return View(trailerViewModel);
         }
 
-        public IActionResult DeleteThisTrailer(int id)
+        public async Task<IActionResult> DeleteThisTrailer(int id)
         {
             if (id != 0)
             {
-                _trailerService.DeleteTrailer(id);
+                await _trailerService.DeleteTrailer(id);
                 return RedirectToAction("Index");
             }
             TempData["message"] = "Popraw dane.";
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdateTrailer()
+        public async Task<IActionResult> UpdateTrailer()
         {
-            var model = new TrailerViewModel()
+            var trailers = await _trailerService.GetTrailers();
+            var trailerViewModel = new TrailerViewModel()
             {
-                Trailers = _trailerService.GetTrailers()
+                Trailers = trailers
             };
-            return View(model);
+            return View(trailerViewModel);
         }
 
-        public IActionResult UpdateThisTrailer(int id, string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
+        public async Task<IActionResult> UpdateThisTrailer(int id, string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
         {
-            var items = _trailerService.GetTrailers().Count();
-            if (id != 0)// && Brand != "" && Model != "" && Type != "" && Mileage < -1 && LicensePlate != "" && YearOfProduction < -1)
+            //var items = _trailerService.GetTrailers();
+            if (id != 0)
             {
-                _trailerService.UpdateTrailer(id, Brand, Model, Type, Mileage, MaxLoad, LicensePlate, YearOfProduction);
+                await _trailerService.UpdateTrailer(id, Brand, Model, Type, Mileage, MaxLoad, LicensePlate, YearOfProduction);
                 return RedirectToAction("Index");
             }
             TempData["message"] = "Popraw dane.";

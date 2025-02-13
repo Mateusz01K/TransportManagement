@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using TransportManagement.Models.AssignTrailer;
 
 namespace TransportManagement.Services.AssignTrailer
@@ -10,10 +11,10 @@ namespace TransportManagement.Services.AssignTrailer
         {
             _context = context;
         }
-        public void AssignmentTrailer(int truckId, int trailerId)
+        public async Task AssignmentTrailer(int truckId, int trailerId)
         {
-            var truck = _context.Trucks.FirstOrDefault(x => x.Id == truckId);
-            var trailer = _context.Trailers.FirstOrDefault(x => x.Id == trailerId);
+            var truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Id == truckId);
+            var trailer = await _context.Trailers.FirstOrDefaultAsync(x => x.Id == trailerId);
             if (truck == null || trailer == null)
             {
                 throw new ArgumentException("Ciezarowka lub naczepa nie istnieja w bazie danych.");
@@ -32,27 +33,27 @@ namespace TransportManagement.Services.AssignTrailer
                 AssignmentDate = DateTime.Now,
                 ReturnDate = DateTime.Now.AddDays(365)
             });
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteAssignment(int id)
+        public async Task DeleteAssignment(int id)
         {
-            var assign = _context.AssignTrailers.FirstOrDefault(x => x.Id == id);
+            var assign = await _context.AssignTrailers.FirstOrDefaultAsync(x => x.Id == id);
 
             if (assign == null)
             {
                 throw new ArgumentException("Przypisanie nie itnieje w bazie danych.");
             }
 
-            var truck = _context.Trucks.FirstOrDefault(x => x.Id == assign.TruckId);
-            var trailer = _context.Trailers.FirstOrDefault(x => x.Id == assign.TrailerId);
+            var truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Id == assign.TruckId);
+            var trailer = await _context.Trailers.FirstOrDefaultAsync(x => x.Id == assign.TrailerId);
             if (truck != null && trailer != null)
             {
                 truck.IsAssignedTrailer = false;
                 trailer.IsAssigned = false;
             }
             _context.AssignTrailers.Remove(assign);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             /*
             if (assign != null)
@@ -70,20 +71,19 @@ namespace TransportManagement.Services.AssignTrailer
             */
         }
 
-        public AssignTrailerModel GetAssignment(int id)
+        public async Task<AssignTrailerModel> GetAssignment(int id)
         {
-            var assign = _context.AssignTrailers.FirstOrDefault(x => x.Id == id);
-            return assign ?? new AssignTrailerModel();
+            return await _context.AssignTrailers.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<AssignTrailerModel> GetAssignments()
+        public async Task<List<AssignTrailerModel>> GetAssignments()
         {
-            return _context.AssignTrailers.ToList();
+            return await _context.AssignTrailers.ToListAsync();
         }
 
-        public void ReturnTrailer(int id)
+        public async Task ReturnTrailer(int id)
         {
-            var assign = _context.AssignTrailers.FirstOrDefault(x => x.Id == id);
+            var assign = await _context.AssignTrailers.FirstOrDefaultAsync(x => x.Id == id);
 
             if (assign == null)
             {
@@ -92,14 +92,14 @@ namespace TransportManagement.Services.AssignTrailer
 
             assign.IsReturned = true;
             assign.ReturnDate = DateTime.Now;
-            var truck = _context.Trucks.FirstOrDefault(x => x.Id == assign.TruckId);
-            var trailer = _context.Trailers.FirstOrDefault(x => x.Id == assign.TrailerId);
+            var truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Id == assign.TruckId);
+            var trailer = await _context.Trailers.FirstOrDefaultAsync(x => x.Id == assign.TrailerId);
             if (truck != null && trailer != null)
             {
                 truck.IsAssignedTrailer = false;
                 trailer.IsAssigned = false;
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
 
             /*

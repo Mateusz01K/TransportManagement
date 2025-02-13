@@ -43,9 +43,6 @@
                         @* <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LoginUser">Logowanie</a>
                         </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark text-end" asp-area="" asp-controller="Account" asp-action="RegisterUser">Rejestracja</a>
-                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
@@ -63,6 +60,9 @@
                         else
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-dark text-end" asp-area="" asp-controller="Account" asp-action="RegisterUser">Rejestracja</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark text-end" asp-area="" asp-controller="Account" asp-action="LoginUser">Logowanie</a>
                             </li>
                         }
@@ -78,7 +78,7 @@
     </div>
 
     <footer class="footer text-muted">
-        <div class="container">
+        <div class="container-fluid">
             &copy; 2024 - TransportManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

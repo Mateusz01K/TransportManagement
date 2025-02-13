@@ -11,13 +11,14 @@ namespace TransportManagement.Controllers
         {
             _truckService = truckService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = new TruckViewModel()
+            var trailers = await _truckService.GetTrucks();
+            var truckViewModel = new TruckViewModel()
             {
-                Trucks = _truckService.GetTrucks()
+                Trucks = trailers
             };
-            return View(model);
+            return View(truckViewModel);
         }
 
         public IActionResult AddTruck()
@@ -25,7 +26,7 @@ namespace TransportManagement.Controllers
             return View();
         }
 
-        public IActionResult AddNewTruck(string Brand, string Model, int YearOfProduction, int Power, float Mileage, int Weight, string LicensePlate)
+        public async Task<IActionResult> AddNewTruck(string Brand, string Model, int YearOfProduction, int Power, float Mileage, int Weight, string LicensePlate)
         {
             if (string.IsNullOrEmpty(Brand) && string.IsNullOrEmpty(Model) && (YearOfProduction < -1) && (Power > -1)
                 && (Mileage > -1) && (Weight > -1) && string.IsNullOrEmpty(LicensePlate))
@@ -33,45 +34,47 @@ namespace TransportManagement.Controllers
                 TempData["message"] = "Popraw dane.";
                 return RedirectToAction("Index");
             }
-            _truckService.AddTruck(Brand, Model, YearOfProduction, Power, Mileage, Weight, LicensePlate);
+            await _truckService.AddTruck(Brand, Model, YearOfProduction, Power, Mileage, Weight, LicensePlate);
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteTruck()
+        public async Task<IActionResult> DeleteTruck()
         {
-            var model = new TruckViewModel()
+            var trailers = await _truckService.GetTrucks();
+            var truckViewModel = new TruckViewModel()
             {
-                Trucks = _truckService.GetTrucks()
+                Trucks = trailers
             };
-            return View(model);
+            return View(truckViewModel);
         }
 
-        public IActionResult DeleteThisTruck(int id)
+        public async Task<IActionResult> DeleteThisTruck(int id)
         {
             if (id != 0)
             {
-                _truckService.DeleteTruck(id);
+                await _truckService.DeleteTruck(id);
                 return RedirectToAction("Index");
             }
             TempData["message"] = "Popraw dane.";
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdateTruck()
+        public async Task<IActionResult> UpdateTruck()
         {
-            var model = new TruckViewModel()
+            var trailers = await _truckService.GetTrucks();
+            var truckViewModel = new TruckViewModel()
             {
-                Trucks = _truckService.GetTrucks()
+                Trucks = trailers
             };
-            return View(model);
+            return View(truckViewModel);
         }
 
-        public IActionResult UpdateThisTruck(int id, string Brand, string Model, int YearOfProduction, int Power, float Mileage, int Weight, string LicensePlate)
+        public async Task<IActionResult> UpdateThisTruck(int id, string Brand, string Model, int YearOfProduction, int Power, float Mileage, int Weight, string LicensePlate)
         {
-            var items = _truckService.GetTrucks().Count();
-            if (id != 0)// && Brand != "" && Model != "" && YearOfProduction < -1 && Power != "" && Mileage < -1 && Weight < -1 && LicensePlate != "")
+            //var items = _truckService.GetTrucks();
+            if (id != 0)
             {
-                _truckService.UpdateTruck(id, Brand, Model, YearOfProduction, Power, Mileage, Weight, LicensePlate);
+                await _truckService.UpdateTruck(id, Brand, Model, YearOfProduction, Power, Mileage, Weight, LicensePlate);
                 return RedirectToAction("Index");
             }
             TempData["message"] = "Popraw dane.";

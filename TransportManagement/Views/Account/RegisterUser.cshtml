@@ -7,29 +7,29 @@
         - Wszystkie pola muszą być wypełnione.
     </div>
     <div class="pt-3">
-        <label asp-for="FirstName"></label>
+        <label asp-for="FirstName">Imię</label>
         <input asp-for="FirstName" />
-        <span asp-validation-for="FirstName"></span>
+        @*<span asp-validation-for="FirstName"></span>*@
     </div>
     <div>
-        <label asp-for="LastName"></label>
+        <label asp-for="LastName">Nazwisko</label>
         <input asp-for="LastName" />
-        <span asp-validation-for="LastName"></span>
+        @*<span asp-validation-for="LastName"></span>*@
     </div>
     <div>
-        <label asp-for="Email"></label>
+        <label asp-for="Email">Email</label>
         <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+        @*<span asp-validation-for="Email"></span>*@
     </div>
     <div>
-        <label asp-for="Password"></label>
+        <label asp-for="Password">Hasło</label>
         <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
+        @*<span asp-validation-for="Password"></span>*@
     </div>
-    <div>
-        <label asp-for="ConfirmPassword"></label>
+    <div class="pb-2">
+        <label asp-for="ConfirmPassword">Powtórz hasło</label>
         <input asp-for="ConfirmPassword" />
-        <span asp-validation-for="ConfirmPassword"></span>
+        @*<span asp-validation-for="ConfirmPassword"></span>*@
     </div>
-    <button type="submit">Zarejestruj</button>
+    <button type="submit" class="btn btn-success">Zarejestruj</button>
 </form>
