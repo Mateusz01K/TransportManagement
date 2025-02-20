@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Xml.Linq;
-using TransportManagement.Models.Drivers;
+﻿using Microsoft.AspNetCore.Mvc;
 using TransportManagement.Models.User;
-using TransportManagement.Models.User.ResetPassword;
 using TransportManagement.Services.User;
+using TransportManagement.Services.User.ManageUser;
 
 namespace TransportManagement.Controllers
 {
@@ -75,88 +70,6 @@ namespace TransportManagement.Controllers
         {
             await _accountService.LogoutAsync();
             return RedirectToAction("LoginUser");
-        }
-
-
-        public IActionResult ForgotPasswordView()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View("ForgotPassword", model);
-            }
-
-            var resetUrlBase = Url.Action("ResetPassword", "Account", null, Request.Scheme);
-            await _accountService.SendPasswordResetEmailAsync(model.Email, resetUrlBase);
-
-            TempData["message"] = "Otrzymasz wiadomośc e-mail.";
-            return RedirectToAction("ForgotPasswordConfirmation");
-        }
-
-        public IActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult ResetPassword(string userId, string token)
-        {
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var model = new ResetPasswordViewModel { UserId = userId, Token = token };
-            return View(model);
-        }
-        [HttpPost]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var success = await _accountService.ResetPasswordAsync(model.UserId, model.Token, model.NewPassword);
-
-            if (success)
-            {
-                return RedirectToAction("ResetPasswordConfirmation");
-            }
-
-            ModelState.AddModelError(string.Empty, "Resetowanie hasła nie powiodło sie. Sprawdź poprawność adresu e-mail.");
-            return View(model);
-        }
-
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateUser()
-        {
-            var users = await _accountService.GetUserAsync();
-            var userViewModel = new UserViewModel
-            {
-                Users = users
-            };
-            return View(userViewModel);
-        }
-
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateThisUser(ApplicationUser model)
-        {
-            if (model.Email != null)
-            {
-                await _accountService.UpdateUserAsync(model.Email, model.FirstName, model.LastName, model.DateOfBirth, model.PhoneNumber, model.Address, model.Experience);
-                return RedirectToAction("ManageRole");
-            }
-            TempData["message"] = "Popraw dane.";
-            return RedirectToAction("ManageRole");
-        }
-
-        public IActionResult ResetPasswordConfirmation()
-        {
-            return View();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.User;
 
 namespace TransportManagement.Services.User.ManageUser
@@ -6,10 +7,12 @@ namespace TransportManagement.Services.User.ManageUser
     public class UserManagerService : IUserManagerService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly TransportManagementDbContext _context;
 
-        public UserManagerService(UserManager<ApplicationUser> userManager)
+        public UserManagerService(UserManager<ApplicationUser> userManager, TransportManagementDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
         public async Task<List<UserDto>> GetUserAsync()
@@ -29,6 +32,38 @@ namespace TransportManagement.Services.User.ManageUser
                 });
             }
             return userList;
+        }
+
+
+        public async Task<bool> UpdateUserAsync(string Email, string FirstName, string LastName, DateTime DateOfBirth, string PhoneNumber, string Address, int Experience)
+        {
+            var user = await _userManager.FindByEmailAsync(Email);
+            if (user == null)
+            {
+                return false;
+            }
+            user.FirstName = !string.IsNullOrEmpty(FirstName) ? FirstName : user.FirstName;
+            user.LastName = !string.IsNullOrEmpty(LastName) ? LastName : user.LastName;
+            user.DateOfBirth = (DateOfBirth != default(DateTime) && DateOfBirth < DateTime.Now) ? DateOfBirth : user.DateOfBirth;
+            user.PhoneNumber = !string.IsNullOrEmpty(PhoneNumber) ? PhoneNumber : user.PhoneNumber;
+            user.Email = !string.IsNullOrEmpty(Email) ? Email : user.Email;
+            user.Address = !string.IsNullOrEmpty(Address) ? Address : user.Address;
+            user.Experience = Experience >= 0 ? Experience : user.Experience;
+
+            var result = await _userManager.UpdateAsync(user);
+            var driver = await _context.Drivers.FirstOrDefaultAsync(d => d.Email == Email);
+            if (driver != null)
+            {
+                driver.Name = user.FirstName;
+                driver.LastName = user.LastName;
+                driver.DateOfBirth = user.DateOfBirth;
+                driver.PhoneNumber = user.PhoneNumber;
+                driver.Address = user.Address;
+                driver.Experience = user.Experience;
+
+                await _context.SaveChangesAsync();
+            }
+            return result.Succeeded;
         }
     }
 }

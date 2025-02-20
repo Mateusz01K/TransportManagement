@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using TransportManagement.Models.User;
 using TransportManagement.Services.User.ManageUser;
 using TransportManagement.Services.User.RoleService;
@@ -9,7 +8,6 @@ namespace TransportManagement.Controllers
 {
     public class RoleController : Controller
     {
-
         private readonly IRoleService _roleService;
         private readonly IUserManagerService _userManagerService;
 
