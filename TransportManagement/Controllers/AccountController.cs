@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Xml.Linq;
+using TransportManagement.Models.Drivers;
 using TransportManagement.Models.User;
 using TransportManagement.Models.User.ResetPassword;
 using TransportManagement.Services.User;
@@ -32,7 +35,7 @@ namespace TransportManagement.Controllers
 
             if (success)
             {
-                TempData["message"] = "Rejestracja zakończona sukcesem.";
+                //TempData["message"] = "Rejestracja zakończona sukcesem.";
                 return RedirectToAction("LoginUser");
             }
 
@@ -128,9 +131,8 @@ namespace TransportManagement.Controllers
             return View(model);
         }
 
-
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ManageRole()
+        public async Task<IActionResult> UpdateUser()
         {
             var users = await _accountService.GetUserAsync();
             var userViewModel = new UserViewModel
@@ -140,74 +142,15 @@ namespace TransportManagement.Controllers
             return View(userViewModel);
         }
 
-
-
         [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<IActionResult> AssignRole()
+        public async Task<IActionResult> UpdateThisUser(ApplicationUser model)
         {
-            var users = await _accountService.GetUserAsync();
-            var userViewModel = new UserViewModel
+            if (model.Email != null)
             {
-                Users = users
-            };
-            return View(userViewModel);
-        }
-
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> AssignRole(string email, string roleName)
-        {
-            if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(roleName))
-            {
-                TempData["Message"] = "Użytkownik/Rola są wymagane.";
+                await _accountService.UpdateUserAsync(model.Email, model.FirstName, model.LastName, model.DateOfBirth, model.PhoneNumber, model.Address, model.Experience);
                 return RedirectToAction("ManageRole");
             }
-
-            var result = await _accountService.AssignRoleAsync(email, roleName);
-            if (result)
-            {
-                TempData["Message"] = $"Rola '{roleName}' została dodana użytkownikowi {email}.";
-            }
-            else
-            {
-                TempData["Message"] = $"Nie udało się dodać roli '{roleName}' użytkownikowi {email}";
-            }
-            return RedirectToAction("ManageRole");
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<IActionResult> UnAssignRole()
-        {
-            var users = await _accountService.GetUserAsync();
-            var userViewModel = new UserViewModel
-            {
-                Users = users
-            };
-            return View(userViewModel);
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> UnAssignRole(string email, string roleName)
-        {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(roleName))
-            {
-                TempData["Message"] = "Użytkownik/Rola są wymagane.";
-                return RedirectToAction("ManageRole");
-            }
-
-            var result = await _accountService.AssignRoleAsync(email, roleName);
-            if (result)
-            {
-                TempData["Message"] = $"Rola '{roleName}' została usunięta użytkownikowi {email}.";
-            }
-            else
-            {
-                TempData["Message"] = $"Nie udało się usunąć roli '{roleName}' użytkownikowi {email}";
-            }
+            TempData["message"] = "Popraw dane.";
             return RedirectToAction("ManageRole");
         }
 

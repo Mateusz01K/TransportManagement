@@ -1,52 +1,27 @@
 ﻿@model TransportManagement.Models.User.LoginViewModel
 
+@section Styles{
+        <link rel="stylesheet" href="~/css/login.css" />
+}
 
+<div class="container">
+<form class="form-sigin" asp-action="LoginUser" method="post" asp-controller="Account">
+    <h1>Logowanie</h1>
 
+        @*<label class="sr-only" asp-for="Email">Email</label>*@
+        <input class="form-control" type="email" asp-for="Email" placeholder="Email" required/>
 
-<form class="text-center" asp-action="LoginUser" method="post" asp-controller="Account">
-    <h2>Logowanie</h2>
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="validation-sum mary-errors">
+        @*<label class="sr-only" asp-for="Password">Hasło</label>*@
+        <input class="form-control" type="password" asp-for="Password" placeholder="Password" required/>
 
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-            {
-                @error.ErrorMessage
-
-                <br />
-            }
-
-        </div>
-    }
-    @*<div class="mb-3">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" class="form-control" required />
-    </div>
-    <div class="mb-3">
-        <label for="password">Hasło</label>
-        <input type="password" id="password" name="password" class="form-control" required />
-    </div>
-    <div class="mb-3 form-check">
-        <label for="rememberMe">Zapamiętaj mnie</label>
-        <input type="checkbox" id="rememberMe" name="rememberMe" class="form-control" required />
-    </div>*@
-    <div class="pt-3">
-    <label asp-for="Email">Email</label>
-    <input asp-for="Email" />
-    @*<span asp-validation-for="Email"></span>*@
-    </div>
-    <div class="pt-3">
-    <label asp-for="Password">Hasło</label>
-    <input asp-for="Password" />
-    @*<span asp-validation-for="Password"></span>*@
-    </div>
-    <div class="pt-4">
-    <label asp-for="RememberMe">Zapamiętaj Mnie</label>
-    <input asp-for="RememberMe" />
-    @*<span asp-validation-for="RememberMe"></span>*@
+    <div class="checkbox mb-3">
+        <label asp-for="RememberMe">
+            <input type="checkbox" asp-for="RememberMe" /> Zapamiętaj Mnie
+        </label>
     </div>
     <button type="submit" class="btn btn-success">Zaloguj</button>
     <div>
         <a asp-action="ForgotPassword" asp-controller="Account" class="btn btn-link">Zapomniałem hasła.</a>
     </div>
 </form>
+</div>

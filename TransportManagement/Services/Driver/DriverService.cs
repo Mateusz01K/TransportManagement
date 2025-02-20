@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.Drivers;
 using TransportManagement.Models.User;
+using TransportManagement.Services.User;
 
 namespace TransportManagement.Services.Driver
 {
@@ -9,11 +10,13 @@ namespace TransportManagement.Services.Driver
     {
         private readonly TransportManagementDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly IAccountService _accountService;
 
-        public DriverService(TransportManagementDbContext context, UserManager<ApplicationUser> userManager)
+        public DriverService(TransportManagementDbContext context, UserManager<ApplicationUser> userManager/*, IAccountService accountService*/)
         {
             _context = context;
             _userManager = userManager;
+            //_accountService = accountService;
         }
 
         public async Task<bool> AddDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
@@ -86,17 +89,30 @@ namespace TransportManagement.Services.Driver
             var driver = _context.Drivers.FirstOrDefault(x => x.Id == id);
             if (driver != null)
             {
-                driver.Name = !string.IsNullOrEmpty(Name) ? Name : driver.Name;
-                driver.LastName = !string.IsNullOrEmpty(LastName) ? LastName : driver.LastName;
-                driver.DateOfBirth = (DateOfBirth != default(DateTime) && DateOfBirth < DateTime.Now) ? DateOfBirth : driver.DateOfBirth;
-                driver.PhoneNumber = !string.IsNullOrEmpty(PhoneNumber) ? PhoneNumber : driver.PhoneNumber;
-                driver.Email = !string.IsNullOrEmpty(Email) ? Email : driver.Email;
-                driver.Address = !string.IsNullOrEmpty(Address) ? Address : driver.Address;
-                driver.Experience = Experience >= 0 ? Experience : driver.Experience;
-                await _context.SaveChangesAsync();
-                return true;
+                return false;
             }
-            return false;
+
+            driver.Name = !string.IsNullOrEmpty(Name) ? Name : driver.Name;
+            driver.LastName = !string.IsNullOrEmpty(LastName) ? LastName : driver.LastName;
+            driver.DateOfBirth = (DateOfBirth != default(DateTime) && DateOfBirth < DateTime.Now) ? DateOfBirth : driver.DateOfBirth;
+            driver.PhoneNumber = !string.IsNullOrEmpty(PhoneNumber) ? PhoneNumber : driver.PhoneNumber;
+            driver.Email = !string.IsNullOrEmpty(Email) ? Email : driver.Email;
+            driver.Address = !string.IsNullOrEmpty(Address) ? Address : driver.Address;
+            driver.Experience = Experience >= 0 ? Experience : driver.Experience;
+
+
+            //await _context.SaveChangesAsync();
+            //var update = await _accountService.UpdateUserAsync(
+            //    driver.Email,
+            //    driver.Name,
+            //    driver.LastName,
+            //    driver.DateOfBirth,
+            //    driver.PhoneNumber,
+            //    driver.Address,
+            //    driver.Experience
+            //    );
+            //return update;
+            return true;
         }
     }
 }

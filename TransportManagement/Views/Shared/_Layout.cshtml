@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransportManagement.styles.css" asp-append-version="true" />
 </head>
+@RenderSection("Styles", required:false)
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow">
@@ -49,7 +50,10 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Zlecenia</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ManageRole">Zarządzanie Rolami</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="ManageRole">Zarządzanie Rolami</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TransportCost" asp-action="TransportCost">Kalkulator</a>
                             </li>
                             <li class="nav-item">
                                 <form asp-action="Logout" asp-controller="Account" method="post" style="display:inline;">
@@ -77,11 +81,11 @@
         </main>
     </div>
 
-    <footer class="footer text-muted">
+    @*<footer class="footer text-muted">
         <div class="container-fluid">
             &copy; 2024 - TransportManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

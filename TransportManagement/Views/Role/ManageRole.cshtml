@@ -4,9 +4,13 @@
 }
 @if (TempData["message"] != null)
 {
-    <script>
-        alert('@TempData["message"]');
-    </script>
+    var message = TempData["Message"].ToString();
+    var alertClass = message.Contains("Nie udało") ? "alert-danger" : "alert-success";
+    <div class="container mt-3">
+        <div class="alert @alertClass" role="alert">
+            @message
+        </div>
+    </div>
 }
 
 <div class="text-center">
@@ -32,18 +36,10 @@
             }
         </tbody>
     </table>
-</div>
-<div class="container mt-5">
-    <form class="mb-4" asp-action="UnAssignRole" method="post">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <label for="roleName">Nazwa roli</label>
-            <input type="text" id="roleName" name="roleName" class="form-control" required />
-        </div>
-        <button type="submit" class="btn btn-danger">Usuń rolę</button>
-        <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
-    </form>
+
+    <div class="text-center m-5">
+        <a class="btn btn-outline-success" asp-area="" asp-controller="Role" asp-action="AssignRole" role="button">Dodaj rolę</a>
+        <a class="btn btn-outline-warning" asp-area="" asp-controller="Account" asp-action="UpdateUser" role="button">Edytuj kierowcę</a>
+        <a class="btn btn-outline-danger" asp-area="" asp-controller="Role" asp-action="UnAssignRole" role="button">Usuń rolę</a>
+    </div>
 </div>

@@ -10,6 +10,8 @@ using TransportManagement.Services.Trailer;
 using TransportManagement.Services.Truck;
 using TransportManagement.Services.User;
 using TransportManagement.Services.User.EmailSender;
+using TransportManagement.Services.User.ManageUser;
+using TransportManagement.Services.User.RoleService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,8 +45,11 @@ builder.Services.AddScoped<ITrailerService, TrailerService>();
 builder.Services.AddScoped<IAssignTruckService, AssignTruckService>();
 builder.Services.AddScoped<IAssignTrailerService, AssignTrailerService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserManagerService, UserManagerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

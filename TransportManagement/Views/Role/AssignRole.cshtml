@@ -2,12 +2,6 @@
 @{
     ViewData["Title"] = "Zarządzanie rolami";
 }
-@if (TempData["message"] != null)
-{
-    <script>
-        alert('@TempData["message"]');
-    </script>
-}
 
 <div class="text-center">
     <h1 class="display-4">Lista Użytkowników</h1>
@@ -32,10 +26,23 @@
             }
         </tbody>
     </table>
+</div>
 
-    <div class="text-center m-5">
-        <a class="btn btn-outline-success" asp-area="" asp-controller="Account" asp-action="AssignRole" role="button">Dodaj rolę</a>
-        <a class="btn btn-outline-warning" asp-area="" asp-controller="Account" asp-action="" role="button">Edytuj kierowcę</a>
-        <a class="btn btn-outline-danger" asp-area="" asp-controller="Account" asp-action="UnAssignRole" role="button">Usuń rolę</a>
-    </div>
+<div class="container mt-5">
+    <form class="mb-4" asp-action="AssignRole" method="post">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="selectRole">Wybierz Role</label>
+            <select id="selectRole" name="roleName" class="form-control" required>
+                <option value="Admin">Admin</option>
+                <option value="Dispatcher">Dispatcher</option>
+                <option value="Driver">Driver</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Dodaj rolę</button>
+        <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
+    </form>
 </div>

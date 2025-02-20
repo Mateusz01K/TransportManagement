@@ -4,9 +4,13 @@
 }
 @if (TempData["message"] != null)
 {
-    <script>
-        alert('@TempData["message"]');
-    </script>
+    var message = TempData["Message"].ToString();
+    var alertClass = message.Contains("Nie udało") ? "alert-danger" : "alert-success";
+    <div class="container mt-3">
+        <div class="alert @alertClass" role="alert">
+            @message
+        </div>
+    </div>
 }
 
 <div class="text-center">

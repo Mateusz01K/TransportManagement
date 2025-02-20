@@ -1,0 +1,140 @@
+﻿@model TransportManagement.Models.TransportCost.TransportCostRequestViewModel
+
+@{
+    ViewData["Title"] = "Kalkulator";
+}
+
+<h2>Kalkulator Kosztów Transportu</h2>
+
+<div class="container mt-4">
+    <form method="post" asp-controller="TransportCost" asp-action="CalculateCost">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="distance">Dystans (km)</label>
+                <input class="form-control" type="number" name="Distance" id="distance" placeholder="Dystans" required />
+            </div>
+            <div class="col-md-6">
+                <label for="fuelConsumption">Spalanie (L/100km)</label>
+                <input class="form-control" type="number" name="FuelConsumption" id="fuelConsumption" placeholder="Spalanie" required />
+            </div>
+        </div>
+
+
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <label for="fuelPrice">Cena paliwa (litr): </label>
+                <input class="form-control" type="number" name="FuelPrice" id="fuelPrice" placeholder="Cena paliwa" required />
+            </div>
+            <div class="col-md-6">
+                <label for="fuelPrice">Cena przejazdu: </label>
+                <input class="form-control" type="number" name="FreightPrice" id="freightPrice" placeholder="Cena przejazdu" required />
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputCurrency">Waluta wejściowa:</label>
+                <select id="inputCurrency" name="InputCurrency" required>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="PLN">PLN</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="outputCurrency">Przelicz na:</label>
+                <select id="outputCurrency" name="OutputCurrency" required>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="PLN">PLN</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-primary mt-3" type="button" id="calculateButton">Oblicz</button>
+        <button class="btn btn-primary mt-3" type="button" id="fetchRatesButton">Pobierz kursy walut</button>
+    </form>
+</div>
+
+<div class="mt-3 d-none" id="result">
+    <strong>Całkowity koszt:</strong><span id="totalCostAmount"></span><br />
+    <strong>Szacowany zysk:</strong><span id="profitAmount"></span>
+</div>
+<div class="mt-3 d-none" id="exchangeRates">
+    <h4>Kursy walut:</h4>
+    <ul id="currencyRateList"></ul>
+</div>
+
+
+<script>
+    let exchangeRates = {};
+
+    async function loadExchangeRates() {
+        try {
+            const response = await fetch("/TransportCost/GetExchangeRates");
+            if (response.ok) {
+                const data = await response.json();
+                exchangeRates = data.data ? data.data : data;
+                const list = document.getElementById("currencyRateList");
+                list.innerHTML = "";
+                for (const currency in exchangeRates) {
+                    const rate = exchangeRates[currency].value;
+                    const listItem = document.createElement("li");
+                    listItem.textContent = `${currency}: ${parseFloat(rate).toFixed(4)}`;
+                    list.appendChild(listItem);
+                }
+                document.getElementById("exchangeRates").classList.remove("d-none");
+            } else {
+                alert("Nie udało się pobrać kursów walut.");
+            }
+        } catch (error) {
+            console.error("Błąd:", error);
+            alert("Wystąpił problem podczas pobierania kursów walut.");
+        }
+    }
+
+    async function calculateCost(event) {
+        event.preventDefault();
+
+        const distance = parseFloat(document.getElementById("distance").value);
+        const fuelConsumption = parseFloat(document.getElementById("fuelConsumption").value);
+        const fuelPrice = parseFloat(document.getElementById("fuelPrice").value);
+        const freightPrice = parseFloat(document.getElementById("freightPrice").value);
+        const inputCurrency = document.getElementById("inputCurrency").value;
+        const outputCurrency = document.getElementById("outputCurrency").value;
+
+        if (isNaN(distance) || isNaN(fuelConsumption) || isNaN(fuelPrice) || isNaN(freightPrice)) {
+            alert("Proszę wprowadzić poprawne wartości.");
+            return;
+        }
+
+        const fuelCost = (distance / 100) * fuelConsumption * fuelPrice;
+        let totalCost = fuelCost;
+        let profit = freightPrice - fuelCost;
+
+        if (Object.keys(exchangeRates).length === 0) {
+            await loadExchangeRates();
+        }
+
+        if (inputCurrency !== "USD" && exchangeRates[inputCurrency]) {
+            const rateInput = exchangeRates[inputCurrency].value;
+            totalCost = totalCost / rateInput; // przeliczamy z waluty wejściowej na USD
+            profit = profit / rateInput;
+        }
+
+        if (outputCurrency !== "USD" && exchangeRates[outputCurrency]) {
+            const rateOutput = exchangeRates[outputCurrency].value;
+            totalCost = totalCost * rateOutput; // przeliczamy z USD na walutę wyjściową
+            profit = profit * rateOutput;
+        }
+
+        document.getElementById("totalCostAmount").innerText = totalCost.toFixed(2) + " " + outputCurrency;
+        document.getElementById("profitAmount").innerText = profit.toFixed(2) + " " + outputCurrency;
+        document.getElementById("result").classList.remove("d-none");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("calculateButton").addEventListener("click", calculateCost);
+        document.getElementById("fetchRatesButton").addEventListener("click", function (event) {
+            event.preventDefault();
+            loadExchangeRates();
+        });
+    });
+</script>
