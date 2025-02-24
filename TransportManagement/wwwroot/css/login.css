@@ -97,7 +97,24 @@ h1{
     border-top-left-radius: 10px;
 }
 
-/*.form-signup button{
-    margin-top: 10px;*/
-    /*padding-top: 10px;*/
-/*}*/
+.form-forgot {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.form-forgot input{
+    margin-bottom: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.form-forgot .form-control:focus {
+    z-index: 2;
+}
