@@ -1,9 +1,9 @@
 ﻿@{
-    //var userRole = User.IsInRole("Admin") ? "_AdminLayout" :
-    //        User.IsInRole("Dispatcher") ? "_DispatcherLayout" :
-    //        User.IsInRole("Driver") ? "_DriverLayout" :
-    //        "Layout";
+    var userRole = User.IsInRole("Admin") ? "_AdminLayout" :
+            User.IsInRole("Dispatcher") ? "_DispatcherLayout" :
+            User.IsInRole("Driver") ? "_DriverLayout" :
+            "_Layout";
 
-    //Layout = $"~/Views/Shared/{userRole}.cshtml";
-    Layout = "_Layout";
+    Layout = $"~/Views/Shared/{userRole}.cshtml";
+    //Layout = "_Layout";
 }

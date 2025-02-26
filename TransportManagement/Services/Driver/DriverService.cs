@@ -99,19 +99,6 @@ namespace TransportManagement.Services.Driver
             driver.Email = !string.IsNullOrEmpty(Email) ? Email : driver.Email;
             driver.Address = !string.IsNullOrEmpty(Address) ? Address : driver.Address;
             driver.Experience = Experience >= 0 ? Experience : driver.Experience;
-
-
-            //await _context.SaveChangesAsync();
-            //var update = await _accountService.UpdateUserAsync(
-            //    driver.Email,
-            //    driver.Name,
-            //    driver.LastName,
-            //    driver.DateOfBirth,
-            //    driver.PhoneNumber,
-            //    driver.Address,
-            //    driver.Experience
-            //    );
-            //return update;
             return true;
         }
     }

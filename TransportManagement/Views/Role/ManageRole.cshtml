@@ -4,7 +4,7 @@
 }
 @if (TempData["message"] != null)
 {
-    var message = TempData["Message"].ToString();
+    var message = TempData["message"].ToString();
     var alertClass = message.Contains("Nie udało") ? "alert-danger" : "alert-success";
     <div class="container mt-3">
         <div class="alert @alertClass" role="alert">
@@ -15,7 +15,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Lista Użytkowników</h1>
-    <table class="table table-hover">
+    <table class="table table-hover" id="usersTable">
         <thead>
             <tr>
                 <th scope="col">Imie</th>
@@ -43,3 +43,20 @@
         <a class="btn btn-outline-danger" asp-area="" asp-controller="Role" asp-action="UnAssignRole" role="button">Usuń rolę</a>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('#usersTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ użytkowników",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ użytkowników",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            }
+        });
+    });
+</script>

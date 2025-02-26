@@ -1,0 +1,20 @@
+﻿@model TransportManagement.Models.Cv.CvViewModel
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/login.css" />
+}
+
+<div class="container">
+    <form class="form-sigin" asp-action="SendCv" method="post" asp-controller="Cv" enctype="multipart/form-data">
+
+        <label class="sr-only" asp-for="ApplicantEmail">Podaj swój e-mail i załącz swoje CV</label>
+        <input class="form-control" type="email" asp-for="ApplicantEmail" placeholder="Email" required />
+
+        <div class="checkbox mb-3">
+            <label asp-for="CvFile">
+                <input type="file" asp-for="CvFile" accept=".pdf,.doc,.docx" required/>@* Załącz CV*@
+            </label>
+        </div>
+        <button type="submit" class="btn btn-success">Wyślij CV</button>
+    </form>
+</div>

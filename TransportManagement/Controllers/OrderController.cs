@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TransportManagement.Models.Drivers;
 using TransportManagement.Models.Orders;
 using TransportManagement.Services.Order;
 
@@ -17,7 +18,12 @@ namespace TransportManagement.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            return View();
+            var orders = await _orderService.GetAllOrdersAsync();
+            var orderViewModel = new OrderViewModel
+            {
+                Orders = orders
+            };
+            return View(orderViewModel);
         }
 
         [Authorize(Roles = "Dispatcher")]
