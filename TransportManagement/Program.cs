@@ -5,6 +5,7 @@ using TransportManagement.Models.User;
 using TransportManagement.Services.AssignTrailer;
 using TransportManagement.Services.AssignTruck;
 using TransportManagement.Services.Driver;
+using TransportManagement.Services.LeaveRequest;
 using TransportManagement.Services.Order;
 using TransportManagement.Services.Trailer;
 using TransportManagement.Services.Truck;
@@ -51,6 +52,8 @@ builder.Services.AddScoped<IUserManagerService, UserManagerService>();
 builder.Services.AddScoped<IResetPasswordService, ResetPasswordService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ILeaveRequestService, LeaveRequestService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHttpClient();
 
 var app = builder.Build();

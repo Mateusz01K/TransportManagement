@@ -8,10 +8,12 @@ namespace TransportManagement.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly IUserService _userService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, IUserService userService)
         {
             _accountService = accountService;
+            _userService = userService;
         }
 
         public IActionResult RegisterView()
@@ -23,6 +25,13 @@ namespace TransportManagement.Controllers
         {
             if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+
+            var existingUser = await _userService.GetUserByEmail(model.Email);
+            if(existingUser != null)
+            {
+                TempData["message"] = "Konto o tym adresie e-mail już istnieje.";
                 return View(model);
             }
 

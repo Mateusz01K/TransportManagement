@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/TransportManagement.styles.css" asp-append-version="true" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net.flatpickr/dist/flatpickr.min.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 @RenderSection("Styles", required:false)
@@ -76,6 +77,18 @@
                                 Cv
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="LeaveRequest" asp-action="Index">
+                                <span data-feather="calendar"></span>
+                                Urlop
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="LeaveRequest" asp-action="UserRequest">
+                                <span data-feather="calendar"></span>
+                                Urlop
+                            </a>
+                        </li>
                     </ul>
                     <h6 class="slidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>Saved Reports</span>
@@ -138,7 +151,7 @@
                 @if (TempData["message"] != null)
                 {
                     var message = TempData["message"].ToString();
-                    var alertClass = message.Contains("Nie udało") ? "alert-danger" : "alert-success";
+                    var alertClass = (message.Contains("Nie udało") || message.Contains("Nie można")) ? "alert-danger" : "alert-success";
                     <div class="container mt-3">
                         <div class="alert @alertClass" role="alert">
                             @message
@@ -152,6 +165,7 @@
 </body>
 </html>
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     feather.replace()
 </script>

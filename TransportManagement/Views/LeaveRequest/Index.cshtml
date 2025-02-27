@@ -1,0 +1,40 @@
+﻿@model TransportManagement.Models.LeaveRequests.LeaveRequestViewModel
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/login.css" />
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Użytkownik</th>
+            <th>Data początkowa</th>
+            <th>Data zakończenia</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var request in Model.LeaveRequests)
+        {
+            <tr>
+                <td>@Model.UsersEmails[request.UserId]</td>
+                <td>@request.StartDate.ToShortDateString()</td>
+                <td>@request.EndDate.ToShortDateString()</td>
+                <td>@request.Status</td>
+                <td>
+                    @if (request.Status == TransportManagement.Models.LeaveRequests.LeaveStatus.Pending)
+                    {
+                        <form asp-action="ApproveLeaveRequest" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@request.Id">
+                            <button type="submit" class="btn btn-success">Zatwierdź</button>
+                        </form>
+                        <form asp-action="RejectLeaveRequest" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@request.Id">
+                            <input type="text" name="adminComment" placeholder="Powód odrzucenia" required>
+                            <button type="submit" class="btn btn-danger">Odrzuć</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
