@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransportManagement.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
 </head>
 @RenderSection("Styles", required:false)
 <body>
@@ -113,6 +114,12 @@
                                 Reports
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="LeaveRequest" asp-action="UserRequest">
+                                <span data-feather="calendar"></span>
+                                Urlop
+                            </a>
+                        </li>
                     </ul>
                     <h6 class="slidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>Saved Reports</span>
@@ -166,6 +173,16 @@
                 </div>
             </nav>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                @if (TempData["message"] != null)
+                {
+                    var message = TempData["message"].ToString();
+                    var alertClass = (message.Contains("Nie udało") || message.Contains("Nie można")) ? "alert-danger" : "alert-success";
+                    <div class="container mt-3">
+                        <div class="alert @alertClass" role="alert">
+                            @message
+                        </div>
+                    </div>
+                }
                 @RenderBody()
             </main>
         </div>
@@ -181,7 +198,25 @@
     feather.replace()
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script>
+    flatpickr("#startDate", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        onChange: function (selectedDate, dateStr, instance) {
+            flatpickr("#endDate", {
+                dateFormat: "Y-m-d",
+                minDate: dateStr
+            });
+        }
+    });
+
+    flatpickr("#endDate", {
+        dateFormat: "Y-m-d",
+        minDate: "today"
+    });
+</script>
+@*<script>
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
         type: 'line',
@@ -209,4 +244,4 @@
             }
         }
     });
-</script>
+</script>*@

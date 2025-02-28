@@ -28,6 +28,11 @@ namespace TransportManagement.Services.Order
             }
         }
 
+        public async Task<List<string>> GetAllDriverEmails()
+        {
+            return await _context.Users.Where(u=>u.Role=="Driver").Select(u=>u.Email).ToListAsync();
+        }
+
         public async Task<List<OrderModel>> GetAllOrdersAsync()
         {
             return await _context.Orders.Include(o=>o.Driver).ToListAsync();
@@ -36,6 +41,11 @@ namespace TransportManagement.Services.Order
         public async Task<OrderModel> GetOrderByIdAsync(int id)
         {
             return await _context.Orders.Include(o => o.Driver).FirstOrDefaultAsync(o => o.Id == id);
+        }
+
+        public async Task<List<OrderModel>> GetOrderForDriver(string driverEmail)
+        {
+            return await _context.Orders.Where(o => o.DriverEmail == driverEmail).ToListAsync();
         }
 
         public async Task UpdateOrderAsync(OrderModel order)

@@ -14,7 +14,7 @@ namespace TransportManagement.Controllers
             _orderService = orderService;
         }
 
-        [Authorize(Roles = "Dispatcher")]
+        [Authorize(Roles = "Admin, Dispatcher")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -26,7 +26,7 @@ namespace TransportManagement.Controllers
             return View(orderViewModel);
         }
 
-        [Authorize(Roles = "Dispatcher")]
+        [Authorize(Roles = "Admin, Dispatcher")]
         [HttpPost]
         public async Task<IActionResult> Create(OrderModel order)
         {
@@ -40,7 +40,7 @@ namespace TransportManagement.Controllers
         }
 
 
-        [Authorize(Roles = "Dispatcher")]
+        [Authorize(Roles = "Admin, Dispatcher")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -54,7 +54,7 @@ namespace TransportManagement.Controllers
         }
 
 
-        [Authorize(Roles = "Dispatcher")]
+        [Authorize(Roles = "Admin, Dispatcher")]
         [HttpPost]
         public async Task<IActionResult> Edit(OrderModel order)
         {
@@ -68,11 +68,25 @@ namespace TransportManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Dispatcher, Driver")]
+        [Authorize(Roles = "Admin, Dispatcher, Driver")]
         public async Task<IActionResult> Index()
         {
-            var orders = await _orderService.GetAllOrdersAsync();
-            return View(orders);
+            var userEmail = User.Identity.Name;
+            var isDriver = User.IsInRole("Driver");
+            List<OrderModel> orders;
+            if (isDriver)
+            {
+                orders = await _orderService.GetOrderForDriver(userEmail);
+            }
+            else
+            {
+                orders = await _orderService.GetAllOrdersAsync();
+            }
+            var orderViewModel = new OrderViewModel()
+            {
+                Orders = orders
+            };
+            return View(orderViewModel);
         }
     }
 }

@@ -1,5 +1,10 @@
 ﻿@model TransportManagement.Models.LeaveRequests.LeaveRequestViewModel
 
+
+@{
+    ViewData["Title"] = "Urlop";
+}
+
 @section Styles{
     <link rel="stylesheet" href="~/css/login.css" />
 }
@@ -13,10 +18,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var request in Model.LeaveRequests)
+        @foreach (var request in Model.LeaveRequests)
         {
             <tr>
-                <td>@Model.UsersEmails[request.UserId]</td>
+                <td>
+                    @if (Model.UsersEmails.ContainsKey(request.UserId))
+                    {
+                        @Model.UsersEmails[request.UserId]
+                    }
+                    else
+                    {
+                        <span class="text-danger">Brak danych</span>
+                    }
+                </td>
                 <td>@request.StartDate.ToShortDateString()</td>
                 <td>@request.EndDate.ToShortDateString()</td>
                 <td>@request.Status</td>
@@ -29,7 +43,7 @@
                         </form>
                         <form asp-action="RejectLeaveRequest" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="@request.Id">
-                            <input type="text" name="adminComment" placeholder="Powód odrzucenia" required>
+                            <textarea name="adminComment" placeholder="Powód odrzucenia" rows="3" required></textarea>
                             <button type="submit" class="btn btn-danger">Odrzuć</button>
                         </form>
                     }

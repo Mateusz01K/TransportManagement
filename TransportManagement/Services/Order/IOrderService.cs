@@ -11,5 +11,7 @@ namespace TransportManagement.Services.Order
         Task UpdateOrderAsync(OrderModel order);
         //Task AssignOrderToDriverAsync(int id, string driverId);
         Task DeleteOrderAsync(int id);
+        Task<List<string>> GetAllDriverEmails();
+        Task<List<OrderModel>> GetOrderForDriver(string driverEmail);
     }
 }

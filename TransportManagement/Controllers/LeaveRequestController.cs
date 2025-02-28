@@ -31,8 +31,6 @@ namespace TransportManagement.Controllers
 
         public async Task<IActionResult> UserRequest()
         {
-            //int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            //string userEmail = User.FindFirstValue(ClaimTypes.Email);
             var user = await _userService.GetCurrentUser(User);
             if(user==null)
             {
@@ -60,14 +58,8 @@ namespace TransportManagement.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SubmitLeaveRequest()
+        public IActionResult SubmitLeaveRequest()
         {
-            //var request = await _leaveRequestService.GetAllRequests();
-            //var requestViewModel = new LeaveRequestViewModel
-            //{
-            //    LeaveRequests = request
-            //};
-            //return View(requestViewModel);
             return View();
         }
         [HttpPost]

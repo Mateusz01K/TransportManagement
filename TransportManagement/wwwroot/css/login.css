@@ -118,3 +118,11 @@ h1{
 .form-forgot .form-control:focus {
     z-index: 2;
 }
+
+
+
+td.comment-cell{
+    max-width: 300px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}

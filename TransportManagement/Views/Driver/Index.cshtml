@@ -2,16 +2,6 @@
 @{
     ViewData["Title"] = "Kierowcy";
 }
-@if (TempData["message"] != null)
-{
-    var message = TempData["Message"].ToString();
-    var alertClass = message.Contains("Nie udało") ? "alert-danger" : "alert-success";
-    <div class="container mt-3">
-        <div class="alert @alertClass" role="alert">
-            @message
-        </div>
-    </div>
-}
 
 <div class="text-center">
     <h1 class="display-4">Lista Kierowców</h1>

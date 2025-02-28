@@ -1,5 +1,10 @@
 ﻿@model TransportManagement.Models.LeaveRequests.LeaveRequestViewModel
 
+
+@{
+    ViewData["Title"] = "Urlop";
+}
+
 @section Styles{
     <link rel="stylesheet" href="~/css/login.css" />
 }
@@ -8,6 +13,7 @@
         <tr>
             <th>Data początkowa</th>
             <th>Data zakończenia</th>
+            <th>Komentarz</th>
             <th>Status</th>
         </tr>
     </thead>
@@ -17,6 +23,7 @@
             <tr>
                 <td>@request.StartDate.ToShortDateString()</td>
                 <td>@request.EndDate.ToShortDateString()</td>
+                <td class="comment-cell">@request.AdminComment</td>
                 <td>@request.Status</td>
             </tr>
         }

@@ -12,6 +12,8 @@ namespace TransportManagement.Models.Orders
         public string PickupLocation { get; set; }
         public string DeliveryLocation { get; set; }
         public OrderStatus Status { get; set; }
+        public string LoadType { get; set; }
+        public string DriverEmail { get; set; }
 
 
         public int DriverId { get; set; }

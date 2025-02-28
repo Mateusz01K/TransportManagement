@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/TransportManagement.styles.css" asp-append-version="true" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net.flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 @RenderSection("Styles", required:false)
@@ -171,6 +171,29 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script>
+    flatpickr("#startDate",{
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        onChange: function(selectedDate, dateStr, instance){
+            flatpickr("#endDate", {
+                dateFormat: "Y-m-d",
+                minDate: dateStr
+            });
+        }
+    });
+
+    flatpickr("#endDate",{
+        dateFormat: "Y-m-d",
+        minDate: "today"
+    });
+    //var ctx = document.getElementById("myChart");
+    //if (ctx{
+    //}
+    //else {
+    //    console.error("Nie znaleziono elementu #myChart");
+    //}
+</script>
+@*<script>
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
         type: 'line',
@@ -198,4 +221,4 @@
             }
         }
     });
-</script>
+</script>*@

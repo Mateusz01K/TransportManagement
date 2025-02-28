@@ -41,6 +41,7 @@ namespace TransportManagement.Services.LeaveRequest
             if(request == null) return false;
 
             request.Status = LeaveStatus.Reject;
+            request.AdminComment = adminComment;
             return await _context.SaveChangesAsync() > 0;
         }
 

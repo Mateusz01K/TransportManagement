@@ -4,5 +4,6 @@
     {
         public OrderViewModel() { }
         public List<OrderModel> Orders { get; set; }
+        public List<string> DriverEmails { get; set; }
     }
 }
