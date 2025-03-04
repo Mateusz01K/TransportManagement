@@ -35,5 +35,12 @@ namespace TransportManagement.Services.User
         {
             return await _userManager.Users.ToDictionaryAsync(u => u.Id, u => u.Email);
         }
+
+
+        public async Task<List<string>> GetAllDriverEmails()
+        {
+            return await _context.Users.Where(u => u.Role == "Driver").Select(u => u.Email).ToListAsync();
+        }
+
     }
 }

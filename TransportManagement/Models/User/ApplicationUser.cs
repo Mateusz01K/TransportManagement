@@ -9,6 +9,7 @@ namespace TransportManagement.Models.User
         public string LastName { get; set; }
         public string Address { get; set; }
         public int Experience { get; set; }
+        public decimal Salary { get; set; }
         public DateTime DateOfBirth { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model TransportManagement.Models.Orders.OrderViewModel
+﻿@using TransportManagement.Models.Orders;
+@model TransportManagement.Models.Orders.OrderViewModel
 
 @{
     ViewData["Title"] = "Zlecenia";
@@ -15,9 +16,10 @@
                 <th scope="col">Data dostawy</th>
                 <th scope="col">Lokalizacja załadunku</th>
                 <th scope="col">Lokalizacja rozładunku</th>
-                <th scope="col">Status</th>
+                <th scope="col">Typ ładunku</th>
                 <th scope="col">Kierowca</th>
-                <th scope="col">Kolejka</th>
+                <th scope="col">Piorytet</th>
+                <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
@@ -26,13 +28,26 @@
                 <tr>
                     <td scope="row">@item.Id</td>
                     <td scope="row">@item.OrderNumber</td>
-                    <td scope="row">@item.StartDate</td>
-                    <td scope="row">@item.EndDate</td>
+                    <td scope="row">@item.StartDate.ToString("dd.MM.yyyy")</td>
+                    <td scope="row">@item.EndDate.ToString("dd.MM.yyyy")</td>
                     <td scope="row">@item.PickupLocation</td>
                     <td scope="row">@item.DeliveryLocation</td>
-                    <td scope="row">@item.Status</td>
-                    <td scope="row">@item.DriverId</td>
-                    <td scope="row">@item.SequenceNumber</td>
+                    <td scope="row">@item.LoadType</td>
+                    <td scope="row">@item.DriverEmail</td>
+                    <td scope="row">@item.Priority</td>
+                    <td>
+                        <form method="post" asp-action="UpdateStatus">
+                            <input type="hidden" name="orderId" value="@item.Id" />
+                            <select name="newStatus" required>
+                                @foreach (var status in Enum.GetValues(typeof(OrderStatus)))
+                                {
+                                //<option value="@status">@status</option>
+                                    <option value="@status" selected="@(item.Status == (OrderStatus)status ? "selected" : null)">@status</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm">Ustaw</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>

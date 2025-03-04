@@ -1,0 +1,39 @@
+﻿@model TransportManagement.Models.Finance.FinanceViewModel
+
+@{
+    ViewData["Title"] = "Przegląd Finansowy";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista Kierowców</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Opis</th>
+                <th scope="col">Kwota</th>
+                <th scope="col">Typ</th>
+                <th scope="col">Data</th>
+            </tr>
+        </thead>
+        @*<tbody>
+        @foreach (var item in Model.Finances)
+        {
+        <tr>
+        <td scope="row">@item.Description</td>
+        <td scope="row">@item.Amount.ToString("C")</td>
+        <td scope="row">@item.Type</td>
+        <td scope="row">@item.Date.ToString("dd.MM.yyyy")</td>
+        </tr>
+        }
+        </tbody>*@
+        <tbody>
+
+            <tr>
+                <td scope="row">@Model.TotalRevenue</td>
+                <td scope="row">@Model.TotalExpenses</td>
+                <td scope="row">@Model.TotalSalaries</td>
+                <td scope="row">@Model.NetProfit</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

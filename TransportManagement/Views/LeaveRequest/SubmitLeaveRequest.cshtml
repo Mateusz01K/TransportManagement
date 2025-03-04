@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/login.css" />
 }
 
-<div class="container">
+<div class="leave-action">
     <form class="form-sigin" asp-action="SubmitLeaveRequest" method="post" asp-controller="LeaveRequest">
         <input type="hidden" asp-for="UserId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value"/>
         <div class="form-group">

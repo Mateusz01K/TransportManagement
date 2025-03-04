@@ -5,42 +5,46 @@
 <form method="post" asp-controller="Order" asp-action="Create">
     <div class="form-group">
         <label for="orderNumber">Imię: <span style="color: red">*</span></label>
-        <input type="text" class="form-control" id="orderNumber" placeholder="Nr" name="orderNumber" />
+        <input type="text" class="form-control" id="orderNumber" placeholder="Nr" name="orderNumber" required />
     </div>
 
     <div class="form-group">
         <label for="startDate">Data załadunku: <span style="color: red">*</span></label>
-        <input type="datetime" class="form-control" id="startDate" placeholder="Data załadunku" name="startDate" />
+        <input type="datetime" class="form-control" id="startDate" placeholder="Data załadunku" name="startDate" required />
     </div>
 
     <div class="form-group">
         <label for="endDate">Data dostawy: <span style="color: red">*</span></label>
-        <input type="datetime" class="form-control" id="endDate" placeholder="Data dostawy" name="endDate" />
+        <input type="datetime" class="form-control" id="endDate" placeholder="Data dostawy" name="endDate" required />
     </div>
 
     <div class="form-group">
         <label for="pickupLocation">Lokalizacja załadunku: <span style="color: red">*</span></label>
-        <input type="text" class="form-control" id="pickupLocation" placeholder="Lokalizacja załadunku" name="pickupLocation" />
+        <input type="text" class="form-control" id="pickupLocation" placeholder="Lokalizacja załadunku" name="pickupLocation" required />
     </div>
 
     <div class="form-group">
         <label for="deliveryLocation">Lokalizacja rozładunku: <span style="color: red">*</span></label>
-        <input type="text" class="form-control" id="deliveryLocation" placeholder="Lokalizacja rozładunku" name="deliveryLocation" />
+        <input type="text" class="form-control" id="deliveryLocation" placeholder="Lokalizacja rozładunku" name="deliveryLocation" required />
     </div>
 
     <div class="form-group">
-        <label for="status">Status: <span style="color: red">*</span></label>
-        <input type="text" class="form-control" id="status" placeholder="Status" name="status" />
+        <label for="loadType">Typ ładunku: <span style="color: red">*</span></label>
+        <select id="selectLoadType" name="loadType" class="form-control" required>
+            <option value="Cysterna">Cysterna</option>
+            <option value="Firnka">Firanka</option>
+            <option value="Chłodnia">Chłodnia</option>
+        </select>
     </div>
 
     <div class="form-group">
-        <label for="driverId">Kierowca: <span style="color: red">*</span></label>
-        <input type="number" class="form-control" id="driverId" placeholder="Kierowca" name="driverId" />
+        <label for="driverEmail">E-mail kierowcy: <span style="color: red">*</span></label>
+        <input type="email" class="form-control" id="driverEmail" placeholder="E-mail kierowcy" name="driverEmail" required />
     </div>
 
     <div class="form-group">
-        <label for="sequenceNumber">Kolejka: <span style="color: red">*</span></label>
-        <input type="number" class="form-control" id="sequenceNumber" placeholder="Kolejka" name="sequenceNumber" />
+        <label for="revenue">Przychód: <span style="color: red">*</span></label>
+        <input type="number" class="form-control" id="revenue" placeholder="Przychód" name="revenue" required />
     </div>
 
     <div class="text-center m-5">
@@ -48,3 +52,26 @@
         <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
     </div>
 </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#driverEmail").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Order/GetDriverEmails",
+                    type: "GET",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error:", status, error);
+                    }
+                });
+            },
+            minLength: 2
+        });
+    });
+</script>

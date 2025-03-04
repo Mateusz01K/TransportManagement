@@ -242,9 +242,66 @@ namespace TransportManagement.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<decimal>("Salary")
+                        .HasColumnType("decimal(65,30)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Drivers");
+                });
+
+            modelBuilder.Entity("TransportManagement.Models.Finance.FinanceModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Finances");
+                });
+
+            modelBuilder.Entity("TransportManagement.Models.FinanceReport.FinanceReportModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("DriverEmail")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalExpenses")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("TotalRevenue")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("TotalSalary")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FinanceReports");
                 });
 
             modelBuilder.Entity("TransportManagement.Models.LeaveRequests.LeaveRequestModel", b =>
@@ -298,9 +355,6 @@ namespace TransportManagement.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("DriverId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
 
@@ -316,8 +370,11 @@ namespace TransportManagement.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("SequenceNumber")
+                    b.Property<int>("Priority")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Revenue")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime(6)");
@@ -328,8 +385,6 @@ namespace TransportManagement.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DispatcherId");
-
-                    b.HasIndex("DriverId");
 
                     b.ToTable("Orders");
                 });
@@ -478,6 +533,9 @@ namespace TransportManagement.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<decimal>("Salary")
+                        .HasColumnType("decimal(65,30)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
@@ -595,15 +653,7 @@ namespace TransportManagement.Migrations
                         .WithMany()
                         .HasForeignKey("DispatcherId");
 
-                    b.HasOne("TransportManagement.Models.Drivers.DriverModel", "Driver")
-                        .WithMany()
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Dispatcher");
-
-                    b.Navigation("Driver");
                 });
 
             modelBuilder.Entity("TransportManagement.Models.Drivers.DriverModel", b =>

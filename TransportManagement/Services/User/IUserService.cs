@@ -8,5 +8,6 @@ namespace TransportManagement.Services.User
         Task<ApplicationUser> GetUserByEmail(string email);
         Task<ApplicationUser> GetCurrentUser(ClaimsPrincipal user);
         Task<Dictionary<string, string>> GetAllUsersEmails();
+        Task<List<string>> GetAllDriverEmails();
     }
 }

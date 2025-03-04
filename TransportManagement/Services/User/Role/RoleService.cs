@@ -39,7 +39,8 @@ namespace TransportManagement.Services.User.RoleService
                         user.PhoneNumber,
                         user.Email,
                         user.Address,
-                        user.Experience
+                        user.Experience,
+                        user.Salary
                         );
                 }
             }

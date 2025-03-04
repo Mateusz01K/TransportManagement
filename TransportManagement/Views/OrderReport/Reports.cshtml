@@ -1,0 +1,5 @@
+﻿@model TransportManagement.Models.Orders.OrderViewModel
+
+@foreach(var order in Model.Orders){
+    <p>Zlecenie @order.OrderNumber, zakończone @order.EndDate.ToString("dd.MM.yyy")</p>
+}

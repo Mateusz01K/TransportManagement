@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 @RenderSection("Styles", required:false)
@@ -42,15 +43,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Role" asp-action="ManageRole">
+                            <a class="nav-link" asp-controller="Driver" asp-action="Index">
                                 <span data-feather="users"></span>
-                                Employees
+                                Kierowcy
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="OrderReport" asp-action="Reports">
                                 <span data-feather="bar-chart-2"></span>
-                                Reports
+                                Raporty
                             </a>
                         </li>
                         <li class="nav-item">
@@ -75,6 +76,12 @@
                             <a class="nav-link" asp-controller="Cv" asp-action="SendCv">
                                 <span data-feather="settings"></span>
                                 Cv
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Finance" asp-action="Finance">
+                                <span data-feather="settings"></span>
+                                Finanse
                             </a>
                         </li>
                         <li class="nav-item">
@@ -104,7 +111,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="FinanceReport" asp-action="FiannceReport">
                                 <span data-feather="file-text"></span>
                                 Current month
                             </a>
@@ -116,7 +123,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="FinanceReport" asp-action="FinanceAnnualReport">
                                 <span data-feather="file-text"></span>
                                 All
                             </a>
@@ -151,7 +158,9 @@
                 @if (TempData["message"] != null)
                 {
                     var message = TempData["message"].ToString();
-                    var alertClass = (message.Contains("Nie udało") || message.Contains("Nie można")) ? "alert-danger" : "alert-success";
+                    var alertClass = (message.Contains("Nie udało") || message.Contains("Podany użytkownik nie jest kierowcą")
+                    || message.Contains("Kierowca w tym czasie jest na urlopie") || message.Contains("Nie można")) ? "alert-danger" : "alert-success";
+                    
                     <div class="container mt-3">
                         <div class="alert @alertClass" role="alert">
                             @message

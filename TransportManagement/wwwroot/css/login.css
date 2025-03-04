@@ -126,3 +126,9 @@ td.comment-cell{
     word-wrap: break-word;
     white-space: pre-wrap;
 }
+
+.leave-action{
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+}

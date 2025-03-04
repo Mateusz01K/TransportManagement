@@ -30,7 +30,7 @@ namespace TransportManagement.Controllers
         {
             if (model.Email != null)
             {
-                await _userManagerService.UpdateUserAsync(model.Email, model.FirstName, model.LastName, model.DateOfBirth, model.PhoneNumber, model.Address, model.Experience);
+                await _userManagerService.UpdateUserAsync(model.Email, model.FirstName, model.LastName, model.DateOfBirth, model.PhoneNumber, model.Address, model.Experience, model.Salary);
                 return RedirectToAction("ManageRole", "Role");
             }
             TempData["message"] = "Popraw dane.";

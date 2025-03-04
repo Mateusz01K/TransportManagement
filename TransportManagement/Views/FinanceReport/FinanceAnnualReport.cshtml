@@ -1,0 +1,32 @@
+﻿@model TransportManagement.Models.FinanceReport.FinanceReportViewModel
+
+@{
+    ViewData["Title"] = "Raport Finansowy";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista Kierowców</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Rok</th>
+                <th scope="col">Miesiąc</th>
+                <th scope="col">Przychód</th>
+                <th scope="col">Wydatki</th>
+                <th scope="col">Zysk netto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Model.FinanceReports)
+            {
+                <tr>
+                    <td scope="row">@report.Year</td>
+                    <td scope="row">@report.Month</td>
+                    <td scope="row">@report.TotalRevenue.ToString("C")</td>
+                    <td scope="row">@report.TotalExpenses.ToString("C")</td>
+                    <td scope="row">@report.NetProfit.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

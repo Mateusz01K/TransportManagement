@@ -26,16 +26,16 @@ namespace TransportManagement.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AddNewDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
+        public async Task<IActionResult> AddNewDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience, decimal Salary)
         {
             if(string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(LastName) || (DateOfBirth >= DateTime.Now) || string.IsNullOrEmpty(PhoneNumber)
-                || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Address) || (Experience < 0))
+                || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Address) || (Experience < 0) || (Salary < 0))
             {
                 TempData["message"] = "Popraw dane.";
                 return RedirectToAction("Index");
             }
 
-            var result = await _driverService.AddDriver(Name, LastName, DateOfBirth, PhoneNumber, Email, Address, Experience);
+            var result = await _driverService.AddDriver(Name, LastName, DateOfBirth, PhoneNumber, Email, Address, Experience, Salary);
 
             if (!result)
             {
@@ -77,12 +77,11 @@ namespace TransportManagement.Controllers
         }
 
         public async Task<IActionResult> UpdateThisDriver(int id, string Name, string LastName, DateTime DateOfBirth,
-                                                string PhoneNumber, string Email, string Address, int Experience)
+                                                string PhoneNumber, string Email, string Address, int Experience, decimal Salary)
         {
-            //var items = _driverService.GetDrivers();
             if(id != 0)
             {
-                await _driverService.UpdateDriver(id, Name, LastName, DateOfBirth, PhoneNumber, Email, Address, Experience);
+                await _driverService.UpdateDriver(id, Name, LastName, DateOfBirth, PhoneNumber, Email, Address, Experience, Salary);
                 return RedirectToAction("Index");
             }
             TempData["message"] = "Popraw dane.";

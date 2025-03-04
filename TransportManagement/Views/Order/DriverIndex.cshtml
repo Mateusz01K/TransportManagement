@@ -1,0 +1,50 @@
+﻿@model TransportManagement.Models.Orders.OrderViewModel
+
+@{
+    ViewData["Title"] = "Moje Zlecenia";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista Kierowców</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nr</th>
+                <th scope="col">Data załadunku</th>
+                <th scope="col">Data dostawy</th>
+                <th scope="col">Lokalizacja załadunku</th>
+                <th scope="col">Lokalizacja rozładunku</th>
+                <th scope="col">Typ ładunku</th>
+                <th scope="col">Kierowca</th>
+                <th scope="col">Piorytet</th>
+                <th scope="col">Status</th>
+                <th scope="col">Dostarczona</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Orders)
+            {
+                <tr>
+                    <td scope="row">@item.Id</td>
+                    <td scope="row">@item.OrderNumber</td>
+                    <td scope="row">@item.StartDate.ToString("dd.MM.yyyy")</td>
+                    <td scope="row">@item.EndDate.ToString("dd.MM.yyyy")</td>
+                    <td scope="row">@item.PickupLocation</td>
+                    <td scope="row">@item.DeliveryLocation</td>
+                    <td scope="row">@item.LoadType</td>
+                    <td scope="row">@item.DriverEmail</td>
+                    <td scope="row">@item.Priority</td>
+                    <td scope="row">@item.Status</td>
+                    <form method="post" asp-action="UpdateStatus">
+                        <input type="hidden" name="orderId" value="@item.Id" />
+                        <select name="newStatus" required>
+                            <option value="Dostarczone">Dostarczone</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">Ustaw</button>
+                    </form>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

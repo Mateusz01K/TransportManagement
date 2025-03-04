@@ -35,7 +35,7 @@ namespace TransportManagement.Services.User.ManageUser
         }
 
 
-        public async Task<bool> UpdateUserAsync(string Email, string FirstName, string LastName, DateTime DateOfBirth, string PhoneNumber, string Address, int Experience)
+        public async Task<bool> UpdateUserAsync(string Email, string FirstName, string LastName, DateTime DateOfBirth, string PhoneNumber, string Address, int Experience, decimal Salary)
         {
             var user = await _userManager.FindByEmailAsync(Email);
             if (user == null)
@@ -49,6 +49,7 @@ namespace TransportManagement.Services.User.ManageUser
             user.Email = !string.IsNullOrEmpty(Email) ? Email : user.Email;
             user.Address = !string.IsNullOrEmpty(Address) ? Address : user.Address;
             user.Experience = Experience >= 0 ? Experience : user.Experience;
+            user.Salary = Salary >= 0 ? Salary : user.Salary;
 
             var result = await _userManager.UpdateAsync(user);
             var driver = await _context.Drivers.FirstOrDefaultAsync(d => d.Email == Email);

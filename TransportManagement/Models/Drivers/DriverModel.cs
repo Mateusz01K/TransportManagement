@@ -14,6 +14,7 @@ namespace TransportManagement.Models.Drivers
         public string Address { get; set; }
         public int Experience { get; set; }
         public bool IsAssignedTruck { get; set; }
+        public decimal Salary { get; set; }
         public ICollection<AssignTruckModel> AssignTruck { get; set; }
     }
 }

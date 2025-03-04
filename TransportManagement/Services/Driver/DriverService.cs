@@ -19,7 +19,7 @@ namespace TransportManagement.Services.Driver
             //_accountService = accountService;
         }
 
-        public async Task<bool> AddDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
+        public async Task<bool> AddDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience, decimal Salary)
         {
             var existingUser = await _userManager.FindByEmailAsync(Email);
             if (existingUser != null)
@@ -43,7 +43,8 @@ namespace TransportManagement.Services.Driver
                 PhoneNumber = PhoneNumber,
                 Email = Email,
                 Address = Address,
-                Experience = Experience
+                Experience = Experience,
+                Salary = Salary
             };
 
 
@@ -84,7 +85,7 @@ namespace TransportManagement.Services.Driver
             return await _context.Drivers.ToListAsync();
         }
 
-        public async Task<bool> UpdateDriver(int id, string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience)
+        public async Task<bool> UpdateDriver(int id, string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience, decimal Salary)
         {
             var driver = _context.Drivers.FirstOrDefault(x => x.Id == id);
             if (driver != null)
@@ -99,6 +100,7 @@ namespace TransportManagement.Services.Driver
             driver.Email = !string.IsNullOrEmpty(Email) ? Email : driver.Email;
             driver.Address = !string.IsNullOrEmpty(Address) ? Address : driver.Address;
             driver.Experience = Experience >= 0 ? Experience : driver.Experience;
+            driver.Salary = Salary >= 0 ? Salary : driver.Salary;
             return true;
         }
     }
