@@ -41,12 +41,18 @@
                             <select name="newStatus" required>
                                 @foreach (var status in Enum.GetValues(typeof(OrderStatus)))
                                 {
-                                //<option value="@status">@status</option>
                                     <option value="@status" selected="@(item.Status == (OrderStatus)status ? "selected" : null)">@status</option>
                                 }
                             </select>
                             <button type="submit" class="btn btn-primary btn-sm">Ustaw</button>
                         </form>
+                        @if (item.Status != OrderStatus.Zakończone)
+                        {
+                            <form method="post" asp-action="CompletedOrder">
+                                <input type="hidden" name="orderId" value="@item.Id" />
+                                <button type="submit" class="btn btn-primary btn-sm">Zakończ</button>
+                            </form>
+                        }
                     </td>
                 </tr>
             }

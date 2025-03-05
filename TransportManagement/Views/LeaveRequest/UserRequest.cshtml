@@ -6,30 +6,37 @@
 }
 
 @section Styles{
-    <link rel="stylesheet" href="~/css/login.css" />
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
 }
-<table class="table">
-    <thead>
-        <tr>
-            <th>Data początkowa</th>
-            <th>Data zakończenia</th>
-            <th>Komentarz</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var request in Model.LeaveRequests)
-        {
-            <tr>
-                <td>@request.StartDate.ToShortDateString()</td>
-                <td>@request.EndDate.ToShortDateString()</td>
-                <td class="comment-cell">@request.AdminComment</td>
-                <td>@request.Status</td>
-            </tr>
-        }
-    </tbody>
-</table>
-<a class="btn btn-success" asp-area="" asp-controller="LeaveRequest" asp-action="SubmitLeaveRequest" role="button">Złóz wniosek</a>
+<div class="container">
+    <h1 class="text-center">Wnioski Urlopowe</h1>
+    <div class="table-container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Data początkowa</th>
+                    <th>Data zakończenia</th>
+                    <th>Komentarz</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model.LeaveRequests)
+                {
+                    <tr>
+                        <td>@request.StartDate.ToShortDateString()</td>
+                        <td>@request.EndDate.ToShortDateString()</td>
+                        <td class="comment-cell">@request.AdminComment</td>
+                        <td>@request.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center mt-4">
+        <a class="btn btn-lg btn-primary" asp-area="" asp-controller="LeaveRequest" asp-action="SubmitLeaveRequest" role="button">Złóż wniosek</a>
+    </div>
+</div>
 @*<div class="container">
     <form class="form-sigin" asp-action="SubmitLeaveRequest" method="post" asp-controller="LeaveRequest">
         <div class="form-group">

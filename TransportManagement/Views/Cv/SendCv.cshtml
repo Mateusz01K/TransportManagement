@@ -1,25 +1,31 @@
 ﻿@model TransportManagement.Models.Cv.CvViewModel
 
-
 @{
     ViewData["Title"] = "CV";
 }
 
 @section Styles{
-    <link rel="stylesheet" href="~/css/login.css" />
+        <link rel="stylesheet" href="~/css/StyleSheet.css" />
 }
 
 <div class="container">
-    <form class="form-sigin" asp-action="SendCv" method="post" asp-controller="Cv" enctype="multipart/form-data">
+    <h1 class="text-center">Prześlij swoje CV</h1>
 
-        <label class="sr-only" asp-for="ApplicantEmail">Podaj swój e-mail i załącz swoje CV</label>
-        <input class="form-control" type="email" asp-for="ApplicantEmail" placeholder="Email" required />
+    <form class="form-signin" asp-action="SendCv" method="post" asp-controller="Cv" enctype="multipart/form-data">
 
-        <div class="checkbox mb-3">
-            <label asp-for="CvFile">
-                <input type="file" asp-for="CvFile" accept=".pdf,.doc,.docx" required/>@* Załącz CV*@
-            </label>
+        <div class="form-group">
+            <label class="sr-only" asp-for="ApplicantEmail">Podaj swój e-mail i załącz swoje CV</label>
+            <input class="form-control" type="email" asp-for="ApplicantEmail" placeholder="Email" required />
         </div>
-        <button type="submit" class="btn btn-success">Wyślij CV</button>
+
+        <div class="form-group mb-4">
+            <label asp-for="CvFile" class="sr-only">Załącz CV</label>
+            <input type="file" asp-for="CvFile" accept=".pdf,.doc,.docx" class="form-control-file" required />
+        </div>
+
+        
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-lg btn-primary">Wyślij CV</button>
+        </div>
     </form>
 </div>

@@ -5,10 +5,11 @@ namespace TransportManagement.Models.Finance
     public class FinanceViewModel
     {
         public FinanceViewModel() { }
-        //public List<FinanceReportModel> Finances { get; set; }
+        public List<FinanceModel> Finances { get; set; }
         public decimal TotalRevenue { get; set; }
         public decimal TotalExpenses { get; set; }
         public decimal TotalSalaries { get; set; }
-        public decimal NetProfit => TotalRevenue - TotalExpenses;
+        public decimal GrossProfit { get; set; }
+        public decimal NetProfit { get; set; }
     }
 }

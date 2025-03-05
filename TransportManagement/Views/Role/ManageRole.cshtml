@@ -33,20 +33,3 @@
         <a class="btn btn-outline-danger" asp-area="" asp-controller="Role" asp-action="UnAssignRole" role="button">Usuń rolę</a>
     </div>
 </div>
-
-<script>
-    $(document).ready(function(){
-        $('#usersTable').DataTable({
-            "language": {
-                "search": "Szukaj:",
-                "lengthMenu": "Pokaż _MENU_ użytkowników",
-                "zeroRecords": "Brak wyników",
-                "info": "Wyświetlono _START_ do _END_ użytkowników",
-                "paginate": {
-                    "next": "Następna",
-                    "previous": "Poprzednia"
-                }
-            }
-        });
-    });
-</script>

@@ -61,6 +61,7 @@ namespace TransportManagement.Services.User.ManageUser
                 driver.PhoneNumber = user.PhoneNumber;
                 driver.Address = user.Address;
                 driver.Experience = user.Experience;
+                driver.Salary = user.Salary;
 
                 await _context.SaveChangesAsync();
             }

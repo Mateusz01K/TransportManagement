@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TransportManagement.Models.Finance;
+using TransportManagement.Models.FinanceReport;
 using TransportManagement.Models.Orders;
 
 namespace TransportManagement.Services.Order
@@ -11,6 +13,48 @@ namespace TransportManagement.Services.Order
         {
             _context = context;
         }
+
+        public async Task<bool> CompleteOrder(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if(order == null)
+            {
+                return false;
+            }
+
+            if(order.Status == OrderStatus.Zakończone)
+            {
+                return false;
+            }
+
+            order.Status = OrderStatus.Zakończone;
+
+            var finance = new FinanceModel
+            {
+                Date = DateTime.UtcNow,
+                Amount = order.Revenue,
+                Type = FinanceType.Revenue,
+                Description = $"Przychód za zlecenie {order.Id}",
+                DriverEmail = order.DriverEmail
+            };
+
+            var financeReport = new FinanceReportModel
+            {
+                DriverEmail = order.DriverEmail,
+                Year = order.EndDate.Year,
+                Month = order.EndDate.Month,
+                TotalRevenue = order.Revenue,
+                TotalExpenses = 0,
+                TotalSalary = 0,
+                TotalProfitFromCompletedOrders = order.Revenue
+            };
+
+            _context.Finances.Add(finance);
+            _context.FinanceReports.Add(financeReport);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task CreateOrderAsync(string orderNumber, DateTime startDate, DateTime endDate, string pickupLocation,
             string deliveryLocation, string driverEmail, string loadType, string assignedBy, decimal revenue)
         {

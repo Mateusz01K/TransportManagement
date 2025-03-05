@@ -8,8 +8,11 @@ namespace TransportManagement.Services.Finance
         Task<decimal> CalculateTotalRevenue();
         Task<decimal> CalculateTotalExpenses();
         Task<decimal> CalculateNetProfit();
+        Task<decimal> CalculateGrossProfit();
         Task<decimal> CalculateTotalSalaries();
         Task<List<FinanceModel>> GetAllFinance();
-        Task<List<FinanceReportModel>> GetFinanceReport();
+        Task AddSalariesToFinance(int year, int month, int day);
+        Task AddExpensesToFinance(decimal amount, string description, int year, int month, int day);
+        //Task<List<FinanceReportModel>> GetFinanceReport();
     }
 }

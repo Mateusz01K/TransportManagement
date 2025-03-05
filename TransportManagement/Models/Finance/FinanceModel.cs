@@ -7,11 +7,13 @@
         public decimal Amount { get; set; }
         public FinanceType Type { get; set; }
         public DateTime Date { get; set; }
+        public string? DriverEmail { get; set; }
     }
 
     public enum FinanceType
     {
         Revenue,
-        Expense
+        Expense,
+        Salary
     }
 }

@@ -1,54 +1,62 @@
 ﻿@model TransportManagement.Models.LeaveRequests.LeaveRequestViewModel
 
-
 @{
     ViewData["Title"] = "Urlop";
 }
 
 @section Styles{
-    <link rel="stylesheet" href="~/css/login.css" />
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
 }
-<table class="table">
-    <thead>
-        <tr>
-            <th>Użytkownik</th>
-            <th>Data początkowa</th>
-            <th>Data zakończenia</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var request in Model.LeaveRequests)
-        {
-            <tr>
-                <td>
-                    @if (Model.UsersEmails.ContainsKey(request.UserId))
-                    {
-                        @Model.UsersEmails[request.UserId]
-                    }
-                    else
-                    {
-                        <span class="text-danger">Brak danych</span>
-                    }
-                </td>
-                <td>@request.StartDate.ToShortDateString()</td>
-                <td>@request.EndDate.ToShortDateString()</td>
-                <td>@request.Status</td>
-                <td>
-                    @if (request.Status == TransportManagement.Models.LeaveRequests.LeaveStatus.Pending)
-                    {
-                        <form asp-action="ApproveLeaveRequest" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="@request.Id">
-                            <button type="submit" class="btn btn-success">Zatwierdź</button>
-                        </form>
-                        <form asp-action="RejectLeaveRequest" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="@request.Id">
-                            <textarea name="adminComment" placeholder="Powód odrzucenia" rows="3" required></textarea>
-                            <button type="submit" class="btn btn-danger">Odrzuć</button>
-                        </form>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div class="container">
+    <h1 class="text-center">Wnioski Urlopowe</h1>
+    <div class="table-container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Użytkownik</th>
+                    <th>Data początkowa</th>
+                    <th>Data zakończenia</th>
+                    <th>Status</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model.LeaveRequests)
+                {
+                    <tr>
+                        <td>
+                            @if (Model.UsersEmails.ContainsKey(request.UserId))
+                            {
+                                @Model.UsersEmails[request.UserId]
+                            }
+                            else
+                            {
+                                <span class="text-danger">Brak danych</span>
+                            }
+                        </td>
+                        <td>@request.StartDate.ToShortDateString()</td>
+                        <td>@request.EndDate.ToShortDateString()</td>
+                        <td>@request.Status</td>
+                        <td>
+                            @if (request.Status == TransportManagement.Models.LeaveRequests.LeaveStatus.Pending)
+                            {
+                                <div class="action-buttons">
+                                    <form asp-action="ApproveLeaveRequest" method="post">
+                                        <input type="hidden" name="id" value="@request.Id">
+                                        <button type="submit" class="btn btn-success">Zatwierdź</button>
+                                    </form>
+                                    <form asp-action="RejectLeaveRequest" method="post">
+                                        <input type="hidden" name="id" value="@request.Id">
+                                        <textarea name="adminComment" placeholder="Powód odrzucenia" rows="2" required></textarea>
+                                        <button type="submit" class="btn btn-danger">Odrzuć</button>
+                                    </form>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -4,36 +4,85 @@
     ViewData["Title"] = "Przegląd Finansowy";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Lista Kierowców</h1>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Opis</th>
-                <th scope="col">Kwota</th>
-                <th scope="col">Typ</th>
-                <th scope="col">Data</th>
-            </tr>
-        </thead>
-        @*<tbody>
-        @foreach (var item in Model.Finances)
-        {
-        <tr>
-        <td scope="row">@item.Description</td>
-        <td scope="row">@item.Amount.ToString("C")</td>
-        <td scope="row">@item.Type</td>
-        <td scope="row">@item.Date.ToString("dd.MM.yyyy")</td>
-        </tr>
-        }
-        </tbody>*@
-        <tbody>
+@section Styles{
+    <link rel="stylesheet" href="~/css/finance.css" />
+}
 
-            <tr>
-                <td scope="row">@Model.TotalRevenue</td>
-                <td scope="row">@Model.TotalExpenses</td>
-                <td scope="row">@Model.TotalSalaries</td>
-                <td scope="row">@Model.NetProfit</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container">
+    <h1 class="text-center">Finanse</h1>
+    <div class="table-container mt-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Przychód</th>
+                    <th scope="col">Wydatki</th>
+                    <th scope="col">Pensje</th>
+                    <th scope="col">Zysk Brutto</th>
+                    <th scope="col">Zysk Netto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">@Model.TotalRevenue.ToString("C")</td>
+                    <td scope="row">@Model.TotalExpenses.ToString("C")</td>
+                    <td scope="row">@Model.TotalSalaries.ToString("C")</td>
+                    <td scope="row">@Model.GrossProfit.ToString("C")</td>
+                    <td scope="row">@Model.NetProfit.ToString("C")</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="finance-row">
+
+        <div class="col-md-6">
+            <div class="form-container">
+                <h3>Opłać Wynagrodzenia</h3>
+                <form method="post" asp-action="AddSalaries">
+                    <div class="form-group">
+                        <label for="year">Wybierz rok:</label>
+                        <input type="number" id="year" name="year" class="form-control" value="@DateTime.Now.Year" min="2000" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="month">Wybierz miesiąc:</label>
+                        <input type="number" id="month" name="month" class="form-control" value="@DateTime.Now.Month" min="1" max="12" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="day">Wybierz dzień:</label>
+                        <input type="number" id="day" name="day" class="form-control" value="@DateTime.Now.Day" min="1" max="31" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Opłać wynagrodzenia</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="form-container">
+                <h3>Dodaj Wydatek</h3>
+                <form method="post" asp-action="AddExpense">
+                    <div class="form-group">
+                        <label for="amount">Kwota wydatku:</label>
+                        <input type="number" id="amount" name="amount" class="form-control" step="0.01" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Opis wydatku:</label>
+                        <input type="text" id="description" name="description" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Wybierz rok:</label>
+                        <input type="number" id="year" name="year" class="form-control" value="@DateTime.Now.Year" min="2000" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="month">Wybierz miesiąc:</label>
+                        <input type="number" id="month" name="month" class="form-control" value="@DateTime.Now.Month" min="1" max="12" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="day">Wybierz dzień:</label>
+                        <input type="number" id="day" name="day" class="form-control" value="@DateTime.Now.Day" min="1" max="31" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Dodaj wydatek</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

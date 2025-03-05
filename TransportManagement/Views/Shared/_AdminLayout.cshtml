@@ -15,13 +15,13 @@
 </head>
 @RenderSection("Styles", required:false)
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow">
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
         <div class="container-fluid">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TransportManagement</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            @*<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>*@
         </div>
     </nav>
 
@@ -111,7 +111,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="FinanceReport" asp-action="FiannceReport">
+                            <a class="nav-link" asp-controller="FinanceReport" asp-action="FinanceMonthlyReport">
                                 <span data-feather="file-text"></span>
                                 Current month
                             </a>
@@ -160,7 +160,7 @@
                     var message = TempData["message"].ToString();
                     var alertClass = (message.Contains("Nie udało") || message.Contains("Podany użytkownik nie jest kierowcą")
                     || message.Contains("Kierowca w tym czasie jest na urlopie") || message.Contains("Nie można")) ? "alert-danger" : "alert-success";
-                    
+
                     <div class="container mt-3">
                         <div class="alert @alertClass" role="alert">
                             @message
@@ -180,10 +180,10 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script>
-    flatpickr("#startDate",{
+    flatpickr("#startDate", {
         dateFormat: "Y-m-d",
         minDate: "today",
-        onChange: function(selectedDate, dateStr, instance){
+        onChange: function (selectedDate, dateStr, instance) {
             flatpickr("#endDate", {
                 dateFormat: "Y-m-d",
                 minDate: dateStr
@@ -191,16 +191,26 @@
         }
     });
 
-    flatpickr("#endDate",{
+    flatpickr("#endDate", {
         dateFormat: "Y-m-d",
         minDate: "today"
     });
-    //var ctx = document.getElementById("myChart");
-    //if (ctx{
-    //}
-    //else {
-    //    console.error("Nie znaleziono elementu #myChart");
-    //}
+</script>
+<script>
+    $(document).ready(function () {
+        $('#usersTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ użytkowników",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ użytkowników",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            }
+        });
+    });
 </script>
 @*<script>
     var ctx = document.getElementById("myChart");

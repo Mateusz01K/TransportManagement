@@ -1,0 +1,239 @@
+﻿body {
+    background-color: #4f4848;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin-top: 20px;
+    color: white;
+    padding-bottom: 50px;
+    width: 80%; /* Zmniejszono szerokość kontenera */
+    margin: 0 auto; /* Centrowanie kontenera */
+}
+
+h1 {
+    color: #fff;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+/* Ogólny styl dla formularzy */
+.form-container {
+    background-color: #4f4848;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    margin-bottom: 30px; /* Odstęp od innych elementów */
+    width: 60%; /* Zmniejszenie szerokości formularza */
+    margin: 0 auto; /* Centrowanie formularza */
+}
+
+.form-container label {
+    margin-bottom: 5px; /* Odstęp między label a input */
+    color: white; /* Kolor tekstu dla etykiety */
+    font-weight: bold;
+}
+
+.form-container .form-group {
+    margin-bottom: 15px;
+}
+
+.form-container input[type="number"],
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="file"],
+.form-container input[type="date"],
+.form-container input[type="datetime"],
+.form-container input[type="datetime-local"] {
+    border-radius: 10px;
+    padding: 8px;
+    width: 70%; /* Zmniejszenie szerokości inputów */
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    margin: 0 auto; /* Centrowanie inputów */
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.form-container button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Stylizacja przycisku Edytuj */
+.text-center button {
+    width: auto; /* Zmniejszenie szerokości przycisku */
+    padding: 10px 20px; /* Dostosowanie paddingu */
+    background-color: #007bff; /* Kolor tła przycisku */
+    border-radius: 5px;
+    color: white; /* Kolor tekstu */
+    margin-bottom: 15px; /* Odstęp między przyciskami */
+}
+
+    /* Zmieniony efekt hover */
+    .text-center button:hover {
+        background-color: #0056b3; /* Zmiana koloru tła po najechaniu */
+        border-color: #0056b3; /* Zmiana koloru ramki przycisku */
+        color: #ffffff; /* Kolor tekstu po najechaniu */
+    }
+
+/* Stylizacja przycisku Wróć */
+.text-center .back-button {
+    width: auto; /* Zmniejszenie szerokości przycisku */
+    padding: 10px 20px;
+    background-color: #6c757d; /* Kolor tła przycisku Wróć */
+    border-color: #6c757d;
+    color: white;
+    border-radius: 5px;
+}
+
+    .text-center .back-button:hover {
+        background-color: #5a6268; /* Zmiana koloru tła przycisku Wróć po najechaniu */
+        border-color: #5a6268;
+    }
+
+/* Tabela */
+.table-container {
+    margin-top: 40px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px; /* Odstęp od innych elementów */
+}
+
+.table {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .table th,
+    .table td {
+        text-align: center;
+        padding: 12px;
+    }
+
+    .table th {
+        background-color: #f1f1f1;
+        color: #333;
+    }
+
+    .table tbody tr {
+        background-color: #fff;
+    }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+/* Styl dla wierszy finansowych */
+.finance-row {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .finance-row .col-md-6 {
+        flex: 1;
+    }
+
+/* Dostosowanie responsywności dla mniejszych ekranów */
+@media (max-width: 768px) {
+    .container {
+        width: 100%; /* Zmniejszenie szerokości kontenera na małych ekranach */
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .form-container {
+        width: 100%; /* Zmniejszenie szerokości formularza */
+        padding: 15px;
+    }
+
+        .form-container input[type="number"],
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container input[type="file"],
+        .form-container input[type="date"],
+        .form-container input[type="datetime"],
+        .form-container input[type="datetime-local"],
+        .form-container button {
+            padding: 8px;
+        }
+
+        .form-container input[type="number"],
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container input[type="file"],
+        .form-container input[type="date"],
+        .form-container input[type="datetime"],
+        .form-container input[type="datetime-local"] {
+            width: 100%; /* Zwiększenie szerokości pól formularza na małych ekranach */
+        }
+}
+
+/* Stylowanie elementu wyszukiwania w DataTables */
+#usersTable_filter input {
+    background-color: #fff;
+    color: #333; /* Czarny tekst na białym tle */
+    border-radius: 5px;
+    padding: 8px;
+    margin-left: 10px;
+    width: auto;
+}
+
+#usersTable_filter label {
+    color: #000000; /* Kolor tekstu przycisku wyszukiwania */
+    font-weight: bold;
+}
+
+#usersTable_length select {
+    background-color: #ffffff;
+    color: #333; /* Kolor tekstu dla przycisku select */
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#usersTable_length label {
+    color: #000000;
+    font-weight: bold;
+}
+
+#usersTable_paginate .paginate_button {
+    color: #000000;
+    border: 1px solid #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+    #usersTable_paginate .paginate_button:hover {
+        background-color: #007bff;
+        color: #000000;
+    }
+
+    #usersTable_paginate .paginate_button.current {
+        background-color: #007bff;
+        color: #000000;
+    }
+
+#usersTable_info {
+    color: #000000;
+}

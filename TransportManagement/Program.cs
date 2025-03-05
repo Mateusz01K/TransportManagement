@@ -17,6 +17,8 @@ using TransportManagement.Services.User.EmailSender;
 using TransportManagement.Services.User.ManageUser;
 using TransportManagement.Services.User.ResetPassword;
 using TransportManagement.Services.User.RoleService;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,8 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireLowercase = false;
 }
 );
+
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 builder.Services.AddControllersWithViews();
 

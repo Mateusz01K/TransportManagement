@@ -1,5 +1,5 @@
 ﻿html, body {
-    height:100%;
+    height: 100%;
 }
 
 body {
@@ -19,7 +19,7 @@ body {
     min-height: 100vh;
 }
 
-.navbar{
+.navbar {
     position: fixed;
     top: 0;
     margin-left: 0;
@@ -38,15 +38,15 @@ body {
     border-radius: 10px;
 }
 
-.form-sigin .checkbox{
-    font-weight: 400;
-}
+    .form-sigin .checkbox {
+        font-weight: 400;
+    }
 
-.form-sigin .form-control:focus{
-    z-index: 2;
-}
+    .form-sigin .form-control:focus {
+        z-index: 2;
+    }
 
-h1{
+h1 {
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -89,13 +89,13 @@ h1{
 }
 
 
-.form-signup input {
-    margin-bottom: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-}
+    .form-signup input {
+        margin-bottom: 10px;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+    }
 
 .form-forgot {
     width: 100%;
@@ -107,27 +107,27 @@ h1{
     border-radius: 10px;
 }
 
-.form-forgot input{
-    margin-bottom: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-}
+    .form-forgot input {
+        margin-bottom: 10px;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+    }
 
-.form-forgot .form-control:focus {
-    z-index: 2;
-}
+    .form-forgot .form-control:focus {
+        z-index: 2;
+    }
 
 
 
-td.comment-cell{
+td.comment-cell {
     max-width: 300px;
     word-wrap: break-word;
     white-space: pre-wrap;
 }
 
-.leave-action{
+.leave-action {
     display: flex;
     flex-direction: column-reverse;
     gap: 10px;

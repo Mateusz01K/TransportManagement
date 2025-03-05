@@ -163,6 +163,20 @@ namespace TransportManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin, Dispatcher")]
+        public async Task<IActionResult> CompletedOrder(int orderId)
+        {
+            bool success = await _orderService.CompleteOrder(orderId);
+
+            if (!success)
+            {
+                TempData["message"] = "Nie udało się zakończyć zlecenia.";
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetDriverEmails(string term)
         {

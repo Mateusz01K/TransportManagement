@@ -1,7 +1,7 @@
 ﻿@model TransportManagement.Models.FinanceReport.FinanceReportViewModel
 
 @{
-    ViewData["Title"] = "Raport Finansowy - Roczny";
+    ViewData["Title"] = "Raport Finansowy - Miesięczny";
 }
 
 <div class="text-center">
@@ -13,6 +13,7 @@
                 <th scope="col">Miesiąc</th>
                 <th scope="col">Przychód</th>
                 <th scope="col">Wydatki</th>
+                <th scope="col">Wypłaty</th>
                 <th scope="col">Zysk netto</th>
             </tr>
         </thead>
@@ -21,9 +22,16 @@
             {
                 <tr>
                     <td scope="row">@report.Year</td>
-                    <td scope="row">@report.TotalRevenue.ToString("C")</td>
-                    <td scope="row">@report.TotalExpenses.ToString("C")</td>
+                    <td scope="row">@report.Month</td>
+                    <td scope="row">@report.TotalRevenue</td>
+                    <td scope="row">@report.TotalExpenses</td>
+                    <td scope="row">@report.TotalSalary</td>
                     <td scope="row">@report.NetProfit.ToString("C")</td>
+                    <td>
+                        <a href="@Url.Action("DownloadMonthlyReport", "FinanceReport", new { driverEmail = report.DriverEmail, year = report.Year, month = report.Month })" class="btn btn-primary">
+                            Pobierz PDF
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>
