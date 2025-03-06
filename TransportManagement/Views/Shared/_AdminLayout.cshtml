@@ -12,8 +12,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    @if (!IsSectionDefined("Styles"))
+    {
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    }
+
+    @RenderSection("Styles", required:false)
 </head>
-@RenderSection("Styles", required:false)
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
         <div class="container-fluid">
@@ -46,6 +52,30 @@
                             <a class="nav-link" asp-controller="Driver" asp-action="Index">
                                 <span data-feather="users"></span>
                                 Kierowcy
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Truck" asp-action="Index">
+                                <span data-feather="users"></span>
+                                Ciężarówki
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Trailer" asp-action="Index">
+                                <span data-feather="users"></span>
+                                Naczepy
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="AssignTruck" asp-action="Index">
+                                <span data-feather="users"></span>
+                                Przypisania Ciężarówek
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="AssignTrailer" asp-action="Index">
+                                <span data-feather="users"></span>
+                                Przypisania Naczep
                             </a>
                         </li>
                         <li class="nav-item">
@@ -204,6 +234,54 @@
                 "lengthMenu": "Pokaż _MENU_ użytkowników",
                 "zeroRecords": "Brak wyników",
                 "info": "Wyświetlono _START_ do _END_ użytkowników",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#truckTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ ciężarówek",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ ciężarówek",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#trailerTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ naczep",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ naczep",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#assignTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ przypisań",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ przypisań",
                 "paginate": {
                     "next": "Następna",
                     "previous": "Poprzednia"

@@ -3,40 +3,44 @@
     ViewData["Title"] = "Zlecenia";
 }
 
+
+
 <div class="text-center">
     <h1 class="display-4">Lista Zleceń</h1>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nr</th>
-                <th scope="col">Data załadunku</th>
-                <th scope="col">Data dostawy</th>
-                <th scope="col">Lokalizacja załadunku</th>
-                <th scope="col">Lokalizacja rozładunku</th>
-                <th scope="col">Typ Ładunku</th>
-                <th scope="col">Kierowca</th>
-                <th scope="col">Status</th>
-                <th scope="col">Kolejka</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Orders)
-            {
+    <div class="table-container">
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td scope="row">@item.Id</td>
-                    <td scope="row">@item.OrderNumber</td>
-                    <td scope="row">@item.StartDate</td>
-                    <td scope="row">@item.EndDate</td>
-                    <td scope="row">@item.PickupLocation</td>
-                    <td scope="row">@item.DeliveryLocation</td>
-                    <td scope="row">@item.Status</td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nr</th>
+                    <th scope="col">Data załadunku</th>
+                    <th scope="col">Data dostawy</th>
+                    <th scope="col">Lokalizacja załadunku</th>
+                    <th scope="col">Lokalizacja rozładunku</th>
+                    <th scope="col">Typ Ładunku</th>
+                    <th scope="col">Kierowca</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Kolejka</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Orders)
+                {
+                    <tr>
+                        <td scope="row">@item.Id</td>
+                        <td scope="row">@item.OrderNumber</td>
+                        <td scope="row">@item.StartDate</td>
+                        <td scope="row">@item.EndDate</td>
+                        <td scope="row">@item.PickupLocation</td>
+                        <td scope="row">@item.DeliveryLocation</td>
+                        <td scope="row">@item.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-<form method="post" asp-controller="Order" asp-action="Edit">
+<form method="post" asp-controller="Order" asp-action="Edit" class="form-container">
     <div class="form-group">
         <label for="Id">Id: <span style="color: red">*</span></label>
         <input type="number" class="form-control" id="Id" placeholder="Id" name="Id" required />
@@ -79,6 +83,8 @@
 
     <div class="text-center m-5">
         <button type="submit" class="btn btn-success">Edytuj</button>
+    </div>
+    <div class="text-center mt-4">
         <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
     </div>
 </form>

@@ -2,48 +2,44 @@
 @{
     ViewData["Title"] = "Ciężarówki";
 }
-@if (TempData["message"] != null)
-{
-    <script>
-        alert('@TempData["message"]');
-    </script>
-}
 
 <div class="text-center">
     <h1 class="display-4">Lista Ciężarówek</h1>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Marka</th>
-                <th scope="col">Model</th>
-                <th scope="col">Rok produkcji</th>
-                <th scope="col">Moc</th>
-                <th scope="col">Przebieg</th>
-                <th scope="col">Waga</th>
-                <th scope="col">Nr Rejestracyjny</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Trucks)
-            {
+    <div class="table-container">
+        <table class="table table-hover" id="truckTable">
+            <thead>
                 <tr>
-                    <td scope="row">@item.Id</td>
-                    <td scope="row">@item.Brand</td>
-                    <td scope="row">@item.Model</td>
-                    <td scope="row">@item.YearOfProduction</td>
-                    <td scope="row">@item.Power</td>
-                    <td scope="row">@item.Mileage</td>
-                    <td scope="row">@item.Weight</td>
-                    <td scope="row">@item.LicensePlate</td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Marka</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Rok produkcji</th>
+                    <th scope="col">Moc</th>
+                    <th scope="col">Przebieg</th>
+                    <th scope="col">Waga</th>
+                    <th scope="col">Nr Rejestracyjny</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Trucks)
+                {
+                    <tr>
+                        <td scope="row">@item.Id</td>
+                        <td scope="row">@item.Brand</td>
+                        <td scope="row">@item.Model</td>
+                        <td scope="row">@item.YearOfProduction</td>
+                        <td scope="row">@item.Power</td>
+                        <td scope="row">@item.Mileage</td>
+                        <td scope="row">@item.Weight</td>
+                        <td scope="row">@item.LicensePlate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-    <div class="text-center m-5">
-        <a class="btn btn-outline-success" asp-area="" asp-controller="Truck" asp-action="AddTruck" role="button">Dodaj ciężarówkę</a>
-        <a class="btn btn-outline-warning" asp-area="" asp-controller="Truck" asp-action="UpdateTruck" role="button">Edytuj ciężarówkę</a>
-        <a class="btn btn-outline-danger" asp-area="" asp-controller="Truck" asp-action="DeleteTruck" role="button">Usuń ciężarówkę</a>
+        <div class="text-center m-5">
+            <a class="btn btn-outline-success" asp-area="" asp-controller="Truck" asp-action="AddTruck" role="button">Dodaj ciężarówkę</a>
+            <a class="btn btn-outline-warning" asp-area="" asp-controller="Truck" asp-action="UpdateTruck" role="button">Edytuj ciężarówkę</a>
+            <a class="btn btn-outline-danger" asp-area="" asp-controller="Truck" asp-action="DeleteTruck" role="button">Usuń ciężarówkę</a>
+        </div>
     </div>
 </div>

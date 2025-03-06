@@ -3,48 +3,51 @@
     ViewData["Title"] = "Przypisz ciężarówkę do naczepy";
 }
 
+
 <div class="text-center">
-    <h1 class="display-4">Przypisz Ciężarówkę</h1>
-    <table class="table table-hover m-2">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Model</th>
-                <th scope="col">Przypisany kierowca</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Trucks)
-            {
+    <h1 class="display-4">Lista Przypisań Ciężarówek</h1>
+    <div class="table-container">
+        <table class="table table-hover" id="truckTable">
+            <thead>
                 <tr>
-                    <td scope="row">@item.Id</td>
-                    <td scope="row">@item.Model</td>
-                    <td scope="row">@item.IsAssignedDriver</td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Przypisany kierowca</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <table class="table table-hover m-2">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Imię i Nazwisko</th>
-                <th scope="col">Przypisana ciężarówka</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Drivers)
-            {
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Trucks)
+                {
+                    <tr>
+                        <td scope="row">@item.Id</td>
+                        <td scope="row">@item.Model</td>
+                        <td scope="row">@item.IsAssignedDriver</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <table class="table table-hover" id="usersTable">
+            <thead>
                 <tr>
-                    <td scope="row">@item.Id</td>
-                    <td scope="row">@item.Name @item.LastName</td>
-                    <td scope="row">@item.IsAssignedTruck</td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Imię i Nazwisko</th>
+                    <th scope="col">Przypisana ciężarówka</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Drivers)
+                {
+                    <tr>
+                        <td scope="row">@item.Id</td>
+                        <td scope="row">@item.Name @item.LastName</td>
+                        <td scope="row">@item.IsAssignedTruck</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-<form method="post" asp-controller="AssignTruck" asp-action="AssignmentThisTruck">
+<form method="post" asp-controller="AssignTruck" asp-action="AssignmentThisTruck" class="form-container">
     <div class="form-group">
         <label for="id">Id ciężarówki: <span style="color: red">*</span></label>
         <input type="text" class="form-control" id="id" placeholder="Id ciężarówki" name="truckId" />
@@ -57,6 +60,8 @@
 
     <div class="text-center m-5">
         <button type="submit" class="btn btn-success">Dodaj</button>
+    </div>
+    <div class="text-center mt-4">
         <a class="btn btn-danger" href="javascript: history.go(-1)">Wróć</a>
     </div>
 </form>

@@ -51,6 +51,7 @@ h3 {
 .form-container input[type="file"],
 .form-container input[type="date"],
 .form-container input[type="datetime"],
+.form-container select,
 .form-container input[type="datetime-local"] {
     border-radius: 10px;
     padding: 8px;
@@ -235,5 +236,154 @@ h3 {
     }
 
 #usersTable_info {
+    color: #000000;
+}
+
+
+
+/* Stylowanie elementu wyszukiwania w DataTables */
+#trailerTable_filter input {
+    background-color: #fff;
+    color: #333; /* Czarny tekst na białym tle */
+    border-radius: 5px;
+    padding: 8px;
+    margin-left: 10px;
+    width: auto;
+}
+
+#trailerTable_filter label {
+    color: #000000; /* Kolor tekstu przycisku wyszukiwania */
+    font-weight: bold;
+}
+
+#trailerTable_length select {
+    background-color: #ffffff;
+    color: #333; /* Kolor tekstu dla przycisku select */
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#trailerTable_length label {
+    color: #000000;
+    font-weight: bold;
+}
+
+#trailerTable_paginate .paginate_button {
+    color: #000000;
+    border: 1px solid #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+    #trailerTable_paginate .paginate_button:hover {
+        background-color: #007bff;
+        color: #000000;
+    }
+
+    #trailerTable_paginate .paginate_button.current {
+        background-color: #007bff;
+        color: #000000;
+    }
+
+#trailerTable_info {
+    color: #000000;
+}
+
+
+/* Stylowanie elementu wyszukiwania w DataTables */
+#truckTable_filter input {
+    background-color: #fff;
+    color: #333; /* Czarny tekst na białym tle */
+    border-radius: 5px;
+    padding: 8px;
+    margin-left: 10px;
+    width: auto;
+}
+
+#truckTable_filter label {
+    color: #000000; /* Kolor tekstu przycisku wyszukiwania */
+    font-weight: bold;
+}
+
+#truckTable_length select {
+    background-color: #ffffff;
+    color: #333; /* Kolor tekstu dla przycisku select */
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#truckTable_length label {
+    color: #000000;
+    font-weight: bold;
+}
+
+#truckTable_paginate .paginate_button {
+    color: #000000;
+    border: 1px solid #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+    #truckTable_paginate .paginate_button:hover {
+        background-color: #007bff;
+        color: #000000;
+    }
+
+    #truckTable_paginate .paginate_button.current {
+        background-color: #007bff;
+        color: #000000;
+    }
+
+#truckTable_info {
+    color: #000000;
+}
+
+
+
+/* Stylowanie elementu wyszukiwania w DataTables */
+#assignTable_filter input {
+    background-color: #fff;
+    color: #333; /* Czarny tekst na białym tle */
+    border-radius: 5px;
+    padding: 8px;
+    margin-left: 10px;
+    width: auto;
+}
+
+#assignTable_filter label {
+    color: #000000; /* Kolor tekstu przycisku wyszukiwania */
+    font-weight: bold;
+}
+
+#assignTable_length select {
+    background-color: #ffffff;
+    color: #333; /* Kolor tekstu dla przycisku select */
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#assignTable_length label {
+    color: #000000;
+    font-weight: bold;
+}
+
+#assignTable_paginate .paginate_button {
+    color: #000000;
+    border: 1px solid #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+    #assignTable_paginate .paginate_button:hover {
+        background-color: #007bff;
+        color: #000000;
+    }
+
+    #assignTable_paginate .paginate_button.current {
+        background-color: #007bff;
+        color: #000000;
+    }
+
+#assignTable_info {
     color: #000000;
 }

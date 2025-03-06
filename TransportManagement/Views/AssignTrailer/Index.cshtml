@@ -3,37 +3,40 @@
     ViewData["Title"] = "Przypisania Naczep";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Lista Przypisań</h1>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Model ciężarówki</th>
-                <th scope="col">Model naczepy</th>
-                <th scope="col">Data przypisania</th>
-                <th scope="col">Data zwrotu</th>
-                <th scope="col">Czy zwrózono?</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.AssignTrailer)
-            {
-                <tr>
-                    <td scope="row">@item.Id</td>
-                    <td scope="row">@item.Truck.Model</td>
-                    <td scope="row">@item.Trailer.Model</td>
-                    <td scope="row">@item.AssignmentDate.ToShortDateString()</td>
-                    <td scope="row">@item.ReturnDate.ToShortDateString()</td>
-                    <td scope="row">@(item.IsReturned ? "Zwrócono" : "Nie zwrócono")</td>
-                </tr>
-            }
-        </tbody>
-    </table>
 
-    <div class="text-center m-5">
-        <a class="btn btn-outline-success" asp-area="" asp-controller="AssignTrailer" asp-action="AssignmentTrailers" role="button">Dodaj naczepę do ciężarówki</a>
-        <a class="btn btn-outline-warning" asp-area="" asp-controller="AssignTrailer" asp-action="ReturnAssignment" role="button">Zwróć naczepę</a>
-        <a class="btn btn-outline-danger" asp-area="" asp-controller="AssignTrailer" asp-action="DeleteAssignment" role="button">Usuń przypisanie naczepy</a>
+<div class="text-center">
+    <h1 class="display-4">Lista Przypisań Naczep</h1>
+    <div class="table-container">
+        <table class="table table-hover" id="assignTable">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Model ciężarówki</th>
+                    <th scope="col">Model naczepy</th>
+                    <th scope="col">Data przypisania</th>
+                    <th scope="col">Data zwrotu</th>
+                    <th scope="col">Czy zwrózono?</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AssignTrailer)
+                {
+                    <tr>
+                        <td scope="row">@item.Id</td>
+                        <td scope="row">@item.Truck.Model</td>
+                        <td scope="row">@item.Trailer.Model</td>
+                        <td scope="row">@item.AssignmentDate.ToShortDateString()</td>
+                        <td scope="row">@item.ReturnDate.ToShortDateString()</td>
+                        <td scope="row">@(item.IsReturned ? "Zwrócono" : "Nie zwrócono")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="text-center m-5">
+            <a class="btn btn-outline-success" asp-area="" asp-controller="AssignTrailer" asp-action="AssignmentTrailers" role="button">Dodaj naczepę do ciężarówki</a>
+            <a class="btn btn-outline-warning" asp-area="" asp-controller="AssignTrailer" asp-action="ReturnAssignment" role="button">Zwróć naczepę</a>
+            <a class="btn btn-outline-danger" asp-area="" asp-controller="AssignTrailer" asp-action="DeleteAssignment" role="button">Usuń przypisanie naczepy</a>
+        </div>
     </div>
 </div>
