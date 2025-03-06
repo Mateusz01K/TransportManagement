@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TransportManagement</a>
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">TransportManagement</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,39 +21,47 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-controller="Cv" asp-action="SendCv">
+                                CV
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Driver" asp-action="Index">Kierowcy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Truck" asp-action="Index">Ciężarówki</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Trailer" asp-action="Index">Naczepy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AssignTruck" asp-action="Index">Przypisania Ciężarówek</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AssignTrailer" asp-action="Index">Przypisania Naczep</a>
+                            <a class="nav-link text-light" asp-controller="TransportRequest" asp-action="RequestTransportCost">
+                                Zapytanie o wycenę
+                            </a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
+
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Zlecenia</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Driver" asp-action="Index">Kierowcy</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="ManageRole">Zarządzanie Rolami</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Truck" asp-action="Index">Ciężarówki</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TransportCost" asp-action="TransportCost">Kalkulator</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Trailer" asp-action="Index">Naczepy</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Panel Admina</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="AssignTruck" asp-action="Index">Przypisania Ciężarówek</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="AssignTrailer" asp-action="Index">Przypisania Naczep</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Order" asp-action="Index">Zlecenia</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Role" asp-action="ManageRole">Zarządzanie Rolami</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="TransportCost" asp-action="TransportCost">Kalkulator</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Dashboard" asp-action="Index">Panel Admina</a>
                             </li>
                             <li class="nav-item">
                                 <form asp-action="Logout" asp-controller="Account" method="post" style="display:inline;">
@@ -64,10 +72,10 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark text-end" asp-area="" asp-controller="Account" asp-action="RegisterUser">Rejestracja</a>
+                                <a class="nav-link text-light text-end" asp-area="" asp-controller="Account" asp-action="RegisterUser">Rejestracja</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark text-end" asp-area="" asp-controller="Account" asp-action="LoginUser">Logowanie</a>
+                                <a class="nav-link text-light text-end" asp-area="" asp-controller="Account" asp-action="LoginUser">Logowanie</a>
                             </li>
                         }
                     </ul>
@@ -77,14 +85,26 @@
     </header>
     <div class="container-fluid">
         <main role="main" class="pt-5">
+            @if (TempData["message"] != null)
+                {
+                    var message = TempData["message"].ToString();
+                    var alertClass = (message.Contains("Nie udało") || message.Contains("Podany użytkownik nie jest kierowcą")
+                || message.Contains("Kierowca w tym czasie jest na urlopie") || message.Contains("Nie można") || message.Contains("Wystąpił błąd")) ? "alert-danger" : "alert-success";
+
+                    <div class="container mt-3">
+                        <div class="alert @alertClass" role="alert">
+                            @message
+                        </div>
+                    </div>
+                }
             @RenderBody()
         </main>
     </div>
 
     @*<footer class="footer text-muted">
-        <div class="container-fluid">
-            &copy; 2024 - TransportManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <div class="container-fluid">
+    &copy; 2024 - TransportManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
     </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

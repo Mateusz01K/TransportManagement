@@ -192,101 +192,86 @@ h3 {
 }
 
 /* Stylowanie elementu wyszukiwania w DataTables */
-#usersTable_filter input {
+#usersTable_filter input,
+#leaveTable_filter input,
+#trailerTable_filter input,
+#ordersTable_filter input {
     background-color: #fff;
-    color: #333; /* Czarny tekst na białym tle */
+    color: #000000; /* Czarny tekst na białym tle */
     border-radius: 5px;
     padding: 8px;
     margin-left: 10px;
     width: auto;
 }
 
-#usersTable_filter label {
+#usersTable_filter label,
+#leaveTable_filter label,
+#trailerTable_filter label,
+#ordersTable_filter label {
     color: #000000; /* Kolor tekstu przycisku wyszukiwania */
     font-weight: bold;
 }
 
-#usersTable_length select {
+#usersTable_length select,
+#leaveTable_length select,
+#trailerTable_length select,
+#ordersTable_length select {
     background-color: #ffffff;
     color: #333; /* Kolor tekstu dla przycisku select */
     border-radius: 5px;
     padding: 5px;
 }
 
-#usersTable_length label {
+#usersTable_length label,
+#leaveTable_length label,
+#trailerTable_length label,
+#ordersTable_length label {
     color: #000000;
     font-weight: bold;
 }
 
-#usersTable_paginate .paginate_button {
-    color: #000000;
-    border: 1px solid #007bff;
-    padding: 5px 10px;
-    border-radius: 5px;
+#usersTable_paginate .paginate_button,
+#leaveTable_paginate .paginate_button,
+#trailerTable_paginate .paginate_button,
+#ordersTable_paginate .paginate_button {
+    color: #000000 !important;
+    border: 1px solid #007bff !important;
+    padding: 5px 10px !important;
+    border-radius: 5px !important;
 }
 
-    #usersTable_paginate .paginate_button:hover {
-        background-color: #007bff;
-        color: #000000;
+    #usersTable_paginate .paginate_button:hover,
+    #leaveTable_paginate .paginate_button:hover,
+    #trailerTable_paginate .paginate_button:hover,
+    #ordersTable_paginate .paginate_button:hover {
+        background-color: #007bff !important;
+        color: #ffffff !important;
     }
 
-    #usersTable_paginate .paginate_button.current {
-        background-color: #007bff;
-        color: #000000;
+    #usersTable_paginate .paginate_button.current,
+    #leaveTable_paginate .paginate_button.current,
+    #trailerTable_paginate .paginate_button.current,
+    #ordersTable_paginate .paginate_button.current {
+        background-color: #007bff !important;
+        color: #000000 !important;
     }
 
-#usersTable_info {
-    color: #000000;
-}
-
-
-
-/* Stylowanie elementu wyszukiwania w DataTables */
-#trailerTable_filter input {
-    background-color: #fff;
-    color: #333; /* Czarny tekst na białym tle */
-    border-radius: 5px;
-    padding: 8px;
-    margin-left: 10px;
-    width: auto;
-}
-
-#trailerTable_filter label {
-    color: #000000; /* Kolor tekstu przycisku wyszukiwania */
-    font-weight: bold;
-}
-
-#trailerTable_length select {
-    background-color: #ffffff;
-    color: #333; /* Kolor tekstu dla przycisku select */
-    border-radius: 5px;
-    padding: 5px;
-}
-
-#trailerTable_length label {
-    color: #000000;
-    font-weight: bold;
-}
-
-#trailerTable_paginate .paginate_button {
-    color: #000000;
-    border: 1px solid #007bff;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-    #trailerTable_paginate .paginate_button:hover {
-        background-color: #007bff;
-        color: #000000;
+    #usersTable_paginate .paginate_button.disabled,
+    #leaveTable_paginate .paginate_button.disabled,
+    #trailerTable_paginate .paginate_button.disabled,
+    #ordersTable_paginate .paginate_button.disabled {
+        background-color: #ffffff !important;
+        color: #000000 !important;
     }
 
-    #trailerTable_paginate .paginate_button.current {
-        background-color: #007bff;
-        color: #000000;
-    }
-
-#trailerTable_info {
+#usersTable_info,
+#leaveTable_info,
+#trailerTable_info,
+#ordersTable_info {
     color: #000000;
+}
+
+
 }
 
 

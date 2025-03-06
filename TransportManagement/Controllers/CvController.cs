@@ -29,15 +29,6 @@ namespace TransportManagement.Controllers
                 return View(model);
             }
 
-            //var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-            //Directory.CreateDirectory(uploadsFolder);
-            //var filePath = Path.Combine(uploadsFolder, model.CvFile.FileName);
-
-            //using(var stream = new FileStream(filePath, FileMode.Create))
-            //{
-            //    await model.CvFile.CopyToAsync(stream);
-            //}
-
             var success = await _emailSender.SendCvAsync(model.ApplicantEmail, model.CvFile);
             if (!success)
             {

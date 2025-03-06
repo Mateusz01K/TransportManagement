@@ -1,8 +1,4 @@
-﻿@section Styles{
-    <link rel="stylesheet" href="~/css/dashboard.css" />
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,79 +7,29 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransportManagement.styles.css" asp-append-version="true" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-</head>
-@RenderSection("Styles", required:false)
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TransportManagement</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Driver" asp-action="Index">Kierowcy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Truck" asp-action="Index">Ciężarówki</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Trailer" asp-action="Index">Naczepy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AssignTruck" asp-action="Index">Przypisania Ciężarówek</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AssignTrailer" asp-action="Index">Przypisania Naczep</a>
-                        </li>
-                        @* <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LoginUser">Logowanie</a>
-                        </li>*@
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Zlecenia</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="ManageRole">Zarządzanie Rolami</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TransportCost" asp-action="TransportCost">Kalkulator</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Panel Admina</a>
-                            </li>
-                            <li class="nav-item">
-                                <form asp-action="Logout" asp-controller="Account" method="post" style="display:inline;">
-                                    <button type="submit" class="btn btn-primary">Wyloguj</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark text-end" asp-area="" asp-controller="Account" asp-action="RegisterUser">Rejestracja</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark text-end" asp-area="" asp-controller="Account" asp-action="LoginUser">Logowanie</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+    @if (!IsSectionDefined("Styles"))
+    {
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    }
+
+    @RenderSection("Styles", required:false)
+</head>
+<body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TransportManagement</a>
+            @*<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>*@
+        </div>
+    </nav>
 
     <div class="container-fluid">
         <div class="row">
@@ -91,9 +37,9 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" asp-controller="Home" asp-action="Index">
                                 <span data-feather="home"></span>
-                                Dashboard <span class="sr-only">(current)</span>
+                                Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
@@ -103,15 +49,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Role" asp-action="ManageRole">
-                                <span data-feather="users"></span>
-                                Employees
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="OrderReport" asp-action="Reports">
                                 <span data-feather="bar-chart-2"></span>
-                                Reports
+                                Raporty
                             </a>
                         </li>
                         <li class="nav-item">
@@ -135,7 +75,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="FinanceReport" asp-action="FinanceMonthlyReport">
                                 <span data-feather="file-text"></span>
                                 Current month
                             </a>
@@ -147,7 +87,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="FinanceReport" asp-action="FinanceAnnualReport">
                                 <span data-feather="file-text"></span>
                                 All
                             </a>
@@ -169,14 +109,22 @@
                                 Ustawienia
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="Logout">
+                                <span data-feather="log-out"></span>
+                                Wyloguj
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="main">
                 @if (TempData["message"] != null)
                 {
                     var message = TempData["message"].ToString();
-                    var alertClass = (message.Contains("Nie udało") || message.Contains("Nie można")) ? "alert-danger" : "alert-success";
+                    var alertClass = (message.Contains("Nie udało") || message.Contains("Podany użytkownik nie jest kierowcą")
+                    || message.Contains("Kierowca w tym czasie jest na urlopie") || message.Contains("Nie można")) ? "alert-danger" : "alert-success";
+
                     <div class="container mt-3">
                         <div class="alert @alertClass" role="alert">
                             @message
@@ -189,15 +137,11 @@
     </div>
 </body>
 </html>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-<script src="../../../../assets/js/vendor/popper.min.js"></script>
-<script src="../../../../dist/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     feather.replace()
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script>
     flatpickr("#startDate", {
@@ -216,32 +160,111 @@
         minDate: "today"
     });
 </script>
-@*<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
+<script>
+    $(document).ready(function () {
+        $('#usersTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ użytkowników",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ użytkowników",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
             },
-            legend: {
-                display: false,
-            }
-        }
+            "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+            "pegeLength": 5
+        });
     });
-</script>*@
+</script>
+<script>
+    $(document).ready(function () {
+        $('#truckTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ ciężarówek",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ ciężarówek",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            },
+            "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+            "pegeLength": 5
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#trailerTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ naczep",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ naczep",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            },
+            "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+            "pegeLength": 5
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#assignTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ przypisań",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ przypisań",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            },
+            "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+            "pegeLength": 5
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#leaveTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ wniosków",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ wniosków",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            },
+            "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+            "pegeLength": 5
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#ordersTable').DataTable({
+            "language": {
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ zleceń",
+                "zeroRecords": "Brak wyników",
+                "info": "Wyświetlono _START_ do _END_ zleceń",
+                "paginate": {
+                    "next": "Następna",
+                    "previous": "Poprzednia"
+                }
+            },
+            "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+            "pegeLength": 5
+        });
+    });
+</script>

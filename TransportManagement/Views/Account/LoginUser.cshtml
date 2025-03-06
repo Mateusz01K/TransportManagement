@@ -12,11 +12,7 @@
 <div class="container">
 <form class="form-sigin" asp-action="LoginUser" method="post" asp-controller="Account">
     <h1>Logowanie</h1>
-
-        @*<label class="sr-only" asp-for="Email">Email</label>*@
         <input class="form-control" type="email" asp-for="Email" placeholder="Email" required/>
-
-        @*<label class="sr-only" asp-for="Password">Hasło</label>*@
         <input class="form-control" type="password" asp-for="Password" placeholder="Password" required/>
 
     <div class="checkbox mb-3">
@@ -26,7 +22,7 @@
     </div>
     <button type="submit" class="btn btn-success">Zaloguj</button>
     <div>
-        <a asp-action="ForgotPassword" asp-controller="ResetPassword" class="btn btn-link">Zapomniałem hasła.</a>
+        <a asp-action="ForgotPassword" asp-controller="ResetPassword" class="btn btn-link">Zapomniałem hasła</a>
     </div>
 </form>
 </div>

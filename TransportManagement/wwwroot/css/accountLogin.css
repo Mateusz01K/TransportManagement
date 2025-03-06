@@ -27,6 +27,13 @@ body {
     z-index: 1000;
     left: 0;
 }
+a {
+    text-decoration: none !important;
+}
+
+a-btnlink {
+    text-decoration: none !important;
+}
 
 .form-sigin {
     width: 100%;
@@ -51,7 +58,8 @@ h1 {
     padding-bottom: 20px;
 }
 
-.form-sigin input[type="email"] {
+.form-sigin input[type="email"],
+.form-sigin input[type="file"] {
     margin-bottom: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;

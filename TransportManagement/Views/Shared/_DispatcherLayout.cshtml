@@ -85,12 +85,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Role" asp-action="ManageRole">
-                                <span data-feather="edit"></span>
-                                Zarządzanie Rolami
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" asp-controller="TransportCost" asp-action="TransportCost">
                                 <span data-feather="divide-square"></span>
                                 Kalkulator
@@ -100,24 +94,6 @@
                             <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
                                 <span data-feather="settings"></span>
                                 Panel Admina
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Cv" asp-action="SendCv">
-                                <span data-feather="settings"></span>
-                                Cv
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Finance" asp-action="Finance">
-                                <span data-feather="settings"></span>
-                                Finanse
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="LeaveRequest" asp-action="Index">
-                                <span data-feather="calendar"></span>
-                                Urlop
                             </a>
                         </li>
                         <li class="nav-item">
@@ -257,7 +233,7 @@
                     "previous": "Poprzednia"
                 }
             },
-            "lengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
+            "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
             "pegeLength": 5
         });
     });
@@ -275,7 +251,7 @@
                     "previous": "Poprzednia"
                 }
             },
-            "lengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
+            "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
             "pegeLength": 5
         });
     });
@@ -329,37 +305,8 @@
                     "previous": "Poprzednia"
                 }
             },
-            "lengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
+            "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
             "pegeLength": 5
         });
     });
 </script>
-@*<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>*@

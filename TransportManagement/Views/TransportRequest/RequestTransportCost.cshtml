@@ -1,0 +1,74 @@
+﻿@model TransportManagement.Models.TransportCostRequest.TransportCostRequest
+
+@{
+    ViewData["Title"] = "Zapytanie o Koszt Transportu";
+}
+
+<div class="container">
+    <h1 class="text-center">Zapytanie o Koszt Transportu</h1>
+
+    <form asp-action="RequestTransportCost" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="UserEmail">Twój Email</label>
+            <input class="form-control" type="email" id="UserEmail" name="UserEmail" required />
+        </div>
+
+        <div class="form-group">
+            <label for="PickupLocation">Miejsce odbioru</label>
+            <input class="form-control" type="text" id="PickupLocation" name="PickupLocation" required />
+        </div>
+
+        <div class="form-group">
+            <label for="DeliveryLocation">Miejsce dostawy</label>
+            <input class="form-control" type="text" id="DeliveryLocation" name="DeliveryLocation" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Description">Opis</label>
+            <textarea class="form-control" id="Description" name="Description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Weight">Waga (kg)</label>
+            <input class="form-control" type="number" id="Weight" name="Weight" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Width">Szerokość (cm)</label>
+            <input class="form-control" type="number" id="Width" name="Width" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Length">Długość (cm)</label>
+            <input class="form-control" type="number" id="Length" name="Length" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Height">Wysokość (cm)</label>
+            <input class="form-control" type="number" id="Height" name="Height" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Quantity">Ilość</label>
+            <input class="form-control" type="number" id="Quantity" name="Quantity" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Type">Typ ładunku</label>
+            <select class="form-control" id="Type" name="Type">
+                <option value="Paleta">Paleta</option>
+                <option value="Ciecz">Ciecz</option>
+                <option value="Kruszywo">Kruszywo</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="File">Załącz plik (opcjonalnie)</label>
+            <input class="form-control-file" type="file" id="File" name="File" accept=".pdf,.doc,.docx" />
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-lg btn-primary">Wyślij zapytanie</button>
+        </div>
+    </form>
+</div>

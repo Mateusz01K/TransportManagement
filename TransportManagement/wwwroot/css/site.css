@@ -1,9 +1,11 @@
 * {
-    background-color: #5e4646;/*#5c9a9a;*/
+    background-color: #5e4646; /*#5c9a9a;*/
+    color: #ffffff;
 }
 
 html {
   font-size: 14px;
+  color: #ffffff;
 }
 
 @media (min-width: 768px) {
@@ -35,4 +37,63 @@ div {
 
 .border{
     border-color: black !important;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.25rem;
+    color: #f8f9fa;
+}
+
+/* Styl dla trzech kolumn */
+.service-box {
+    background-color: #4c3c3c;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .service-box h3 {
+        font-size: 1.5rem;
+        color: #fff;
+        margin-bottom: 15px;
+        background-color: #4c3c3c;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .service-box p {
+        font-size: 1rem;
+        color: #ddd;
+        background-color: #4c3c3c;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    /* Zmiana koloru po najechaniu */
+    .service-box:hover,
+    .service-box:hover h3,
+    .service-box:hover p {
+        background-color: #5e4646;
+    }
+
+/* Styl dla uk³adu responsywnego */
+@media (max-width: 768px) {
+    .service-box {
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1.125rem;
+    }
 }
