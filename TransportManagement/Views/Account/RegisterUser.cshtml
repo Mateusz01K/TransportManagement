@@ -8,7 +8,7 @@
 @section Styles{
     <link rel="stylesheet" href="~/css/accountLogin.css" />
 }
-
+<a class="btn btn-outline-success" asp-area="" asp-controller="Account" asp-action="TestEmail" role="button">Test email</a>
 
 <form class="form-signup" asp-action="RegisterUser" method="post">
     <h2>Resjestracja</h2>
@@ -31,16 +31,14 @@
         <input class="form-control" type="email" asp-for="Email" placeholder="Email" required />
         @*<span asp-validation-for="Email"></span>*@
     </div>
-    <div>
+    @*<div>
         <label asp-for="Password">Hasło</label>
         <input class="form-control" type="password" asp-for="Password" placeholder="Password" required />
-        @*<span asp-validation-for="Password"></span>*@
     </div>
     <div class="pb-2">
         <label asp-for="ConfirmPassword">Powtórz hasło</label>
         <input class="form-control" type="password" asp-for="ConfirmPassword" placeholder="ConfirmPassword" required />
-        @*<span asp-validation-for="ConfirmPassword"></span>*@
-    </div>
+    </div>*@
     <div>
         <label asp-for="PhoneNumber">Nr telefonu</label>
         <input class="form-control" type="text" asp-for="PhoneNumber" placeholder="PhoneNumber" required />

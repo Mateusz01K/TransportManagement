@@ -89,7 +89,8 @@
                 {
                     var message = TempData["message"].ToString();
                     var alertClass = (message.Contains("Nie udało") || message.Contains("Podany użytkownik nie jest kierowcą")
-                || message.Contains("Kierowca w tym czasie jest na urlopie") || message.Contains("Nie można") || message.Contains("Wystąpił błąd")) ? "alert-danger" : "alert-success";
+                || message.Contains("Kierowca w tym czasie jest na urlopie") || message.Contains("Nie można") || message.Contains("Wystąpił błąd")
+                || message.Contains("Zmiana hasła nie powiodła")) ? "alert-danger" : "alert-success";
 
                     <div class="container mt-3">
                         <div class="alert @alertClass" role="alert">

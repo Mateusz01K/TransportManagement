@@ -11,5 +11,6 @@ namespace TransportManagement.Models.User
         public int Experience { get; set; }
         public decimal Salary { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public bool HasChangedPassword { get; set; }
     }
 }

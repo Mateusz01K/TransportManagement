@@ -163,7 +163,16 @@ namespace TransportManagement.Services.User.EmailSender
                     IsBodyHtml = false
                 };
 
-                mailMessage.To.Add(smtpSettings["ToEmail"]);
+                mailMessage.To.Add(smtpSettings["SmtpUsername"]);
+
+                if (file != null && file.Length > 0)
+                {
+                    var filePath = await SaveFileAsync(file);
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        mailMessage.Attachments.Add(new Attachment(filePath));
+                    }
+                }
 
                 await client.SendMailAsync(mailMessage);
                 return true;
@@ -171,8 +180,6 @@ namespace TransportManagement.Services.User.EmailSender
             catch (Exception ex)
             {
                 Console.WriteLine($"Błąd wysyłania e-maiala:{ex.Message}");
-                Console.WriteLine($"StackTrace: {ex.StackTrace}");
-                Console.WriteLine($"InnerException: {ex.InnerException?.Message}");
                 return false;
             }
         }
