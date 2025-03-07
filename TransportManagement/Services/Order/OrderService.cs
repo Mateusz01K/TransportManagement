@@ -14,46 +14,46 @@ namespace TransportManagement.Services.Order
             _context = context;
         }
 
-        public async Task<bool> CompleteOrder(int orderId)
-        {
-            var order = await _context.Orders.FindAsync(orderId);
-            if(order == null)
-            {
-                return false;
-            }
+        //public async Task<bool> CompleteOrder(int orderId)
+        //{
+        //    var order = await _context.Orders.FindAsync(orderId);
+        //    if (order == null)
+        //    {
+        //        return false;
+        //    }
 
-            if(order.Status == OrderStatus.Zakończone)
-            {
-                return false;
-            }
+        //    if (order.Status == OrderStatus.Zakończone)
+        //    {
+        //        return false;
+        //    }
 
-            order.Status = OrderStatus.Zakończone;
+        //    order.Status = OrderStatus.Zakończone;
 
-            var finance = new FinanceModel
-            {
-                Date = DateTime.UtcNow,
-                Amount = order.Revenue,
-                Type = FinanceType.Revenue,
-                Description = $"Przychód za zlecenie {order.Id}",
-                DriverEmail = order.DriverEmail
-            };
+        //    var finance = new FinanceModel
+        //    {
+        //        Date = DateTime.UtcNow,
+        //        Amount = order.Revenue,
+        //        Type = FinanceType.Revenue,
+        //        Description = $"Przychód za zlecenie {order.Id}",
+        //        DriverEmail = order.DriverEmail
+        //    };
 
-            var financeReport = new FinanceReportModel
-            {
-                DriverEmail = order.DriverEmail,
-                Year = order.EndDate.Year,
-                Month = order.EndDate.Month,
-                TotalRevenue = order.Revenue,
-                TotalExpenses = 0,
-                TotalSalary = 0,
-                TotalProfitFromCompletedOrders = order.Revenue
-            };
+        //    var financeReport = new FinanceReportModel
+        //    {
+        //        DriverEmail = order.DriverEmail,
+        //        Year = order.EndDate.Year,
+        //        Month = order.EndDate.Month,
+        //        TotalRevenue = order.Revenue,
+        //        TotalExpenses = 0,
+        //        TotalSalary = 0,
+        //        TotalProfitFromCompletedOrders = order.Revenue
+        //    };
 
-            _context.Finances.Add(finance);
-            _context.FinanceReports.Add(financeReport);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+        //    _context.Finances.Add(finance);
+        //    _context.FinanceReports.Add(financeReport);
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
 
         public async Task CreateOrderAsync(string orderNumber, DateTime startDate, DateTime endDate, string pickupLocation,
             string deliveryLocation, string driverEmail, string loadType, string assignedBy, decimal revenue)
@@ -117,14 +117,14 @@ namespace TransportManagement.Services.Order
             return await _context.Orders.Where(o => o.DriverEmail == driverEmail).ToListAsync();
         }
 
-        public  OrderPriority GetPriorityForDriver(OrderModel order)
+        public OrderPriority GetPriorityForDriver(OrderModel order)
         {
             var dayLeft = (order.EndDate - DateTime.Now).TotalDays;
-            if(dayLeft <= 1)
+            if (dayLeft <= 1)
             {
                 return OrderPriority.Wysoki;
             }
-            else if(dayLeft <= 3)
+            else if (dayLeft <= 3)
             {
                 return OrderPriority.Średni;
             }
@@ -169,14 +169,43 @@ namespace TransportManagement.Services.Order
 
         public async Task<bool> UpdateOrderStatus(int id, OrderStatus newStatus)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o=>o.Id==id);
-            if(order != null)
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            order.Status = newStatus;
+
+            if (order == null)
             {
-                order.Status = newStatus;
-                await _context.SaveChangesAsync();
-                return true;
+                return false;
             }
-            return false;
+
+            order.Status = OrderStatus.Zakończone;
+            if (newStatus == OrderStatus.Zakończone)
+            {
+                var finance = new FinanceModel
+                {
+                    Date = DateTime.UtcNow,
+                    Amount = order.Revenue,
+                    Type = FinanceType.Revenue,
+                    Description = $"Przychód za zlecenie {order.Id}",
+                    DriverEmail = order.DriverEmail
+                };
+
+                var financeReport = new FinanceReportModel
+                {
+                    DriverEmail = order.DriverEmail,
+                    Year = order.EndDate.Year,
+                    Month = order.EndDate.Month,
+                    TotalRevenue = order.Revenue,
+                    TotalExpenses = 0,
+                    TotalSalary = 0,
+                    TotalProfitFromCompletedOrders = order.Revenue
+                };
+
+                _context.Finances.Add(finance);
+                _context.FinanceReports.Add(financeReport);
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -19,6 +19,16 @@
     vertical-align: text-bottom;
 }
 
+#supportView {
+    height: 400px;
+    width: 1px;
+}
+
+#supportViewDispatcher {
+    height: 100px;
+    width: 1px;
+}
+
 .slidebar {
     position: fixed;
     top: 0;

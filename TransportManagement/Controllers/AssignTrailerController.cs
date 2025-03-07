@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using TransportManagement.Models.AssignTrailer;
 using TransportManagement.Services.AssignTrailer;
 using TransportManagement.Services.Trailer;
@@ -6,6 +8,7 @@ using TransportManagement.Services.Truck;
 
 namespace TransportManagement.Controllers
 {
+    [Authorize(Roles = "Admin, Dispatcher")]
     public class AssignTrailerController : Controller
     {
         private readonly IAssignTrailerService _assignTrailerService;
