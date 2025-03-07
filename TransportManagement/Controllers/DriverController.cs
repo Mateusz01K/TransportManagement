@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using TransportManagement.Models.Drivers;
 using TransportManagement.Services.Driver;
 
@@ -11,6 +13,8 @@ namespace TransportManagement.Controllers
         {
             _driverService = driverService;
         }
+
+        [Authorize(Roles = "Admin, Dispatcher")]
         public async Task<IActionResult> Index()
         {
             var drivers = await _driverService.GetDrivers();
@@ -26,6 +30,7 @@ namespace TransportManagement.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddNewDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience, decimal Salary)
         {
             if(string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(LastName) || (DateOfBirth >= DateTime.Now) || string.IsNullOrEmpty(PhoneNumber)
@@ -45,6 +50,7 @@ namespace TransportManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteDriver()
         {
             var drivers = await _driverService.GetDrivers();
@@ -55,6 +61,7 @@ namespace TransportManagement.Controllers
             return View(driverViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteThisDriver(int id)
         {
             if(id != 0)
@@ -66,6 +73,7 @@ namespace TransportManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateDriver()
         {
             var drivers = await _driverService.GetDrivers();
@@ -76,6 +84,7 @@ namespace TransportManagement.Controllers
             return View(driverViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateThisDriver(int id, string Name, string LastName, DateTime DateOfBirth,
                                                 string PhoneNumber, string Email, string Address, int Experience, decimal Salary)
         {

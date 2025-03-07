@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using TransportManagement.Models.Trailer;
 using TransportManagement.Services.Trailer;
 
@@ -11,6 +13,8 @@ namespace TransportManagement.Controllers
         {
             _trailerService = trailerService;
         }
+
+        [Authorize(Roles = "Admin, Dispatcher")]
         public async Task<IActionResult> Index()
         {
             var trailers = await _trailerService.GetTrailers();
@@ -26,6 +30,7 @@ namespace TransportManagement.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddNewTrailer(string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
         {
             if (string.IsNullOrEmpty(Brand) || string.IsNullOrEmpty(Model) || string.IsNullOrEmpty(Type) || (Mileage == 0)
@@ -38,6 +43,7 @@ namespace TransportManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTrailer()
         {
             var trailers = await _trailerService.GetTrailers();
@@ -48,6 +54,7 @@ namespace TransportManagement.Controllers
             return View(trailerViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteThisTrailer(int id)
         {
             if (id != 0)
@@ -59,6 +66,7 @@ namespace TransportManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateTrailer()
         {
             var trailers = await _trailerService.GetTrailers();
@@ -69,6 +77,7 @@ namespace TransportManagement.Controllers
             return View(trailerViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateThisTrailer(int id, string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
         {
             //var items = _trailerService.GetTrailers();

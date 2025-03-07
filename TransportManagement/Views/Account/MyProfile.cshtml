@@ -1,0 +1,88 @@
+﻿@model TransportManagement.Models.User.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "Moje dane";
+}
+
+<div class="container text-center">
+    <h1 class="display-4">Moje dane</h1>
+
+    <div class="card shadow p-4 mb-4">
+        <h2 class="mb-3 text-dark">Dane użytkownika</h2>
+        <table class="table">
+            <tr><th>Email:</th><td>@Model.Email</td></tr>
+            <tr><th>Imię:</th><td>@Model.FirstName</td></tr>
+            <tr><th>Nazwisko:</th><td>@Model.LastName</td></tr>
+            <tr><th>Telefon:</th><td>@Model.PhoneNumber</td></tr>
+            <tr><th>Adres:</th><td>@Model.Address</td></tr>
+            <tr><th>Rola:</th><td>@Model.Role</td></tr>
+        </table>
+    </div>
+
+    @if (Model.Role == "Driver")
+    {
+        <div class="card shadow p-4 mb-4">
+            <h2 class="mb-3 text-dark">Przypisane ciężarówki</h2>
+            @if (Model.AssignedTrucks.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Marka</th>
+                            <th>Model</th>
+                            <th>Nr rejestracyjny</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var truck in Model.AssignedTrucks)
+                        {
+                            <tr>
+                                <td>@truck.Truck.Brand</td>
+                                <td>@truck.Truck.Model</td>
+                                <td>@truck.Truck.LicensePlate</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="text-dark">Brak przypisanych ciężarówek.</p>
+            }
+        </div>
+
+        <div class="card shadow p-4 mb-4">
+            <h2 class="mb-3 text-dark">Przypisane naczepy</h2>
+            @if (Model.AssignedTrailers.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Marka</th>
+                            <th>Model</th>
+                            <th>Nr rejestracyjny</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var trailer in Model.AssignedTrailers)
+                        {
+                            <tr>
+                                <td>@trailer.Brand</td>
+                                <td>@trailer.Model</td>
+                                <td>@trailer.LicensePlate</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="text-dark">Brak przypisanych naczep.</p>
+            }
+        </div>
+    }
+
+    <div class="text-center m-5">
+        <a class="btn btn-warning" asp-area="" asp-controller="Account" asp-action="ChangePassword">Zmień hasło</a>
+    </div>
+</div>

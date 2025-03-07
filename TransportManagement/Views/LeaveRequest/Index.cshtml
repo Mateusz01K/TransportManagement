@@ -39,11 +39,11 @@
                             @if (request.Status == TransportManagement.Models.LeaveRequests.LeaveStatus.Pending)
                             {
                                 <div class="action-buttons">
-                                    <form asp-action="ApproveLeaveRequest" method="post" class="form-container">
+                                    <form asp-action="ApproveLeaveRequest" method="post" class="action-form">
                                         <input type="hidden" name="id" value="@request.Id">
                                         <button type="submit" class="btn btn-success">Zatwierdź</button>
                                     </form>
-                                    <form asp-action="RejectLeaveRequest" method="post" class="form-container">
+                                    <form asp-action="RejectLeaveRequest" method="post" class="action-form">
                                         <input type="hidden" name="id" value="@request.Id">
                                         <textarea name="adminComment" placeholder="Powód odrzucenia" rows="2" required></textarea>
                                         <button type="submit" class="btn btn-danger">Odrzuć</button>

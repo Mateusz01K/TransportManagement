@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Data;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TransportManagement.Models.TransportCost;
 
 namespace TransportManagement.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TransportCostController : Controller
     {
         private readonly HttpClient _httpClient;

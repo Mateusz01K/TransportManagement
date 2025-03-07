@@ -39,13 +39,19 @@
                         <td scope="row">@item.DriverEmail</td>
                         <td scope="row">@item.Priority</td>
                         <td scope="row">@item.Status</td>
-                        <form method="post" asp-action="UpdateStatus">
-                            <input type="hidden" name="orderId" value="@item.Id" />
-                            <select name="newStatus" required>
-                                <option value="Dostarczone">Dostarczone</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary btn-sm">Ustaw</button>
-                        </form>
+                        <td class="text-center">
+                            @if (item.Status == TransportManagement.Models.Orders.OrderStatus.Trwa)
+                            {
+                                <form method="post" asp-action="MarkDelivered">
+                                    <input type="hidden" name="orderId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-primary btn-sm">Dostarczone</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="text-muted text-dark">Brak</span>
+                            }
+                        </td>
                     </tr>
                 }
             </tbody>

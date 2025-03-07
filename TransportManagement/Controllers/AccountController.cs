@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.User;
 using TransportManagement.Services.User;
 using TransportManagement.Services.User.EmailSender;
@@ -13,13 +15,16 @@ namespace TransportManagement.Controllers
         private readonly IUserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly TransportManagementDbContext _context;
 
-        public AccountController(IAccountService accountService, IUserService userService, UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public AccountController(IAccountService accountService, IUserService userService, UserManager<ApplicationUser> userManager, IEmailSender emailSender,
+            TransportManagementDbContext context)
         {
             _accountService = accountService;
             _userService = userService;
             _userManager = userManager;
             _emailSender = emailSender;
+            _context = context;
         }
 
         public IActionResult RegisterView()
@@ -27,6 +32,7 @@ namespace TransportManagement.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RegisterUser(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -122,6 +128,46 @@ namespace TransportManagement.Controllers
                 return RedirectToAction("Index", "Home");
             }
             TempData["message"] = "Zmiana hasła nie powiodła się.";
+            return View(model);
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Dispatcher, Driver")]
+        public async Task<IActionResult> MyProfile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("LoginUser");
+            }
+
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault() ?? "Brak";
+
+            var model = new UserProfileViewModel
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address,
+                Role = role,
+            };
+
+            if(roles.Contains("Driver"))
+            {
+                var driver = await _context.Drivers.Include(d => d.AssignTruck).ThenInclude(at => at.Truck).FirstOrDefaultAsync(d=>d.Email==user.Email);
+                if (driver != null)
+                {
+                    model.AssignedTrucks = driver.AssignTruck.Where(at=>!at.IsReturned).ToList();
+
+                    model.AssignedTrailers = await _context.AssignTrailers.Where(at => model.AssignedTrucks.Select(t => t.Id).Contains(at.TruckId) && !at.IsReturned)
+                        .Include(at => at.Trailer).Select(at => at.Trailer).ToListAsync();
+                }
+            }
+
             return View(model);
         }
 

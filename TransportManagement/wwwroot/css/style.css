@@ -23,6 +23,46 @@ h3 {
     color: white;
 }
 
+.action-buttons form {
+    display: inline-block;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-form {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.action-form textarea {
+    width: 150px;
+    height: 40px;
+    resize: vertical;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    max-width: 250px;
+}
+
+.action-form button {
+    margin: 0;
+}
+
+.action-form button.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545
+}
+
+.action-form button.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130
+}
+
+.table td {
+    vertical-align: middle;
+}
+
 /* Ogólny styl dla formularzy */
 .form-container {
     background-color: #4f4848;
@@ -174,6 +214,7 @@ h3 {
         .form-container input[type="email"],
         .form-container input[type="file"],
         .form-container input[type="date"],
+        .form-container input[type="password"],
         .form-container input[type="datetime"],
         .form-container input[type="datetime-local"],
         .form-container button {
@@ -185,6 +226,7 @@ h3 {
         .form-container input[type="email"],
         .form-container input[type="file"],
         .form-container input[type="date"],
+        .form-container input[type="password"],
         .form-container input[type="datetime"],
         .form-container input[type="datetime-local"] {
             width: 100%; /* Zwiększenie szerokości pól formularza na małych ekranach */
