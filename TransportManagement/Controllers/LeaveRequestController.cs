@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TransportManagement.Models.LeaveRequests;
+using TransportManagement.Models.Orders;
 using TransportManagement.Services.LeaveRequest;
 using TransportManagement.Services.User;
 
@@ -94,6 +95,19 @@ namespace TransportManagement.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ArchivedLeaveRequests()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                TempData["message"] = "Nie można wyświetlić archiwum.";
+                return RedirectToAction("Index", "Home");
+            }
+            var archivedRequests = await _leaveRequestService.ArchivedLeaveRequestsForUsers(userId);
+            return View(archivedRequests);
         }
     }
 }

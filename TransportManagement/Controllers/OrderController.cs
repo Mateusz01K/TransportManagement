@@ -183,5 +183,30 @@ namespace TransportManagement.Controllers
             var emails = await _context.Drivers.Where(d => d.Email.Contains(term)).Select(d => d.Email).ToListAsync();
             return Json(emails);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Dispatcher")]
+        public async Task<IActionResult> ArchivedOrders()
+        {
+            var archiverOrders = await _context.Orders.Where(o=>o.EndDate<DateTime.Now.AddMonths(-1) && o.Status == OrderStatus.Zakończone).ToListAsync();
+            var model = new OrderViewModel
+            {
+                Orders = archiverOrders
+            };
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Driver")]
+        public async Task<IActionResult> ArchivedOrdersForDrivers()
+        {
+            string userEmail = User.Identity.Name;
+            var archiverOrders = await _context.Orders.Where(o=> o.DriverEmail == userEmail && o.EndDate < DateTime.Now.AddMonths(-1) && o.Status == OrderStatus.Zakończone).ToListAsync();
+            var model = new OrderViewModel
+            {
+                Orders = archiverOrders
+            };
+            return View(model);
+        }
     }
 }

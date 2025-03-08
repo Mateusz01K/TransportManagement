@@ -12,5 +12,6 @@ namespace TransportManagement.Services.LeaveRequest
         Task<bool> SubmitLeaveRequest(string userId, DateTime startDate, DateTime endDate);
         Task<bool> ApproveLeaveRequest(int id);
         Task<bool> RejectLeaveRequest(int id, string adminComment);
+        Task<List<LeaveRequestModel>> ArchivedLeaveRequestsForUsers(string userId);
     }
 }

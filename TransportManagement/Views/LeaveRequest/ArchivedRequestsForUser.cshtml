@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var request in Model.LeaveRequests.Where(r=>r.EndDate < DateTime.Now.AddYears(-1)))
+                @foreach (var request in Model.LeaveRequests)
                 {
                     <tr>
                         <td>@request.StartDate.ToShortDateString()</td>

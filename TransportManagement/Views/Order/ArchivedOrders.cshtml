@@ -2,13 +2,13 @@
 @model TransportManagement.Models.Orders.OrderViewModel
 
 @{
-    ViewData["Title"] = "Zlecenia";
+    ViewData["Title"] = "Archiwum Zlecenia";
 }
 
 
 
 <div class="text-center">
-    <h1 class="display-4">Lista Zleceń</h1>
+    <h1 class="display-4">Lista Archiwalnych Zleceń</h1>
     <div class="table-container">
         <table class="table table-hover" id="ordersTable">
             <thead>
@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Orders.Where(o=>!(o.EndDate<DateTime.Now.AddMonths(-1) && o.Status == OrderStatus.Zakończone)))
+                @foreach (var item in Model.Orders)
                 {
                     <tr>
                         <td scope="row">@item.Id</td>
@@ -38,25 +38,7 @@
                         <td scope="row">@item.LoadType</td>
                         <td scope="row">@item.DriverEmail</td>
                         <td scope="row">@item.Priority</td>
-                        <td>
-                            <form method="post" asp-action="UpdateStatus">
-                                <input type="hidden" name="orderId" value="@item.Id" />
-                                <select name="newStatus" required>
-                                    @foreach (var status in Enum.GetValues(typeof(OrderStatus)))
-                                    {
-                                        <option value="@status" selected="@(item.Status == (OrderStatus)status ? "selected" : null)">@status</option>
-                                    }
-                                </select>
-                                <button type="submit" class="btn btn-primary btn-sm">Ustaw</button>
-                            </form>@*
-                            @if (item.Status != OrderStatus.Zakończone)
-                            {
-                                <form method="post" asp-action="CompletedOrder">
-                                    <input type="hidden" name="orderId" value="@item.Id" />
-                                    <button type="submit" class="btn btn-primary btn-sm">Zakończ</button>
-                                </form>
-                            }*@
-                        </td>
+                        <td scope="row">@item.Status</td>
                     </tr>
                 }
             </tbody>

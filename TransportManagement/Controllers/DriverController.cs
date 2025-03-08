@@ -25,6 +25,7 @@ namespace TransportManagement.Controllers
             return View(driverViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult AddDriver()
         {
             return View();
