@@ -109,6 +109,30 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" asp-controller="Finance" asp-action="MonthlyFinance">
+                                <span data-feather="settings"></span>
+                                Finanse Miesieczne
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Finance" asp-action="YearFinance">
+                                <span data-feather="settings"></span>
+                                Finanse Roczne
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Finance" asp-action="MonthlyFinanceForUser">
+                                <span data-feather="settings"></span>
+                                Finanse Miesieczne Pracownika
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Finance" asp-action="YearFinanceForUser">
+                                <span data-feather="settings"></span>
+                                Finanse Roczne Pracownika
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" asp-controller="LeaveRequest" asp-action="Index">
                                 <span data-feather="calendar"></span>
                                 Urlop
@@ -129,9 +153,9 @@
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="FinanceReport" asp-action="GenerateReport">
                                 <span data-feather="file-text"></span>
-                                Current week
+                                Generowanie raportów
                             </a>
                         </li>
                         <li class="nav-item">

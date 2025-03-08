@@ -21,10 +21,10 @@ namespace TransportManagement.Services.Finance
             {
                 var salaryExpense = new FinanceModel
                 {
-                    Description = $"Pensja dla pracownika {driver.Email}",
-                    DriverEmail = driver.Email,
+                    Description = $"Pensja",
+                    EmployeeEmail = driver.Email,
                     Amount = driver.Salary,
-                    Type = FinanceType.Salary,
+                    Type = FinanceType.Pensja,
                     Date = new DateTime(year, month, day)
                 };
 
@@ -51,12 +51,12 @@ namespace TransportManagement.Services.Finance
 
         public async Task<decimal> CalculateTotalExpenses()
         {
-            return await _context.Finances.Where(f => f.Type == FinanceType.Expense).SumAsync(f => f.Amount);
+            return await _context.Finances.Where(f => f.Type == FinanceType.Wydatek || f.Type == FinanceType.Pensja).SumAsync(f => f.Amount);
         }
 
         public async Task<decimal> CalculateTotalRevenue()
         {
-            return await _context.Finances.Where(f => f.Type == FinanceType.Revenue).SumAsync(f => f.Amount);
+            return await _context.Finances.Where(f => f.Type == FinanceType.Przychód).SumAsync(f => f.Amount);
         }
 
         public async Task<decimal> CalculateTotalSalaries()
@@ -75,7 +75,7 @@ namespace TransportManagement.Services.Finance
             {
                 Description = description,
                 Amount = amount,
-                Type = FinanceType.Expense,
+                Type = FinanceType.Wydatek,
                 Date = new DateTime(year, month, day)
             };
 
@@ -97,5 +97,178 @@ namespace TransportManagement.Services.Finance
 
         //    return reports;
         //}
+
+
+
+
+
+        public async Task<decimal> CalculateMonthlyTotalRevenue(int year, int month)
+        {
+            return await _context.Finances
+                .Where(f => f.Type == FinanceType.Przychód && f.Date.Year == year && f.Date.Month == month)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateMonthlyTotalExpenses(int year, int month)
+        {
+            return await _context.Finances
+                .Where(f => (f.Type == FinanceType.Wydatek || f.Type == FinanceType.Pensja) && f.Date.Year == year && f.Date.Month == month)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateMonthlyTotalSalaries(int year, int month)
+        {
+            return await _context.Finances
+                .Where(f => f.Type == FinanceType.Pensja && f.Date.Year == year && f.Date.Month == month)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateMonthlyGrossProfit(int year, int month)
+        {
+            var revenue = await CalculateMonthlyTotalRevenue(year, month);
+            var expenses = await CalculateMonthlyTotalExpenses(year, month);
+            return revenue - expenses;
+        }
+
+        public async Task<decimal> CalculateMonthlyNetProfit(int year, int month)
+        {
+            var grossProfit = await CalculateMonthlyGrossProfit(year, month);
+            decimal taxRate = 0.18m;
+            return grossProfit - (grossProfit * taxRate);
+        }
+
+
+
+
+
+
+
+
+
+        public async Task<decimal> CalculateMonthlyTotalRevenueForUser(string employeeEmail, int year, int month)
+        {
+            return await _context.Finances
+                .Where(f => f.EmployeeEmail == employeeEmail && f.Type == FinanceType.Przychód && f.Date.Year == year && f.Date.Month == month)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateMonthlyTotalExpensesForUser(string employeeEmail, int year, int month)
+        {
+            return await _context.Finances
+                .Where(f => f.EmployeeEmail == employeeEmail && (f.Type == FinanceType.Wydatek || f.Type == FinanceType.Pensja) && f.Date.Year == year && f.Date.Month == month)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateMonthlyTotalSalariesForUser(string employeeEmail, int year, int month)
+        {
+            return await _context.Finances
+                .Where(f => f.EmployeeEmail == employeeEmail && f.Type == FinanceType.Pensja && f.Date.Year == year && f.Date.Month == month)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateMonthlyGrossProfitForUser(string employeeEmail, int year, int month)
+        {
+            var revenue = await CalculateMonthlyTotalRevenueForUser(employeeEmail, year, month);
+            var expenses = await CalculateMonthlyTotalExpensesForUser(employeeEmail, year, month);
+            return revenue - expenses;
+        }
+
+        public async Task<decimal> CalculateMonthlyNetProfitForUser(string employeeEmail, int year, int month)
+        {
+            var grossProfit = await CalculateMonthlyGrossProfitForUser(employeeEmail, year, month);
+            decimal taxRate = 0.18m;
+            return grossProfit - (grossProfit * taxRate);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        public async Task<decimal> CalculateYearTotalRevenue(int year)
+        {
+            return await _context.Finances
+                .Where(f => f.Type == FinanceType.Przychód && f.Date.Year == year)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateYearTotalExpenses(int year)
+        {
+            return await _context.Finances
+                .Where(f => (f.Type == FinanceType.Wydatek || f.Type == FinanceType.Pensja) && f.Date.Year == year)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateYearTotalSalaries(int year)
+        {
+            return await _context.Finances
+                .Where(f => f.Type == FinanceType.Pensja && f.Date.Year == year)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateYearGrossProfit(int year)
+        {
+            var revenue = await CalculateYearTotalRevenue(year);
+            var expenses = await CalculateYearTotalExpenses(year);
+            return revenue - expenses;
+        }
+
+        public async Task<decimal> CalculateYearNetProfit(int year)
+        {
+            var grossProfit = await CalculateYearGrossProfit(year);
+            decimal taxRate = 0.18m;
+            return grossProfit - (grossProfit * taxRate);
+        }
+
+
+
+
+
+
+
+
+        public async Task<decimal> CalculateYearTotalRevenueForUser(string employeeEmail, int year)
+        {
+            return await _context.Finances
+                .Where(f => f.EmployeeEmail == employeeEmail && f.Type == FinanceType.Przychód && f.Date.Year == year)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateYearTotalExpensesForUser(string employeeEmail, int year)
+        {
+            return await _context.Finances
+                .Where(f => f.EmployeeEmail == employeeEmail && (f.Type == FinanceType.Wydatek || f.Type == FinanceType.Pensja) && f.Date.Year == year)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateYearTotalSalariesForUser(string employeeEmail, int year)
+        {
+            return await _context.Finances
+                .Where(f => f.EmployeeEmail == employeeEmail && f.Type == FinanceType.Pensja && f.Date.Year == year)
+                .SumAsync(f => f.Amount);
+        }
+
+        public async Task<decimal> CalculateYearGrossProfitForUser(string employeeEmail, int year)
+        {
+            var revenue = await CalculateYearTotalRevenueForUser(employeeEmail, year);
+            var expenses = await CalculateYearTotalExpensesForUser(employeeEmail, year);
+            return revenue - expenses;
+        }
+
+        public async Task<decimal> CalculateYearNetProfitForUser(string employeeEmail, int year)
+        {
+            var grossProfit = await CalculateYearGrossProfitForUser(employeeEmail, year);
+            decimal taxRate = 0.18m;
+            return grossProfit - (grossProfit * taxRate);
+        }
+
+
+
+
     }
 }

@@ -7,8 +7,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransportManagement.styles.css" asp-append-version="true" />
+
+    @if (!IsSectionDefined("Styles"))
+    {
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    }
+
+    @RenderSection("Styles", required:false)
 </head>
-@RenderSection("Styles", required:false)
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow">

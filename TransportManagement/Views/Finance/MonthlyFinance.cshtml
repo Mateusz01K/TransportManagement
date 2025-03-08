@@ -1,0 +1,75 @@
+﻿@model TransportManagement.Models.Finance.FinanceViewModel
+
+@{
+    ViewData["Title"] = "Przegląd Finansowy";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/finance.css" />
+}
+
+<div class="container">
+    <h1 class="text-center">Miesięczne Finanse</h1>
+
+    <form method="get" action="/Finance/MonthlyFinance">
+        <div class="row">
+            <div class="col">
+                <label for="year">Rok:</label>
+                <input type="number" id="year" name="year" class="form-control" value="@Model.Year" />
+            </div>
+            <div class="col">
+                <label for="month">Miesiąc:</label>
+                <input type="number" id="month" name="month" class="form-control" value="@Model.Month" />
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary" style="margin-top: 30px;">Pokaż</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-container mt-4">
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">Przychód</th>
+                    <th scope="col">Wydatki</th>
+                    <th scope="col">Pensje</th>
+                    <th scope="col">Zysk Brutto</th>
+                    <th scope="col">Zysk Netto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.TotalRevenue.ToString("C")</td>
+                    <td>@Model.TotalExpenses.ToString("C")</td>
+                    <td>@Model.TotalSalaries.ToString("C")</td>
+                    <td>@Model.GrossProfit.ToString("C")</td>
+                    <td>@Model.NetProfit.ToString("C")</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Typ</th>
+                    <th scope="col">Kwota</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Pracownik</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var finance in Model.Finances)
+                {
+                    <tr>
+                        <td>@finance.Description</td>
+                        <td>@finance.Type</td>
+                        <td>@finance.Amount.ToString("C")</td>
+                        <td>@finance.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@finance.EmployeeEmail</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

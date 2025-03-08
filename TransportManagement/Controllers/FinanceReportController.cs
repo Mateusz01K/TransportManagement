@@ -1,5 +1,5 @@
 ﻿using DinkToPdf.Contracts;
-using DinkToPdf;
+using IronPdf;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using TransportManagement.Models.FinanceReport;
@@ -7,76 +7,156 @@ using TransportManagement.Services.FinanceReport;
 using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.Finance;
 using TransportManagement.Models.Orders;
+using TransportManagement.Services.Finance;
 
 namespace TransportManagement.Controllers
 {
     public class FinanceReportController : Controller
     {
-        private readonly IFinanceReportService _financeReportService;
+        private readonly IFinanceService _financeService;
         private readonly IConverter _pdfConverter;
-        private readonly TransportManagementDbContext _context;
 
-        public FinanceReportController(IFinanceReportService financeReportService, IConverter pdfConverter, TransportManagementDbContext context)
+        public FinanceReportController(IFinanceService financeService, IConverter pdfConverter)
         {
-            _financeReportService = financeReportService;
+            _financeService = financeService;
             _pdfConverter = pdfConverter;
-            _context = context;
         }
 
-        public async Task<IActionResult> DownloadMonthlyReport(string driverEmail, int year, int month)
+        public IActionResult GenerateReport()
         {
-            var reports = await _financeReportService.GenerateMonthlyReport(year, month);
+            return View();
+        }
+
+        public async Task<IActionResult> DownloadMonthlyReport(string employeeEmail, int year, int month)
+        {
+            var revenue = await _financeService.CalculateMonthlyTotalRevenueForUser(employeeEmail, year, month);
+            var expenses = await _financeService.CalculateMonthlyTotalExpensesForUser(employeeEmail, year, month);
+            var salary = await _financeService.CalculateMonthlyTotalSalariesForUser(employeeEmail, year, month);
+            var grossProfit = await _financeService.CalculateMonthlyGrossProfitForUser(employeeEmail, year, month);
+            var netProfit = await _financeService.CalculateMonthlyNetProfitForUser(employeeEmail, year, month);
+
+            var reports = new List<FinanceReportModel>
+            {
+                new FinanceReportModel
+                {
+                    EmployeeEmail = employeeEmail,
+                    Year = year,
+                    Month = month,
+                    TotalRevenue = revenue,
+                    TotalExpenses = expenses,
+                    TotalSalary = salary,
+                    NetProfit = netProfit
+                }
+            };
+
             string htmlContent = GenerateFinanceReportHtml(reports, year, month);
 
-            var pdf = _pdfConverter.Convert(new HtmlToPdfDocument
-            {
-                GlobalSettings = { PaperSize = PaperKind.A4, Orientation = Orientation.Portrait },
-                Objects = { new ObjectSettings { HtmlContent = htmlContent, WebSettings = { DefaultEncoding = "utf-8" } } }
-            });
+            var pdf = ConvertHtmlToPdf(htmlContent);
 
-            return File(pdf, "application/pdf", $"Raport_{year}_{month}.pdf");
+            return File(pdf, "application/pdf", $"Raport_{employeeEmail}_{year}_{month}.pdf");
         }
 
-        private string GenerateFinanceReportHtml(List<FinanceReportModel> reports, int year, int month)
+        public async Task<IActionResult> DownloadAnnualReport(string employeeEmail, int year)
+        {
+            var revenue = await _financeService.CalculateYearTotalRevenueForUser(employeeEmail, year);
+            var expenses = await _financeService.CalculateYearTotalExpensesForUser(employeeEmail, year);
+            var salary = await _financeService.CalculateYearTotalSalariesForUser(employeeEmail, year);
+            var grossProfit = await _financeService.CalculateYearGrossProfitForUser(employeeEmail, year);
+            var netProfit = await _financeService.CalculateYearNetProfitForUser(employeeEmail, year);
+
+            var reports = new List<FinanceReportModel>
+            {
+                new FinanceReportModel
+                {
+                    EmployeeEmail = employeeEmail,
+                    Year = year,
+                    Month = 0,
+                    TotalRevenue = revenue,
+                    TotalExpenses = expenses,
+                    TotalSalary = salary,
+                    NetProfit = netProfit
+                }
+            };
+
+            string htmlContent = GenerateFinanceReportHtml(reports, year);
+
+            var pdf = ConvertHtmlToPdf(htmlContent);
+
+            return File(pdf, "application/pdf", $"Raport_{employeeEmail}_{year}.pdf");
+        }
+
+        private byte[] ConvertHtmlToPdf(string htmlContent)
+        {
+            var renderer = new ChromePdfRenderer();
+            var pdf = renderer.RenderHtmlAsPdf(htmlContent);
+            return pdf.BinaryData;
+        }
+
+        //public async Task<IActionResult> DownloadMonthlyReport(string employeeEmail, int year, int month)
+        //{
+        //    var reports = await _financeReportService.GenerateMonthlyReport(year, month, employeeEmail);
+        //    string htmlContent = GenerateFinanceReportHtml(reports, year, month);
+
+        //    var pdf = ConvertHtmlToPdf(htmlContent);
+
+        //    return File(pdf, "application/pdf", $"Raport_{employeeEmail}_{year}_{month}.pdf");
+        //}
+
+        //public async Task<IActionResult> DownloadAnnualReport(string employeeEmail, int year)
+        //{
+        //    var reports = await _financeReportService.GenerateAnnualReport(year, employeeEmail);
+        //    string htmlContent = GenerateFinanceReportHtml(reports, year, 0);
+
+        //    var pdf = ConvertHtmlToPdf(htmlContent);
+
+        //    return File(pdf, "application/pdf", $"Raport_{employeeEmail}_{year}.pdf");
+        //}
+
+        private string GenerateFinanceReportHtml(List<FinanceReportModel> reports, int year, int month = 0)
         {
             StringBuilder html = new StringBuilder();
 
             html.Append($@"
-    <html>
-    <head>
-        <style>
-            body {{ font-family: Arial, sans-serif; }}
-            h2 {{ text-align: center; }}
-            table {{ width: 100%; border-collapse: collapse; }}
-            th, td {{ border: 1px solid black; padding: 8px; text-align: center; }}
-            th {{ background-color: #f2f2f2; }}
-        </style>
-    </head>
-    <body>
-        <h2>Raport finansowy dla kierowcy - {year}/{month}</h2>
-        <table>
-            <tr>
-                <th>Data</th>
-                <th>Przychód</th>
-                <th>Wydatki</th>
-                <th>Wypłaty</th>
-                <th>Zysk z zakończonych zleceń</th>
-                <th>Zysk</th>
-            </tr>");
+<html>
+<head>
+    <style>
+        body {{ font-family: Arial, sans-serif; }}
+        h2 {{ text-align: center; }}
+        table {{ width: 100%; border-collapse: collapse; }}
+        th, td {{ border: 1px solid black; padding: 8px; text-align: center; }}
+        th {{ background-color: #f2f2f2; }}
+    </style>
+</head>
+<body>
+    <h2>Raport finansowy dla pracownika - {year}{(month != 0 ? $"/{month}" : "")}</h2>
+    <table>
+        <tr>
+            <th>Email pracownika</th>
+            <th>Rok</th>
+            <th>Miesiąc</th>
+            <th>Przychód</th>
+            <th>Wydatki</th>
+            <th>Wynagrodzenie</th>
+            <th>Zysk netto</th>
+        </tr>");
 
             foreach (var report in reports)
             {
-                var formattedMonth = report.Month.ToString("D2");
+                string totalRevenue = report.TotalRevenue.ToString("0.00");
+                string totalExpenses = report.TotalExpenses.ToString("0.00");
+                string totalSalary = report.TotalSalary.ToString("0.00");
+                string netProfit = report.NetProfit.ToString("0.00");
 
                 html.Append($@"
-        <tr>
-            <td>{report.Year}/{formattedMonth}</td>
-            <td>{report.TotalRevenue} zł</td>
-            <td>{report.TotalExpenses} zł</td>
-            <td>{report.TotalSalary} zł</td>
-            <td>{report.TotalProfitFromCompletedOrders} zł</td>
-            <td>{(report.TotalRevenue - report.TotalExpenses - report.TotalSalary + report.TotalProfitFromCompletedOrders)} zł</td>
-        </tr>");
+    <tr>
+        <td>{report.EmployeeEmail}</td>
+        <td>{report.Year}</td>
+        <td>{(report.Month != 0 ? report.Month.ToString() : "Cały rok")}</td>
+        <td>{totalRevenue} zł</td>
+        <td>{totalExpenses} zł</td>
+        <td>{totalSalary} zł</td>
+        <td>{netProfit} zł</td>
+    </tr>");
             }
 
             html.Append("</table></body></html>");
@@ -84,24 +164,26 @@ namespace TransportManagement.Controllers
             return html.ToString();
         }
 
-        public async Task<IActionResult> FinanceMonthlyReport(int year, int month)
-        {
-            var reports = await _financeReportService.GenerateMonthlyReport(year, month);
-            var viewModel = new FinanceReportViewModel
-            {
-                FinanceReports = reports
-            };
-            return View(viewModel);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> FinanceMonthlyReport(int year, int month)
+        //{
+        //    var reports = await _financeReportService.GenerateMonthlyReport(year, month);
+        //    var viewModel = new FinanceReportViewModel
+        //    {
+        //        FinanceReports = reports
+        //    };
+        //    return View(viewModel);
+        //}
 
-        public async Task<IActionResult> FinanceAnnualReport(int year)
-        {
-            var reports = await _financeReportService.GenerateAnnualReport(year);
-            var viewModel = new FinanceReportViewModel
-            {
-                FinanceReports = reports
-            };
-            return View(viewModel);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> FinanceAnnualReport(int year)
+        //{
+        //    var reports = await _financeReportService.GenerateAnnualReport(year);
+        //    var viewModel = new FinanceReportViewModel
+        //    {
+        //        FinanceReports = reports
+        //    };
+        //    return View(viewModel);
+        //}
     }
 }

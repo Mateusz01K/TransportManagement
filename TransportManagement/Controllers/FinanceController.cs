@@ -46,5 +46,110 @@ namespace TransportManagement.Controllers
             await _financeService.AddExpensesToFinance(amount, description, year, month, day);
             return RedirectToAction("Finance");
         }
+
+
+
+        public async Task<IActionResult> MonthlyFinance(int year, int month)
+        {
+            var revenue = await _financeService.CalculateMonthlyTotalRevenue(year, month);
+            var expenses = await _financeService.CalculateMonthlyTotalExpenses(year, month);
+            var salary = await _financeService.CalculateMonthlyTotalSalaries(year, month);
+            var grossProfit = await _financeService.CalculateMonthlyGrossProfit(year, month);
+            var netProfit = await _financeService.CalculateMonthlyNetProfit(year, month);
+            var finaces = await _financeService.GetAllFinance();
+
+            var viewModel = new FinanceViewModel
+            {
+                Finances = finaces,
+                Year = year,
+                Month = month,
+                TotalRevenue = revenue,
+                TotalExpenses = expenses,
+                TotalSalaries = salary,
+                GrossProfit = grossProfit,
+                NetProfit = netProfit
+            };
+
+            return View(viewModel);
+        }
+
+
+
+        public async Task<IActionResult> MonthlyFinanceForUser(string employeeEmail, int year, int month)
+        {
+            var revenue = await _financeService.CalculateMonthlyTotalRevenueForUser(employeeEmail, year, month);
+            var expenses = await _financeService.CalculateMonthlyTotalExpensesForUser(employeeEmail, year, month);
+            var salary = await _financeService.CalculateMonthlyTotalSalariesForUser(employeeEmail, year, month);
+            var grossProfit = await _financeService.CalculateMonthlyGrossProfitForUser(employeeEmail, year, month);
+            var netProfit = await _financeService.CalculateMonthlyNetProfitForUser(employeeEmail, year, month);
+            var finaces = await _financeService.GetAllFinance();
+
+            var viewModel = new FinanceViewModel
+            {
+                Finances = finaces,
+                EmployeeEmail = employeeEmail,
+                Year = year,
+                Month = month,
+                TotalRevenue = revenue,
+                TotalExpenses = expenses,
+                TotalSalaries = salary,
+                GrossProfit = grossProfit,
+                NetProfit = netProfit
+            };
+
+            return View(viewModel);
+        }
+
+
+
+
+        public async Task<IActionResult> YearFinance(int year)
+        {
+            var revenue = await _financeService.CalculateYearTotalRevenue(year);
+            var expenses = await _financeService.CalculateYearTotalExpenses(year);
+            var salary = await _financeService.CalculateYearTotalSalaries(year);
+            var grossProfit = await _financeService.CalculateYearGrossProfit(year);
+            var netProfit = await _financeService.CalculateYearNetProfit(year);
+            var finaces = await _financeService.GetAllFinance();
+
+            var viewModel = new FinanceViewModel
+            {
+                Finances = finaces,
+                Year = year,
+                TotalRevenue = revenue,
+                TotalExpenses = expenses,
+                TotalSalaries = salary,
+                GrossProfit = grossProfit,
+                NetProfit = netProfit
+            };
+
+            return View(viewModel);
+        }
+
+
+
+        public async Task<IActionResult> YearFinanceForUser(string employeeEmail, int year)
+        {
+            var revenue = await _financeService.CalculateYearTotalRevenueForUser(employeeEmail, year);
+            var expenses = await _financeService.CalculateYearTotalExpensesForUser(employeeEmail, year);
+            var salary = await _financeService.CalculateYearTotalSalariesForUser(employeeEmail, year);
+            var grossProfit = await _financeService.CalculateYearGrossProfitForUser(employeeEmail, year);
+            var netProfit = await _financeService.CalculateYearNetProfitForUser(employeeEmail, year);
+            var finaces = await _financeService.GetAllFinance();
+
+            var viewModel = new FinanceViewModel
+            {
+                Finances = finaces,
+                EmployeeEmail = employeeEmail,
+                Year = year,
+                TotalRevenue = revenue,
+                TotalExpenses = expenses,
+                TotalSalaries = salary,
+                GrossProfit = grossProfit,
+                NetProfit = netProfit
+            };
+
+            return View(viewModel);
+        }
     }
 }

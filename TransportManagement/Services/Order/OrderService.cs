@@ -1,17 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.Finance;
 using TransportManagement.Models.FinanceReport;
 using TransportManagement.Models.Orders;
+using TransportManagement.Models.User;
 
 namespace TransportManagement.Services.Order
 {
     public class OrderService : IOrderService
     {
         private readonly TransportManagementDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrderService(TransportManagementDbContext context)
+        public OrderService(TransportManagementDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         //public async Task<bool> CompleteOrder(int orderId)
@@ -184,19 +188,19 @@ namespace TransportManagement.Services.Order
                 {
                     Date = DateTime.UtcNow,
                     Amount = order.Revenue,
-                    Type = FinanceType.Revenue,
+                    Type = FinanceType.Przychód,
                     Description = $"Przychód za zlecenie {order.Id}",
-                    DriverEmail = order.DriverEmail
+                    EmployeeEmail = order.DriverEmail
                 };
-
                 var financeReport = new FinanceReportModel
                 {
-                    DriverEmail = order.DriverEmail,
+                    EmployeeEmail = order.DriverEmail,
                     Year = order.EndDate.Year,
                     Month = order.EndDate.Month,
                     TotalRevenue = order.Revenue,
                     TotalExpenses = 0,
                     TotalSalary = 0,
+                    Role = "Driver",
                     TotalProfitFromCompletedOrders = order.Revenue
                 };
 

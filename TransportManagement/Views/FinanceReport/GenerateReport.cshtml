@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Generowanie Raportu Finansowego";
+}
+
+<h2>Generowanie Raportu Finansowego</h2>
+
+<form method="get" action="@Url.Action("DownloadMonthlyReport", "FinanceReport")">
+    <div class="form-group">
+        <label for="employeeEmail">Email pracownika</label>
+        <input type="email" id="employeeEmail" name="employeeEmail" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="year">Rok</label>
+        <input type="number" id="year" name="year" class="form-control" min="2000" max="2100" required />
+    </div>
+    <div class="form-group">
+        <label for="month">Miesiąc</label>
+        <select id="month" name="month" class="form-control">
+            <option value="0">Cały rok</option>
+            <option value="1">Styczeń</option>
+            <option value="2">Luty</option>
+            <option value="3">Marzec</option>
+            <option value="4">Kwiecień</option>
+            <option value="5">Maj</option>
+            <option value="6">Czerwiec</option>
+            <option value="7">Lipiec</option>
+            <option value="8">Sierpień</option>
+            <option value="9">Wrzesień</option>
+            <option value="10">Październik</option>
+            <option value="11">Listopad</option>
+            <option value="12">Grudzień</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Generuj Raport</button>
+</form>
