@@ -16,6 +16,9 @@ namespace TransportManagement.Services.Order
 
         OrderPriority GetPriorityForDriver(OrderModel order);
         Task<bool> IsDriverOnLeave(string driverEmail, DateTime startDate, DateTime endDate);
+
+        Task<List<OrderModel>> GetArchivedOrders();
+        Task<List<OrderModel>> GetArchivedOrdersForDrivers(string userEmail);
         //Task<bool> CompleteOrder(int orderId);
 
         //Task AssignOrderToDriverAsync(int id, string driverEmail);

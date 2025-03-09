@@ -98,7 +98,7 @@ namespace TransportManagement.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ArchivedLeaveRequests()
+        public async Task<IActionResult> ArchivedLeaveRequestsForUser()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
@@ -106,8 +106,24 @@ namespace TransportManagement.Controllers
                 TempData["message"] = "Nie można wyświetlić archiwum.";
                 return RedirectToAction("Index", "Home");
             }
-            var archivedRequests = await _leaveRequestService.ArchivedLeaveRequestsForUsers(userId);
-            return View(archivedRequests);
+            var archivedRequests = await _leaveRequestService.GetArchivedLeaveRequestsForUsers(userId);
+            var model = new LeaveRequestViewModel
+            {
+                LeaveRequests = archivedRequests
+            };
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ArchivedLeaveRequests()
+        {
+            var archivedRequests = await _leaveRequestService.GetArchivedLeaveRequests();
+            var model = new LeaveRequestViewModel
+            {
+                LeaveRequests = archivedRequests
+            };
+            return View(model);
         }
     }
 }

@@ -70,9 +70,14 @@ namespace TransportManagement.Services.LeaveRequest
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<List<LeaveRequestModel>> ArchivedLeaveRequestsForUsers(string userId)
+        public async Task<List<LeaveRequestModel>> GetArchivedLeaveRequestsForUsers(string userId)
         {
             return await _context.LeaveRequests.Where(lr=>lr.UserId == userId && lr.EndDate < DateTime.Now.AddYears(-1)).ToListAsync();
+        }
+
+        public async Task<List<LeaveRequestModel>> GetArchivedLeaveRequests()
+        {
+            return await _context.LeaveRequests.Where(lr=>lr.EndDate<DateTime.Now.AddYears(-1)).ToListAsync();
         }
     }
 }

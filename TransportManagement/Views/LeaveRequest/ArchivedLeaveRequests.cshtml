@@ -1,0 +1,59 @@
+﻿@model TransportManagement.Models.LeaveRequests.LeaveRequestViewModel
+
+@{
+    ViewData["Title"] = "Urlop";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Lista Wniosków</h1>
+    <div class="table-container">
+        <table class="table table-hover" id="leaveTable">
+            <thead>
+                <tr>
+                    <th>Użytkownik</th>
+                    <th>Data początkowa</th>
+                    <th>Data zakończenia</th>
+                    <th>Status</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model.LeaveRequests)
+                {
+                    <tr>
+                        <td>
+                            @if (Model.UsersEmails.ContainsKey(request.UserId))
+                            {
+                                @Model.UsersEmails[request.UserId]
+                            }
+                            else
+                            {
+                                <span class="text-danger">Brak danych</span>
+                            }
+                        </td>
+                        <td>@request.StartDate.ToShortDateString()</td>
+                        <td>@request.EndDate.ToShortDateString()</td>
+                        <td>@request.Status</td>
+                        <td>
+                            @if (request.Status == TransportManagement.Models.LeaveRequests.LeaveStatus.Pending)
+                            {
+                                <div class="action-buttons">
+                                    <form asp-action="ApproveLeaveRequest" method="post" class="action-form">
+                                        <input type="hidden" name="id" value="@request.Id">
+                                        <button type="submit" class="btn btn-success">Zatwierdź</button>
+                                    </form>
+                                    <form asp-action="RejectLeaveRequest" method="post" class="action-form">
+                                        <input type="hidden" name="id" value="@request.Id">
+                                        <textarea name="adminComment" placeholder="Powód odrzucenia" rows="2" required></textarea>
+                                        <button type="submit" class="btn btn-danger">Odrzuć</button>
+                                    </form>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

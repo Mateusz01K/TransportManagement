@@ -11,8 +11,8 @@
 <div class="container">
     <h1 class="text-center">Miesięczne Finanse</h1>
 
-    <form method="get" action="/Finance/MonthlyFinance">
-        <div class="row">
+    <form method="get" action="/Finance/MonthlyFinance" class="finance-report">
+        <div class="row finance-row">
             <div class="col">
                 <label for="year">Rok:</label>
                 <input type="number" id="year" name="year" class="form-control" value="@Model.Year" />

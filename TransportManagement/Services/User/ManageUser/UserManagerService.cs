@@ -67,5 +67,27 @@ namespace TransportManagement.Services.User.ManageUser
             }
             return result.Succeeded;
         }
+
+
+        public async Task<bool> DeleteUserAsync(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return false;
+            }
+
+            if (await _userManager.IsInRoleAsync(user, "Driver"))
+            {
+                var driver = await _context.Drivers.FirstOrDefaultAsync(d => d.Email == user.Email);
+                if (driver != null)
+                {
+                    _context.Drivers.Remove(driver);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            var result = await _userManager.DeleteAsync(user);
+            return true;
+        }
     }
 }

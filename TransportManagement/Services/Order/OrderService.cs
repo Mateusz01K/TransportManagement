@@ -211,5 +211,16 @@ namespace TransportManagement.Services.Order
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<List<OrderModel>> GetArchivedOrders()
+        {
+            return await _context.Orders.Where(o => o.EndDate < DateTime.Now.AddMonths(-1) && o.Status == OrderStatus.Zakończone).ToListAsync();
+        }
+
+
+        public async Task<List<OrderModel>> GetArchivedOrdersForDrivers(string userEmail)
+        {
+            return await _context.Orders.Where(o => o.DriverEmail == userEmail && o.EndDate < DateTime.Now.AddMonths(-1) && o.Status == OrderStatus.Zakończone).ToListAsync();
+        }
     }
 }

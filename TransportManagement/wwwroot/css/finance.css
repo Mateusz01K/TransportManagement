@@ -21,8 +21,27 @@ h3 {
     color: white;
 }
 
-.form-container {
+.finance-report {
+    background-color: #4f4848 !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+.finance-report input {
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+}
+
+.finance-row {
     background-color: #4f4848;
+}
+
+.form-container {
+    background-color: #4f4848 !important;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
