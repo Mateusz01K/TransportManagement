@@ -12,7 +12,9 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Model ciężarówki</th>
+                    <th scope="col">Nr rejestracyjny</th>
                     <th scope="col">Model naczepy</th>
+                    <th scope="col">Nr rejestracyjny</th>
                     <th scope="col">Data przypisania</th>
                     <th scope="col">Data zwrotu</th>
                     <th scope="col">Czy zwrózono?</th>
@@ -24,7 +26,9 @@
                     <tr>
                         <td scope="row">@item.Id</td>
                         <td scope="row">@item.Truck.Model</td>
+                        <td scope="row">@item.Truck.LicensePlate</td>
                         <td scope="row">@item.Trailer.Model</td>
+                        <td scope="row">@item.Trailer.LicensePlate</td>
                         <td scope="row">@item.AssignmentDate.ToShortDateString()</td>
                         <td scope="row">@item.ReturnDate.ToShortDateString()</td>
                         <td scope="row">@(item.IsReturned ? "Zwrócono" : "Nie zwrócono")</td>

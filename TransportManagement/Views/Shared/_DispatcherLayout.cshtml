@@ -43,12 +43,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Order" asp-action="Index">
-                                <span data-feather="file"></span>
-                                Zlecenia
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" asp-controller="Driver" asp-action="Index">
                                 <span data-feather="users"></span>
                                 Kierowcy
@@ -79,9 +73,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="OrderReport" asp-action="Reports">
-                                <span data-feather="bar-chart-2"></span>
-                                Raporty
+                            <a class="nav-link" asp-controller="Order" asp-action="Index">
+                                <span data-feather="file"></span>
+                                Zlecenia
                             </a>
                         </li>
                         <li class="nav-item">
@@ -91,47 +85,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
-                                <span data-feather="settings"></span>
-                                Panel Admina
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" asp-controller="LeaveRequest" asp-action="UserRequest">
                                 <span data-feather="calendar"></span>
                                 Urlop
-                            </a>
-                        </li>
-                    </ul>
-                    <h6 class="slidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Saved Reports</span>
-                        <a class="d-flex align-items-center text-muted" href="#">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Current week
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="FinanceReport" asp-action="FinanceMonthlyReport">
-                                <span data-feather="file-text"></span>
-                                Current month
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Current year
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="FinanceReport" asp-action="FinanceAnnualReport">
-                                <span data-feather="file-text"></span>
-                                All
                             </a>
                         </li>
                     </ul>
@@ -150,14 +106,6 @@
                     </ul>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="LeaveRequest" asp-action="ArchivedLeaveRequests">
-                                <span data-feather="file-text"></span>
-                                Archiwum Urlopów
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
                             <a class="nav-link" asp-controller="LeaveRequest" asp-action="ArchivedLeaveRequestsForUser">
                                 <span data-feather="file-text"></span>
                                 Archiwum Moich Urlopów
@@ -165,19 +113,13 @@
                         </li>
                     </ul>
                     <h6 class="slidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Moje Konto</span>
+                        <span>Konto</span>
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Account" asp-action="MyProfile">
                                 <span data-feather="user"></span>
                                 Moje Dane
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="settings"></span>
-                                Ustawienia
                             </a>
                         </li>
                         <li class="nav-item">

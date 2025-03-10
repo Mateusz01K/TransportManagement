@@ -12,7 +12,8 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Model naczepy</th>
-                    <th scope="col">Czy zwrózono?</th>
+                    <th scope="col">Nr rejestracyjny</th>
+                    <th scope="col">Przypisana</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +22,7 @@
                     <tr>
                         <td scope="row">@item.Id</td>
                         <td scope="row">@item.Model</td>
+                        <td scope="row">@item.LicensePlate</td>
                         <td scope="row">@item.IsAssigned</td>
                     </tr>
                 }
@@ -31,7 +33,8 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Model ciężarówki</th>
-                    <th scope="col">Przypisanie</th>
+                    <th scope="col">Nr rejestracyjny</th>
+                    <th scope="col">Przypisana</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +43,7 @@
                     <tr>
                         <td scope="row">@item.Id</td>
                         <td scope="row">@item.Model</td>
+                        <td scope="row">@item.LicensePlate</td>
                         <td scope="row">@item.IsAssignedTrailer</td>
                     </tr>
                 }

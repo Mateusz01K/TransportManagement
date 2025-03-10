@@ -6,19 +6,15 @@
 
 
 <form method="post" asp-controller="Order" asp-action="Create" class="form-container">
-    <div class="form-group">
-        <label for="orderNumber">Imię: <span style="color: red">*</span></label>
-        <input type="text" class="form-control" id="orderNumber" placeholder="Nr" name="orderNumber" required />
-    </div>
 
     <div class="form-group">
         <label for="startDate">Data załadunku: <span style="color: red">*</span></label>
-        <input type="datetime" class="form-control" id="startDate" placeholder="Data załadunku" name="startDate" required />
+        <input type="date" class="form-control" id="startDate" placeholder="Data załadunku" name="startDate" required />
     </div>
 
     <div class="form-group">
         <label for="endDate">Data dostawy: <span style="color: red">*</span></label>
-        <input type="datetime" class="form-control" id="endDate" placeholder="Data dostawy" name="endDate" required />
+        <input type="date" class="form-control" id="endDate" placeholder="Data dostawy" name="endDate" required />
     </div>
 
     <div class="form-group">

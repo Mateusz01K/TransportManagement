@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var request in Model.LeaveRequests)
+                @foreach (var request in Model.LeaveRequests.Where(lr => !(lr.EndDate < DateTime.Now.AddYears(-1))))
                 {
                     <tr>
                         <td>
@@ -36,7 +36,7 @@
                         <td>@request.EndDate.ToShortDateString()</td>
                         <td>@request.Status</td>
                         <td>
-                            @if (request.Status == TransportManagement.Models.LeaveRequests.LeaveStatus.Pending)
+                            @if (request.Status == TransportManagement.Models.LeaveRequests.LeaveStatus.Oczekujące)
                             {
                                 <div class="action-buttons">
                                     <form asp-action="ApproveLeaveRequest" method="post" class="action-form">

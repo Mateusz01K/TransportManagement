@@ -59,24 +59,10 @@ namespace TransportManagement.Services.Order
         //    return true;
         //}
 
-        public async Task CreateOrderAsync(string orderNumber, DateTime startDate, DateTime endDate, string pickupLocation,
+        public async Task CreateOrderAsync(DateTime startDate, DateTime endDate, string pickupLocation,
             string deliveryLocation, string driverEmail, string loadType, string assignedBy, decimal revenue)
         {
-            //var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == driverEmail);
-            //if (user == null && !user.Roles.Contains("Driver"))
-            //{
-
-            //}
-            //var leaveRequests = await _context.LeaveRequests.Where(lr => lr.UserId == driverEmail && lr.Status == Models.LeaveRequests.LeaveStatus.Approved).Where(
-            //    lr => (startDate >= lr.StartDate && startDate <= lr.EndDate) ||
-            //    (endDate >= lr.StartDate && endDate <= lr.EndDate) ||
-            //    (startDate <= lr.StartDate && endDate >= lr.EndDate)).ToListAsync();
-
-            //if (leaveRequests.Any())
-            //{
-
-            //}
-
+            string orderNumber = await GenerateOrderNumberAsync();
             var order = new OrderModel
             {
                 OrderNumber = orderNumber,
@@ -141,7 +127,7 @@ namespace TransportManagement.Services.Order
         public async Task<bool> IsDriverOnLeave(string driverEmail, DateTime startDate, DateTime endDate)
         {
             return await _context.LeaveRequests
-                        .Where(lr => lr.UserId == driverEmail && lr.Status == Models.LeaveRequests.LeaveStatus.Approved).AnyAsync
+                        .Where(lr => lr.UserId == driverEmail && lr.Status == Models.LeaveRequests.LeaveStatus.Zaakceptowane).AnyAsync
                         (lr => (startDate >= lr.StartDate && startDate <= lr.EndDate) ||
                         (endDate >= lr.StartDate && endDate <= lr.EndDate) ||
                         (startDate <= lr.StartDate && endDate >= lr.EndDate) ||
@@ -160,7 +146,7 @@ namespace TransportManagement.Services.Order
                 order.EndDate = endDate >= DateTime.Today ? endDate : order.EndDate;
                 order.PickupLocation = !string.IsNullOrEmpty(pickupLocation) ? pickupLocation : order.PickupLocation;
                 order.DeliveryLocation = !string.IsNullOrEmpty(deliveryLocation) ? deliveryLocation : order.DeliveryLocation;
-                order.Status = OrderStatus.Oczekujące;
+                order.Status = order.Status;
                 order.LoadType = !string.IsNullOrEmpty(loadType) ? loadType : order.LoadType;
                 order.DriverEmail = !string.IsNullOrEmpty(driverEmail) ? driverEmail : order.DriverEmail;
                 order.Revenue = revenue >= 0 ? revenue : order.Revenue;
@@ -189,7 +175,7 @@ namespace TransportManagement.Services.Order
                     Date = DateTime.UtcNow,
                     Amount = order.Revenue,
                     Type = FinanceType.Przychód,
-                    Description = $"Przychód za zlecenie {order.Id}",
+                    Description = $"Przychód za zlecenie {order.OrderNumber}",
                     EmployeeEmail = order.DriverEmail
                 };
                 var financeReport = new FinanceReportModel
@@ -221,6 +207,30 @@ namespace TransportManagement.Services.Order
         public async Task<List<OrderModel>> GetArchivedOrdersForDrivers(string userEmail)
         {
             return await _context.Orders.Where(o => o.DriverEmail == userEmail && o.EndDate < DateTime.Now.AddMonths(-1) && o.Status == OrderStatus.Zakończone).ToListAsync();
+        }
+
+
+        public async Task<string> GenerateOrderNumberAsync()
+        {
+            string currentMonthYear = DateTime.Now.ToString("MMyy");
+
+            var lastOrder = await _context.Orders
+                .Where(o => o.OrderNumber.StartsWith(currentMonthYear))
+                .OrderByDescending(o => o.OrderNumber)
+                .FirstOrDefaultAsync();
+
+            int newNumber = 1;
+
+            if (lastOrder != null)
+            {
+                string lastNumberStr = lastOrder.OrderNumber.Substring(4);
+                if (int.TryParse(lastNumberStr, out int lastNumber))
+                {
+                    newNumber = lastNumber + 1;
+                }
+            }
+
+            return $"{currentMonthYear}{newNumber:D4}";
         }
     }
 }

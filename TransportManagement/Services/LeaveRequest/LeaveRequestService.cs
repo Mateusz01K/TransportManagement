@@ -16,7 +16,7 @@ namespace TransportManagement.Services.LeaveRequest
             var request = await _context.LeaveRequests.FindAsync(id);
             if (request == null) return false;
 
-            request.Status = LeaveStatus.Approved;
+            request.Status = LeaveStatus.Zaakceptowane;
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -40,7 +40,7 @@ namespace TransportManagement.Services.LeaveRequest
             var request = await _context.LeaveRequests.FindAsync(id);
             if(request == null) return false;
 
-            request.Status = LeaveStatus.Reject;
+            request.Status = LeaveStatus.Odrzucone;
             request.AdminComment = adminComment;
             return await _context.SaveChangesAsync() > 0;
         }
@@ -63,7 +63,8 @@ namespace TransportManagement.Services.LeaveRequest
                 UserId = userId,
                 StartDate = startDate,
                 EndDate = endDate,
-                Status = LeaveStatus.Pending
+                Status = LeaveStatus.Oczekujące,
+                RequestDate = DateTime.Now
             };
 
             _context.LeaveRequests.Add(leaveRequest);

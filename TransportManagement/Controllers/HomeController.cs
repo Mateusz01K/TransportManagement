@@ -15,6 +15,16 @@ namespace TransportManagement.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("IndexForUsers", "Home");
+            }
+            return View();
+        }
+
+
+        public IActionResult IndexForUsers()
+        {
             return View();
         }
 

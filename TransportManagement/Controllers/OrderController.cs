@@ -35,10 +35,10 @@ namespace TransportManagement.Controllers
 
         [Authorize(Roles = "Admin, Dispatcher")]
         [HttpPost]
-        public async Task<IActionResult> Create(string orderNumber, DateTime startDate, DateTime endDate, string pickupLocation,
+        public async Task<IActionResult> Create(DateTime startDate, DateTime endDate, string pickupLocation,
             string deliveryLocation, string driverEmail, string loadType, decimal revenue)
         {
-            if (string.IsNullOrEmpty(orderNumber) || startDate < DateTime.Today || endDate < DateTime.Today || string.IsNullOrEmpty(pickupLocation) ||
+            if (startDate < DateTime.Today || endDate < DateTime.Today || string.IsNullOrEmpty(pickupLocation) ||
                 string.IsNullOrEmpty(deliveryLocation) || string.IsNullOrEmpty(driverEmail) || string.IsNullOrEmpty(loadType) || revenue < 0)
             {
                 TempData["message"] = "Popraw Dane.";
@@ -70,7 +70,7 @@ namespace TransportManagement.Controllers
                 return RedirectToAction("Index");
             }
             string assignedBy = User.Identity?.Name;
-            await _orderService.CreateOrderAsync(orderNumber, startDate, endDate, pickupLocation, deliveryLocation, driverEmail, loadType, assignedBy, revenue);
+            await _orderService.CreateOrderAsync(startDate, endDate, pickupLocation, deliveryLocation, driverEmail, loadType, assignedBy, revenue);
             return RedirectToAction("Index");
         }
 
@@ -85,7 +85,12 @@ namespace TransportManagement.Controllers
                 TempData["message"] = "Nie można edytować - Zlecenie nie istnieje.";
                 return RedirectToAction("Index");
             }
-            return View(orders);
+
+            var orderView = new OrderViewModel
+            {
+                Orders = orders
+            };
+            return View(orderView);
         }
 
 

@@ -118,10 +118,12 @@ namespace TransportManagement.Controllers
         [HttpGet]
         public async Task<IActionResult> ArchivedLeaveRequests()
         {
+            var userEmails = await _userService.GetAllUsersEmails();
             var archivedRequests = await _leaveRequestService.GetArchivedLeaveRequests();
             var model = new LeaveRequestViewModel
             {
-                LeaveRequests = archivedRequests
+                LeaveRequests = archivedRequests,
+                UsersEmails = userEmails
             };
             return View(model);
         }

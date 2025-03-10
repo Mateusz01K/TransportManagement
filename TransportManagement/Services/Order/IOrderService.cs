@@ -6,7 +6,7 @@ namespace TransportManagement.Services.Order
     {
         Task<List<OrderModel>> GetAllOrdersAsync();
         //Task<OrderModel> GetOrderByIdAsync(int id);
-        Task CreateOrderAsync(string orderNumber, DateTime startDate, DateTime endDate, string pickupLocation, string deliveryLocation,
+        Task CreateOrderAsync(DateTime startDate, DateTime endDate, string pickupLocation, string deliveryLocation,
              string driverEmail, string loadType, string assignedBy, decimal revenue);
         Task<bool> UpdateOrderAsync(int id, string orderNumber, DateTime startDate, DateTime endDate, string pickupLocation, string deliveryLocation,
              string driverEmail, string loadType, decimal revenue);

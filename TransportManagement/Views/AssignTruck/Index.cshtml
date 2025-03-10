@@ -12,6 +12,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Marka i Model</th>
+                    <th scope="col">Nr rejestracyjny</th>
                     <th scope="col">Imię i Nazwisko</th>
                     <th scope="col">Data przypisania</th>
                     <th scope="col">Data zwrotu</th>
@@ -24,6 +25,7 @@
                     <tr>
                         <td scope="row">@item.Id</td>
                         <td scope="row">@item.Truck.Brand @item.Truck.Model</td>
+                        <td scope="row">@item.Truck.LicensePlate</td>
                         <td scope="row">@item.Driver.Name @item.Driver.LastName</td>
                         <td scope="row">@item.AssignmentDate.ToShortDateString()</td>
                         <td scope="row">@item.ReturnDate.ToShortDateString()</td>

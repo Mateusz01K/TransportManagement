@@ -16,12 +16,12 @@
             <input type="hidden" asp-for="UserId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
             <div class="form-group">
                 <label class="sr-only" asp-for="StartDate">Data początkowa</label>
-                <input class="form-control" type="text" asp-for="StartDate" id="startDate" required />
+                <input class="form-control" type="date" asp-for="StartDate" id="startDate" required />
             </div>
 
             <div class="form-group">
                 <label class="sr-only" asp-for="EndDate">Data zakończenia</label>
-                <input class="form-control" type="text" asp-for="EndDate" id="endDate" required />
+                <input class="form-control" type="date" asp-for="EndDate" id="endDate" required />
             </div>
             <div class="text-center m-5">
                 <button type="submit" class="btn btn-success">Złóż wniosek</button>
@@ -29,4 +29,4 @@
         </div>
     </div>
 </form>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@*<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>*@

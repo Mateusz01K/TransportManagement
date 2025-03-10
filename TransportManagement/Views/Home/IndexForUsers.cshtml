@@ -1,0 +1,17 @@
+﻿@*@{
+    ViewData["Title"] = "Panel Główny";
+    var userName = User.Identity.Name ?? "Użytkowniku";
+    var currentDate = DateTime.Now.ToString("dd MMMM yyyy");
+}*@
+
+<div class="container text-center">
+    <h1>Witaj, w TransportManagement</h1>
+
+    <div class="welcome-box mt-4 p-4">
+        <p>Mamy nadzieję, że Twój dzień będzie udany i pełen sukcesów!</p>
+        <p>Jeśli masz jakie kolwiek pytania lub potrzeby pomocy, zawsze możesz skontaktować się z głównym adinistratorem.</p>
+        <p>E-mail: transportap@onet.pl</p>
+        <p>Nr Telefonu: +48 284 629 164</p>
+        <p>Życzymy miłej pracy!</p>
+    </div>
+</div>
