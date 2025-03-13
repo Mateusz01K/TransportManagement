@@ -72,16 +72,10 @@
                                 Przypisania Naczep
                             </a>
                         </li>
-                        @*<li class="nav-item">
-                            <a class="nav-link" asp-controller="OrderReport" asp-action="Reports">
-                                <span data-feather="bar-chart-2"></span>
-                                Raporty
-                            </a>
-                        </li>*@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Role" asp-action="ManageRole">
                                 <span data-feather="edit"></span>
-                                Zarządzanie Rolami
+                                Zarządzanie Użytkownikami
                             </a>
                         </li>
                         <li class="nav-item">
@@ -96,43 +90,6 @@
                                 Kalkulator
                             </a>
                         </li>
-                    </ul>
-                    <h6 class="slidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Finanse</span>
-                        <a class="d-flex align-items-center text-muted" href="#">
-                        </a>
-                    </h6>
-                    <ul>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Finance" asp-action="Finance">
-                                <span data-feather="dollar-sign"></span>
-                                Finanse
-                            </a>
-                        </li>
-                        @*<li class="nav-item">
-                            <a class="nav-link" asp-controller="Finance" asp-action="MonthlyFinance">
-                                <span data-feather="dollar-sign"></span>
-                                Finanse Miesieczne
-                            </a>
-                        </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Finance" asp-action="YearFinance">
-                                <span data-feather="dollar-sign"></span>
-                                Finanse Roczne
-                            </a>
-                        </li>@*
-                        <li class="nav-item">
-                        <a class="nav-link" asp-controller="Finance" asp-action="MonthlyFinanceForUser">
-                        <span data-feather="settings"></span>
-                        Finanse Miesieczne Pracownika
-                        </a>
-                        </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Finance" asp-action="YearFinanceForUser">
-                                <span data-feather="dollar-sign"></span>
-                                Finanse Roczne Pracownika
-                            </a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="LeaveRequest" asp-action="Index">
                                 <span data-feather="calendar"></span>
@@ -143,6 +100,48 @@
                             <a class="nav-link" asp-controller="LeaveRequest" asp-action="UserRequest">
                                 <span data-feather="calendar"></span>
                                 Mój Urlop
+                            </a>
+                        </li>
+                    </ul>
+                    <h6 class="slidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Finanse</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Finance" asp-action="Finance">
+                                <span data-feather="dollar-sign"></span>
+                                Finanse
+                            </a>
+                        </li>
+                    </ul>
+                    @*<li class="nav-item">
+                    <a class="nav-link" asp-controller="Finance" asp-action="MonthlyFinance">
+                    <span data-feather="dollar-sign"></span>
+                    Finanse Miesieczne
+                    </a>
+                    </li>*@
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Finance" asp-action="YearFinance">
+                                <span data-feather="dollar-sign"></span>
+                                Finanse Roczne
+                            </a>
+                        </li>
+                    </ul>
+                    @*
+                    <li class="nav-item">
+                    <a class="nav-link" asp-controller="Finance" asp-action="MonthlyFinanceForUser">
+                    <span data-feather="settings"></span>
+                    Finanse Miesieczne Pracownika
+                    </a>
+                    </li>*@
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Finance" asp-action="YearFinanceForUser">
+                                <span data-feather="dollar-sign"></span>
+                                Finanse Roczne Pracownika
                             </a>
                         </li>
                     </ul>
@@ -186,7 +185,16 @@
                                 <span data-feather="file-text"></span>
                                 Generowanie Raportu Finansowego
                             </a>
-                        </li>@*
+                        </li>
+                    </ul>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="OrderReport" asp-action="Reports">
+                                <span data-feather="file-text"></span>
+                                Generowanie Raportu Zleceń
+                            </a>
+                        </li>
+                        @*
                         <li class="nav-item">
                         <a class="nav-link" asp-controller="FinanceReport" asp-action="FinanceMonthlyReport">
                         <span data-feather="file-text"></span>

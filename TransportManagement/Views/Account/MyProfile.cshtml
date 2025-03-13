@@ -15,7 +15,23 @@
             <tr><th>Nazwisko:</th><td>@Model.LastName</td></tr>
             <tr><th>Telefon:</th><td>@Model.PhoneNumber</td></tr>
             <tr><th>Adres:</th><td>@Model.Address</td></tr>
-            <tr><th>Rola:</th><td>@Model.Role</td></tr>
+            <tr>
+                <th>Rola:</th>
+                <td>
+                    @switch (Model.Role)
+                    {
+                        case "Driver":
+                            <text>Kierowca</text>
+                            break;
+                        case "Dispatcher":
+                            <text>Spedytor</text>
+                            break;
+                        case "Admin":
+                            <text>Administrator</text>
+                            break;
+                    }
+                </td>
+            </tr>
         </table>
     </div>
 

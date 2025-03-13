@@ -78,7 +78,7 @@ namespace TransportManagement.Services.User
                 HasChangedPassword = false
             };
 
-            var tempPassword = GenerateSecurePassword();/*"Tmp" + Guid.NewGuid().ToString("N").Substring(0, 4) + "!";*/
+            var tempPassword = GenerateSecurePassword();
             if (tempPassword.Length < 6)
             {
                 tempPassword = tempPassword.PadRight(6, '1');
@@ -139,7 +139,6 @@ namespace TransportManagement.Services.User
                 return false;
 
             }
-            //await _userManager.UpdateSecurityStampAsync(user);
             user.HasChangedPassword = true;
             await _userManager.UpdateAsync(user);
             return true;

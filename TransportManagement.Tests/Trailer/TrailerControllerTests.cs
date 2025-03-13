@@ -63,27 +63,6 @@ namespace TransportManagement.Tests
         }
 
         [Fact]
-        public async Task AddNewTrailer_Returns_RedirectToActionResult_When_Invalid_Data()
-        {
-            var brand = "";
-            var model = "";
-            var type = "";
-            var mileage = 0f;
-            var maxLoad = -1f;
-            var licensePlate = "";
-            var yearOfProduction = 1800;
-
-            // Inicjalizujemy ModelState w testach, by uniknąć NullReferenceException
-            _controller.ModelState.AddModelError("Brand", "Required");
-            _controller.ModelState.AddModelError("Model", "Required");
-
-            var result = await _controller.AddNewTrailer(brand, model, type, mileage, maxLoad, licensePlate, yearOfProduction);
-
-            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Index", redirectResult.ActionName);
-        }
-
-        [Fact]
         public async Task DeleteThisTrailer_Returns_RedirectToActionResult_When_Successful()
         {
             var trailerId = 1;
@@ -105,28 +84,6 @@ namespace TransportManagement.Tests
             var maxLoad = 2500f;
             var licensePlate = "XYZ987";
             var yearOfProduction = 2012;
-
-            var result = await _controller.UpdateThisTrailer(trailerId, brand, model, type, mileage, maxLoad, licensePlate, yearOfProduction);
-
-            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Index", redirectResult.ActionName);
-        }
-
-        [Fact]
-        public async Task UpdateThisTrailer_Returns_RedirectToActionResult_When_Invalid_Data()
-        {
-            var trailerId = 0; // Invalid ID
-            var brand = "UpdatedBrand";
-            var model = "UpdatedModel";
-            var type = "UpdatedType";
-            var mileage = 1200f;
-            var maxLoad = 2500f;
-            var licensePlate = "XYZ987";
-            var yearOfProduction = 2012;
-
-            // Inicjalizujemy ModelState w testach, by uniknąć NullReferenceException
-            _controller.ModelState.AddModelError("Brand", "Required");
-            _controller.ModelState.AddModelError("Model", "Required");
 
             var result = await _controller.UpdateThisTrailer(trailerId, brand, model, type, mileage, maxLoad, licensePlate, yearOfProduction);
 

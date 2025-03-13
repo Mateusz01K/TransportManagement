@@ -23,7 +23,20 @@
                         <td scope="row">@item.Name</td>
                         <td scope="row">@item.LastName</td>
                         <td scope="row">@item.Email</td>
-                        <td scope="row">@item.Role</td>
+                        <td scope="row">
+                            @switch (item.Role)
+                            {
+                                case "Driver":
+                                    <text>Kierowca</text>
+                                    break;
+                                case "Dispatcher":
+                                    <text>Spedytor</text>
+                                    break;
+                                case "Admin":
+                                    <text>Administrator</text>
+                                    break;
+                            }
+                        </td>
                     </tr>
                 }
             </tbody>

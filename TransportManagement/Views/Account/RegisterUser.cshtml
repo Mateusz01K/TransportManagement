@@ -12,10 +12,10 @@
 
 <form class="form-signup" asp-action="RegisterUser" method="post">
     <h2>Resjestracja</h2>
-    <div>
+    @*<div>
         - Hasło musi składać się z co najmniej 6 znaków.<br />
-       @* - Wszystkie pola muszą być wypełnione.*@
-    </div>
+        - Wszystkie pola muszą być wypełnione.
+    </div>*@
     <div class="pt-3">
         <label asp-for="FirstName">Imię</label>
         <input class="form-control" type="text" asp-for="FirstName" placeholder="FirstName" required />

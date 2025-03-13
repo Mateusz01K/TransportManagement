@@ -1,5 +1,41 @@
 ﻿@model TransportManagement.Models.Orders.OrderViewModel
 
-@foreach(var order in Model.Orders){
-    <p>Zlecenie @order.OrderNumber, zakończone @order.EndDate.ToString("dd.MM.yyy")</p>
-}
+
+
+<div class="text-center">
+    <h1 class="display-4">Generowanie Raportu Zleceń</h1>
+</div>
+<form method="get" action="@Url.Action("GeneratePdfReport", "OrderReport")" class="form-container">
+    <div class="form-group">
+        <label for="driverEmail">Adres e-mail kierowcy</label>
+        <input type="email" id="driverEmail" name="driverEmail" class="form-control" placeholder="E-mail kierowcy" required>
+    </div>
+
+    <div class="form-group">
+        <label for="year">Rok</label>
+        <input type="number" id="year" name="year" class="form-control" value="@DateTime.Now.Year" placeholder="Wpisz rok" required>
+    </div>
+
+    <div class="form-group">
+        <label for="month">Miesiąc</label>
+        <select id="month" name="month" class="form-control">
+            <option value="0">Cały rok</option>
+            <option value="1">Styczeń</option>
+            <option value="2">Luty</option>
+            <option value="3">Marzec</option>
+            <option value="4">Kwiecień</option>
+            <option value="5">Maj</option>
+            <option value="6">Czerwiec</option>
+            <option value="7">Lipiec</option>
+            <option value="8">Sierpień</option>
+            <option value="9">Wrzesień</option>
+            <option value="10">Październik</option>
+            <option value="11">Listopad</option>
+            <option value="12">Grudzień</option>
+        </select>
+    </div>
+
+    <div class="text-center m-5">
+        <button type="submit" class="btn btn-primary">Generuj raport</button>
+    </div>
+</form>

@@ -86,11 +86,6 @@ namespace TransportManagement.Services.User.EmailSender
                 mailMessage.To.Add(smtpSettings["SmtpUsername"]);
                 mailMessage.Attachments.Add(new Attachment(filePath));
 
-                //if (!string.IsNullOrEmpty(cvFilePath))
-                //{
-                //    mailMessage.Attachments.Add(new Attachment(cvFilePath));
-                //}
-
                 await client.SendMailAsync(mailMessage);
                 return true;
             }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IronPdf;
+using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using TransportManagement.Models.Orders;
 using TransportManagement.Services.OrderReport;
 
@@ -22,6 +24,22 @@ namespace TransportManagement.Controllers
                 Orders = completedOrders
             };
             return View(orderViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GeneratePdfReport(string driverEmail, int year, int month)
+        {
+            try
+            {
+                var pdfBytes = await _orderReportService.GeneratePdfReportForDriver(driverEmail, year, month);
+
+                return File(pdfBytes, "application/pdf", $"Raport_zleceń_{driverEmail}_{year}_{month}.pdf");
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = $"Wystąpił błąd: {ex.Message}";
+                return RedirectToAction("Reports");
+            }
         }
     }
 }

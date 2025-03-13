@@ -23,7 +23,7 @@
                         <td scope="row">@item.Id</td>
                         <td scope="row">@item.Model</td>
                         <td scope="row">@item.LicensePlate</td>
-                        <td scope="row">@item.IsAssignedDriver</td>
+                        <td scope="row">@(item.IsAssignedDriver ? "Tak" : "Nie")</td>
                     </tr>
                 }
             </tbody>
@@ -42,7 +42,7 @@
                     <tr>
                         <td scope="row">@item.Id</td>
                         <td scope="row">@item.Name @item.LastName</td>
-                        <td scope="row">@item.IsAssignedTruck</td>
+                        <td scope="row">@(item.IsAssignedTruck ? "Tak" : "Nie")</td>
                     </tr>
                 }
             </tbody>

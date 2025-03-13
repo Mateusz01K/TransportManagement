@@ -17,7 +17,6 @@ namespace TransportManagement.Controllers
 
         public async Task<IActionResult> Finance()
         {
-            //var finances = await _financeService.GetAllFinance();
             var revenue = await _financeService.CalculateTotalRevenue();
             var expenses = await _financeService.CalculateTotalExpenses();
             var salary = await _financeService.CalculateTotalSalaries();
@@ -25,7 +24,6 @@ namespace TransportManagement.Controllers
             var netProfit = await _financeService.CalculateNetProfit();
             var viewModel = new FinanceViewModel
             {
-                //Finances = finances,
                 TotalRevenue = revenue,
                 TotalExpenses = expenses,
                 TotalSalaries = salary,

@@ -16,9 +16,8 @@ namespace TransportManagement.Tests
 
         public TrailerServiceTests()
         {
-            // Dynamiczna nazwa bazy danych dla każdego testu
             var options = new DbContextOptionsBuilder<TransportManagementDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Używamy GUID, aby każdemu testowi przypisać unikalną bazę
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
             _context = new TransportManagementDbContext(options);

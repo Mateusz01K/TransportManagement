@@ -2,16 +2,19 @@
     ViewData["Title"] = "Generowanie Raportu Finansowego";
 }
 
-<h2>Generowanie Raportu Finansowego</h2>
+<div class="text-center">
+    <h1 class="display-4">Generowanie Raportu Finansowego</h1>
+</div>
 
-<form method="get" action="@Url.Action("DownloadMonthlyReport", "FinanceReport")">
+<form method="get" id="reportForm" class="form-container">
+    @*action="@Url.Action("DownloadMonthlyReport", "FinanceReport")"*@
     <div class="form-group">
         <label for="employeeEmail">Email pracownika</label>
-        <input type="email" id="employeeEmail" name="employeeEmail" class="form-control" required />
+        <input type="email" id="employeeEmail" name="employeeEmail" class="form-control" placeholder="E-mail kierowcy" required />
     </div>
     <div class="form-group">
         <label for="year">Rok</label>
-        <input type="number" id="year" name="year" class="form-control" min="2000" max="2100" required />
+        <input type="number" id="year" name="year" class="form-control" value="@DateTime.Now.Year" min="2000" max="2100" required />
     </div>
     <div class="form-group">
         <label for="month">Miesiąc</label>
@@ -32,5 +35,48 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Generuj Raport</button>
+    <div class="text-center m-5">
+        <button type="submit" class="btn btn-primary">Generuj Raport</button>
+    </div>
 </form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var form = document.getElementById("reportForm");
+        var monthSelect = document.getElementById("month");
+
+        function updateFormAction() {
+            var month = monthSelect.value;
+
+            if (month === "0") {
+                form.action = "@Url.Action("DownloadAnnualReport", "FinanceReport")";
+            } else {
+                form.action = "@Url.Action("DownloadMonthlyReport", "FinanceReport")";
+            }
+        }
+
+        updateFormAction();
+
+        monthSelect.addEventListener("change", updateFormAction);
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#employeeEmail").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Order/GetDriverEmails",
+                    type: "GET",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error:", status, error);
+                    }
+                });
+            },
+            minLength: 2
+        });
+    });
+</script>

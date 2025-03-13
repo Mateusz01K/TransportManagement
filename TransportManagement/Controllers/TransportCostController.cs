@@ -28,7 +28,7 @@ namespace TransportManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CalculateCost(/*[FromBody]*/ TransportCostRequestModel request)
+        public async Task<IActionResult> CalculateCost(TransportCostRequestModel request)
         {
             if (request == null)
             {
@@ -63,8 +63,6 @@ namespace TransportManagement.Controllers
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return Ok(JsonSerializer.Deserialize<object>(jsonResponse));
-            //var exchangeRates = await GetAllExchangeRates();
-            //return Ok(exchangeRates);
         }
 
         private async Task<double> GetExchangeRate(string currency)
