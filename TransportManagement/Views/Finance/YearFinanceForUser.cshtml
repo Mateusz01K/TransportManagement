@@ -9,7 +9,7 @@
 }
 
 <div class="container">
-    <h1 class="text-center">Roczne Finanse</h1>
+    <h1 class="text-center">Roczne Finanse Użytkownika</h1>
 
     <form method="get" action="/Finance/YearFinanceForUser" class="finance-report">
         <div class="row finance-row">
@@ -47,7 +47,7 @@
                     <td>@Model.NetProfit.ToString("C")</td>
                 </tr>
             </tbody>
-        </table>
+        </table>@*
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -70,6 +70,6 @@
                     </tr>
                 }
             </tbody>
-        </table>
+        </table>*@
     </div>
 </div>
