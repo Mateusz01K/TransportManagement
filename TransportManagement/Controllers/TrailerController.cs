@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using TransportManagement.Models.Trailer;
 using TransportManagement.Services.Trailer;
 
@@ -80,7 +79,6 @@ namespace TransportManagement.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateThisTrailer(int id, string Brand, string Model, string Type, float Mileage, float MaxLoad, string LicensePlate, int YearOfProduction)
         {
-            //var items = _trailerService.GetTrailers();
             if (id != 0)
             {
                 await _trailerService.UpdateTrailer(id, Brand, Model, Type, Mileage, MaxLoad, LicensePlate, YearOfProduction);

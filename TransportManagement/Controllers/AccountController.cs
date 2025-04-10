@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.User;
 using TransportManagement.Services.User;
 using TransportManagement.Services.User.EmailSender;
-using TransportManagement.Services.User.ManageUser;
 
 namespace TransportManagement.Controllers
 {
@@ -66,11 +65,6 @@ namespace TransportManagement.Controllers
 
         public async Task<IActionResult> LoginUser(LoginViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(model);
-            //}
-
             if(string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password)){
                 ModelState.AddModelError(string.Empty, "E-mail i hasło są wymagane.");
                 return View(model);

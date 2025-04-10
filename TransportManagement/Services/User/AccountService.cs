@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Xml.Linq;
-using TransportManagement.Models.Drivers;
 using TransportManagement.Models.User;
 using TransportManagement.Services.Driver;
 using TransportManagement.Services.User.EmailSender;
@@ -94,31 +90,8 @@ namespace TransportManagement.Services.User
             string message = $"Twoje tymczasowe hasło: {tempPassword} . Zaloguj się i zmień hasło.";
             await _emailSender.SendEmailAsync(user.Email, "Twoje konto w systemie zostało utworzone.", message);
             return true;
-
-            //var result = await _userManager.CreateAsync(user, model.Password);
-            //return result.Succeeded;
         }
 
-
-        //public async Task<bool> RegisterUserAsync(RegisterViewModel model)
-        //{
-
-        //    var user = new ApplicationUser
-        //    {
-        //        UserName = model.Email,
-        //        Email = model.Email,
-        //        FirstName = model.FirstName,
-        //        LastName = model.LastName,
-        //        PhoneNumber = model.PhoneNumber,
-        //        Address = model.Address,
-        //        Experience = model.Experience,
-        //        DateOfBirth = model.DateOfBirth,
-        //        Role = ""
-        //    };
-
-        //    var result = await _userManager.CreateAsync(user, model.Password);
-        //    return result.Succeeded;
-        //}
 
         public async Task LogoutAsync()
         {

@@ -81,7 +81,6 @@ namespace TransportManagement.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateThisTruck(int id, string Brand, string Model, int YearOfProduction, int Power, float Mileage, int Weight, string LicensePlate)
         {
-            //var items = _truckService.GetTrucks();
             if (id != 0)
             {
                 await _truckService.UpdateTruck(id, Brand, Model, YearOfProduction, Power, Mileage, Weight, LicensePlate);

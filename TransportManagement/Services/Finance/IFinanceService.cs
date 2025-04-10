@@ -1,5 +1,4 @@
 ﻿using TransportManagement.Models.Finance;
-using TransportManagement.Models.FinanceReport;
 
 namespace TransportManagement.Services.Finance
 {
@@ -60,6 +59,5 @@ namespace TransportManagement.Services.Finance
 
         Task AddSalariesToFinance(int year, int month, int day);
         Task AddExpensesToFinance(decimal amount, string description, int year, int month, int day);
-        //Task<List<FinanceReportModel>> GetFinanceReport();
     }
 }

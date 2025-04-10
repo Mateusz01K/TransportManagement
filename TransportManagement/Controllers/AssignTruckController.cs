@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using TransportManagement.Models.AssignTruck;
 using TransportManagement.Services.AssignTruck;
 using TransportManagement.Services.Driver;
@@ -14,15 +13,12 @@ namespace TransportManagement.Controllers
         private readonly IAssignTruckService _assignTruckService;
         private readonly ITruckService _truckService;
         private readonly IDriverService _driverService;
-        private readonly TransportManagementDbContext _context;
 
-        public AssignTruckController(IAssignTruckService assignTruckService, ITruckService truckService, IDriverService driverService,
-                                        TransportManagementDbContext context)
+        public AssignTruckController(IAssignTruckService assignTruckService, ITruckService truckService, IDriverService driverService)
         {
             _assignTruckService = assignTruckService;
             _truckService = truckService;
             _driverService = driverService;
-            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -85,18 +81,6 @@ namespace TransportManagement.Controllers
                 TempData["message"] = e.Message;
             }
             return RedirectToAction("Index");
-
-            /*
-            var items = _assignTruckService.GetAssignments().Count();
-            if(id != 0)
-            {
-                _assignTruckService.DeleteAssignment(id);
-                return RedirectToAction("Index");
-            }
-
-            TempData["message"] = "Popraw dane.";
-            return RedirectToAction("Index");
-            */
         }
 
         public async Task<IActionResult> ReturnAssignment()
@@ -122,17 +106,6 @@ namespace TransportManagement.Controllers
                 TempData["message"] = e.Message;
             }
             return RedirectToAction("Index");
-
-            /*
-            if (id != 0)
-            {
-                _assignTruckService.ReturnTruck(id);
-                return RedirectToAction("Index");
-            }
-
-            TempData["message"] = "Popraw dane.";
-            return RedirectToAction("Index");
-            */
         }
     }
 }

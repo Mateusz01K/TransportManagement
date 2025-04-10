@@ -48,14 +48,7 @@
                                     }
                                 </select>
                                 <button type="submit" class="btn btn-primary btn-sm">Ustaw</button>
-                            </form>@*
-                            @if (item.Status != OrderStatus.Zakończone)
-                            {
-                                <form method="post" asp-action="CompletedOrder">
-                                    <input type="hidden" name="orderId" value="@item.Id" />
-                                    <button type="submit" class="btn btn-primary btn-sm">Zakończ</button>
-                                </form>
-                            }*@
+                            </form>
                         </td>
                     </tr>
                 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using TransportManagement.Models.AssignTruck;
+﻿using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.Drivers;
 using TransportManagement.Models.Truck;
 using TransportManagement.Services.AssignTruck;
-using Xunit;
 
 namespace TransportManagement.Tests
 {

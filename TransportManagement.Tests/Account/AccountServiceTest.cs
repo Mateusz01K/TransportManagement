@@ -1,12 +1,9 @@
-﻿using System.Threading.Tasks;
-using TransportManagement.Models.User;
+﻿using TransportManagement.Models.User;
 using TransportManagement.Services.User;
 using TransportManagement.Services.User.EmailSender;
 using TransportManagement.Services.Driver;
-using TransportManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Xunit;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -14,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using System.Collections.Generic;
 
 namespace TransportManagement.Tests
 {
@@ -48,7 +44,7 @@ namespace TransportManagement.Tests
                 null,
                 null,
                 null,
-                loggerMock.Object // Mock the logger
+                loggerMock.Object
             );
 
             var contextAccessorMock = new Mock<IHttpContextAccessor>();
@@ -167,7 +163,6 @@ namespace TransportManagement.Tests
         [Fact]
         public async Task ChangePassword_Should_Return_True_When_Password_Changed_Successfully()
         {
-            // Arrange
             var user = new ApplicationUser
             {
                 Email = "user@example.com",
@@ -179,7 +174,6 @@ namespace TransportManagement.Tests
                 HasChangedPassword = false
             };
 
-            // Mock UserManager
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
                 Mock.Of<IUserStore<ApplicationUser>>(),
                 null,
@@ -192,23 +186,18 @@ namespace TransportManagement.Tests
                 null
             );
 
-            // Mock FindByEmailAsync to return the user
             mockUserManager.Setup(m => m.FindByEmailAsync(It.IsAny<string>()))
                 .ReturnsAsync(user);
 
-            // Mock CheckPasswordAsync to return true (indicating current password is correct)
             mockUserManager.Setup(m => m.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
                 .ReturnsAsync(true);
 
-            // Mock ChangePasswordAsync to return IdentityResult.Success (indicating successful password change)
             mockUserManager.Setup(m => m.ChangePasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
-            // Mock UpdateAsync to return IdentityResult.Success (indicating successful user update)
             mockUserManager.Setup(m => m.UpdateAsync(It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(IdentityResult.Success);
 
-            // Now use the mocked UserManager in the AccountService (inject mock)
             var accountServiceWithMock = new AccountService(
                 mockUserManager.Object,
                 _signInManager,
@@ -217,7 +206,6 @@ namespace TransportManagement.Tests
                 _context
             );
 
-            // Create ChangePasswordModel
             var changePasswordModel = new ChangePasswordModel
             {
                 CurrentPassword = "Password123!",
@@ -225,7 +213,6 @@ namespace TransportManagement.Tests
                 ConfirmPassword = "NewPassword123!"
             };
 
-            // Act
             var changePasswordResult = await accountServiceWithMock.ChangePassword(
                 user.Email,
                 changePasswordModel.CurrentPassword,
@@ -233,15 +220,12 @@ namespace TransportManagement.Tests
                 changePasswordModel.ConfirmPassword
             );
 
-            // Assert
             Assert.True(changePasswordResult, "The password change did not return true!");
 
-            // Verify that the password was updated and the HasChangedPassword flag is true
             var updatedUser = await mockUserManager.Object.FindByEmailAsync(user.Email);
             Assert.NotNull(updatedUser);
             Assert.True(updatedUser.HasChangedPassword, "The HasChangedPassword flag was not updated.");
 
-            // Check if the password is actually changed by checking with the new password
             var passwordValid = await mockUserManager.Object.CheckPasswordAsync(updatedUser, "NewPassword123!");
             Assert.True(passwordValid, "The password was not correctly changed.");
         }

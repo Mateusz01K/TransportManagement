@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.Drivers;
 using TransportManagement.Models.User;
-using TransportManagement.Services.User;
 
 namespace TransportManagement.Services.Driver
 {
@@ -10,13 +9,11 @@ namespace TransportManagement.Services.Driver
     {
         private readonly TransportManagementDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        //private readonly IAccountService _accountService;
 
-        public DriverService(TransportManagementDbContext context, UserManager<ApplicationUser> userManager/*, IAccountService accountService*/)
+        public DriverService(TransportManagementDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
-            //_accountService = accountService;
         }
 
         public async Task<bool> AddDriver(string Name, string LastName, DateTime DateOfBirth, string PhoneNumber, string Email, string Address, int Experience, decimal Salary)

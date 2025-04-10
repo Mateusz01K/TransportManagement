@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Data;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using TransportManagement.Models.TransportCost;
 
 namespace TransportManagement.Controllers
@@ -110,8 +107,6 @@ namespace TransportManagement.Controllers
             {
                 foreach (var property in dataElement.EnumerateObject())
                 {
-                    //    exchangeRates.Add(property.Name, property.Value.GetProperty("value").GetDouble());
-
                     if (property.Value.TryGetProperty("value", out var valueElement) && valueElement.ValueKind == JsonValueKind.Number)
                     {
                         exchangeRates.Add(property.Name, valueElement.GetDouble());

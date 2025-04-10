@@ -1,26 +1,20 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.Finance;
 using TransportManagement.Models.FinanceReport;
-using TransportManagement.Models.User;
 
 namespace TransportManagement.Services.FinanceReport
 {
     public class FinanceReportService : IFinanceReportService
     {
         private readonly TransportManagementDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public FinanceReportService(TransportManagementDbContext context, UserManager<ApplicationUser> userManager)
+        public FinanceReportService(TransportManagementDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
         public async Task<List<FinanceReportModel>> GenerateAnnualReport(int year)
         {
-            //return await _context.FinanceReports.Where(r => r.Year == year).ToListAsync();
             var reports = await _context.Finances
                 .Where(f => f.Date.Year == year)
                 .GroupBy(f => new { f.Date.Year })
@@ -122,24 +116,5 @@ namespace TransportManagement.Services.FinanceReport
 
             return reports;
         }
-
-        //public async Task<List<FinanceReportModel>> GenerateMonthlyReport(int year, int month)
-        //{
-        //    //return await _context.FinanceReports.Where(r => r.Year == year && r.Month == month).ToListAsync();
-        //    var reports = await _context.Finances
-        //        .Where(f => f.Date.Year == year && f.Date.Month == month)
-        //        .GroupBy(f => new { f.Date.Year, f.Date.Month })
-        //        .Select(g => new FinanceReportModel
-        //        {
-        //            Year = g.Key.Year,
-        //            Month = g.Key.Month,
-        //            TotalRevenue = g.Where(f => f.Type == FinanceType.Revenue).Sum(f => f.Amount),
-        //            TotalExpenses = g.Where(f => f.Type == FinanceType.Expense).Sum(f => f.Amount),
-        //            TotalSalary = g.Where(f => f.Type == FinanceType.Salary).Sum(f => f.Amount)
-        //        })
-        //        .ToListAsync();
-
-        //    return reports;
-        //}
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TransportManagement.Models.Drivers;
 using TransportManagement.Models.Orders;
 using TransportManagement.Models.User;
 using TransportManagement.Services.Order;
@@ -51,18 +50,7 @@ namespace TransportManagement.Controllers
                 TempData["message"] = "Podany użytkownik nie jest kierowcą.";
                 return RedirectToAction("Index");
             }
-            //var leaveRequests = await _context.LeaveRequests
-            //            .Where(lr => lr.UserId == driverEmail && lr.Status == Models.LeaveRequests.LeaveStatus.Approved)
-            //            .Where(lr => (startDate >= lr.StartDate && startDate <= lr.EndDate) ||
-            //            (endDate >= lr.StartDate && endDate <= lr.EndDate) ||
-            //            (startDate <= lr.StartDate && endDate >= lr.EndDate) ||
-            //            (startDate <= lr.StartDate && startDate <= lr.EndDate && endDate >= lr.StartDate && endDate <= lr.EndDate)).ToListAsync();
 
-            //if (leaveRequests.Any())
-            //{
-            //    TempData["message"] = "Kierowca w tym czasie jest na urlopie.";
-            //    return RedirectToAction("Index");
-            //}
             bool isOnLeave = await _orderService.IsDriverOnLeave(driverEmail, startDate, endDate);
             if (isOnLeave)
             {
@@ -167,20 +155,6 @@ namespace TransportManagement.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, Dispatcher")]
-        //public async Task<IActionResult> CompletedOrder(int orderId)
-        //{
-        //    bool success = await _orderService.CompleteOrder(orderId);
-
-        //    if (!success)
-        //    {
-        //        TempData["message"] = "Nie udało się zakończyć zlecenia.";
-        //        return RedirectToAction("Index");
-        //    }
-        //    return RedirectToAction("Index");
-        //}
 
         [HttpGet]
         public async Task<IActionResult> GetDriverEmails(string term)

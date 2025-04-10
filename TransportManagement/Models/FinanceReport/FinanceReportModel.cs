@@ -11,6 +11,6 @@
         public decimal TotalExpenses { get; set; }
         public decimal TotalSalary { get; set; }
         public decimal TotalProfitFromCompletedOrders { get; set; }
-        public decimal NetProfit { get; set; } //=> TotalRevenue - TotalExpenses + TotalProfitFromCompletedOrders;
+        public decimal NetProfit { get; set; }
     }
 }

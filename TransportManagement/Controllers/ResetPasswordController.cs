@@ -28,7 +28,6 @@ namespace TransportManagement.Controllers
             var resetUrlBase = Url.Action("ResetPassword", "ResetPassword", null, Request.Scheme);
             await _resetPasswordService.SendPasswordResetEmailAsync(model.Email, resetUrlBase);
 
-            //TempData["message"] = "Otrzymasz wiadomośc e-mail.";
             return RedirectToAction("ForgotPasswordConfirmation");
         }
 
@@ -61,9 +60,6 @@ namespace TransportManagement.Controllers
             {
                 return RedirectToAction("ResetPasswordConfirmation");
             }
-
-            //ModelState.AddModelError(string.Empty, "Resetowanie hasła nie powiodło sie. Sprawdź poprawność adresu e-mail.");
-            //TempData["message"] = "Resetowanie hasła nie powiodło sie. Sprawdź poprawność adresu e-mail.";
             return View(model);
         }
 

@@ -18,47 +18,6 @@ namespace TransportManagement.Services.Order
             _userManager = userManager;
         }
 
-        //public async Task<bool> CompleteOrder(int orderId)
-        //{
-        //    var order = await _context.Orders.FindAsync(orderId);
-        //    if (order == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    if (order.Status == OrderStatus.Zakończone)
-        //    {
-        //        return false;
-        //    }
-
-        //    order.Status = OrderStatus.Zakończone;
-
-        //    var finance = new FinanceModel
-        //    {
-        //        Date = DateTime.UtcNow,
-        //        Amount = order.Revenue,
-        //        Type = FinanceType.Revenue,
-        //        Description = $"Przychód za zlecenie {order.Id}",
-        //        DriverEmail = order.DriverEmail
-        //    };
-
-        //    var financeReport = new FinanceReportModel
-        //    {
-        //        DriverEmail = order.DriverEmail,
-        //        Year = order.EndDate.Year,
-        //        Month = order.EndDate.Month,
-        //        TotalRevenue = order.Revenue,
-        //        TotalExpenses = 0,
-        //        TotalSalary = 0,
-        //        TotalProfitFromCompletedOrders = order.Revenue
-        //    };
-
-        //    _context.Finances.Add(finance);
-        //    _context.FinanceReports.Add(financeReport);
-        //    await _context.SaveChangesAsync();
-        //    return true;
-        //}
-
         public async Task CreateOrderAsync(DateTime startDate, DateTime endDate, string pickupLocation,
             string deliveryLocation, string driverEmail, string loadType, string assignedBy, decimal revenue)
         {
@@ -93,7 +52,6 @@ namespace TransportManagement.Services.Order
 
         public async Task<List<OrderModel>> GetAllOrdersAsync()
         {
-            //return await _context.Orders.Include(o => o.Driver).ToListAsync();
             return await _context.Orders.ToListAsync() ?? new List<OrderModel>();
         }
 

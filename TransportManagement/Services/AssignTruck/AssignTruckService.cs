@@ -58,21 +58,6 @@ namespace TransportManagement.Services.AssignTruck
             }
             _context.AssignTrucks.Remove(assign);
             await _context.SaveChangesAsync();
-
-            /*
-            if (assign != null)
-            {
-                var truck = _context.Trucks.FirstOrDefault(x=>x.Id == assign.TruckId);
-                var driver = _context.Drivers.FirstOrDefault(x=>x.Id == assign.DriverId);
-                if(truck != null && driver != null)
-                {
-                    truck.IsAssignedDriver = false;
-                    driver.IsAssignedTruck = false;
-                }
-                _context.AssignTrucks.Remove(assign);
-                _context.SaveChanges();
-            }
-            */
         }
 
         public async Task<AssignTruckModel> GetAssignment(int id)
@@ -108,22 +93,6 @@ namespace TransportManagement.Services.AssignTruck
                 driver.IsAssignedTruck = false;
             }
             await _context.SaveChangesAsync();
-
-            /*
-            if (assign != null)
-            {
-                assign.IsReturned = true;
-                assign.ReturnDate = DateTime.Now;
-                var truck = _context.Trucks.FirstOrDefault(x => x.Id == assign.TruckId);
-                var driver = _context.Drivers.FirstOrDefault(x => x.Id == assign.DriverId);
-                if (truck != null && driver != null)
-                {
-                    truck.IsAssignedDriver = false;
-                    driver.IsAssignedTruck = false;
-                }
-                _context.SaveChanges();
-            }
-            */
         }
     }
 }

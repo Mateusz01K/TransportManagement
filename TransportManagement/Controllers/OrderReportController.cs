@@ -1,6 +1,4 @@
-﻿using IronPdf;
-using Microsoft.AspNetCore.Mvc;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc;
 using TransportManagement.Models.Orders;
 using TransportManagement.Services.OrderReport;
 

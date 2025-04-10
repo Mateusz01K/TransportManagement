@@ -24,10 +24,6 @@
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
         <div class="container-fluid">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TransportManagement</a>
-            @*<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>*@
         </div>
     </nav>
 
@@ -116,12 +112,6 @@
                             </a>
                         </li>
                     </ul>
-                    @*<li class="nav-item">
-                    <a class="nav-link" asp-controller="Finance" asp-action="MonthlyFinance">
-                    <span data-feather="dollar-sign"></span>
-                    Finanse Miesieczne
-                    </a>
-                    </li>*@
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Finance" asp-action="MonthlyFinance">
@@ -146,13 +136,6 @@
                             </a>
                         </li>
                     </ul>
-                    @*
-                    <li class="nav-item">
-                    <a class="nav-link" asp-controller="Finance" asp-action="MonthlyFinanceForUser">
-                    <span data-feather="settings"></span>
-                    Finanse Miesieczne Pracownika
-                    </a>
-                    </li>*@
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Finance" asp-action="YearFinanceForUser">
@@ -210,13 +193,6 @@
                                 Generowanie Raportu Zleceń
                             </a>
                         </li>
-                        @*
-                        <li class="nav-item">
-                        <a class="nav-link" asp-controller="FinanceReport" asp-action="FinanceMonthlyReport">
-                        <span data-feather="file-text"></span>
-                        Current month
-                        </a>
-                        </li>*@
                     </ul>
                     <h6 class="slidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>Konto</span>
@@ -257,28 +233,10 @@
 </body>
 </html>
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-@*<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>*@
 <script>
     feather.replace()
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-@*<script>
-    flatpickr("#startDate", {
-        dateFormat: "Y-m-d",
-        minDate: "today",
-        onChange: function (selectedDate, dateStr, instance) {
-            flatpickr("#endDate", {
-                dateFormat: "Y-m-d",
-                minDate: dateStr
-            });
-        }
-    });
-
-    flatpickr("#endDate", {
-        dateFormat: "Y-m-d",
-        minDate: "today"
-    });
-</script>*@
 <script>
     $(document).ready(function () {
         $('#usersTable').DataTable({
@@ -387,32 +345,3 @@
         });
     });
 </script>
-@*<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>*@

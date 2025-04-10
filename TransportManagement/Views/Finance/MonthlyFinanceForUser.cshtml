@@ -51,29 +51,6 @@
                     <td>@Model.NetProfit.ToString("C")</td>
                 </tr>
             </tbody>
-        </table>@*
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Opis</th>
-                    <th scope="col">Typ</th>
-                    <th scope="col">Kwota</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Pracownik</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var finance in Model.Finances)
-                {
-                    <tr>
-                        <td>@finance.Description</td>
-                        <td>@finance.Type</td>
-                        <td>@finance.Amount.ToString("C")</td>
-                        <td>@finance.Date.ToString("yyyy-MM-dd")</td>
-                        <td>@finance.EmployeeEmail</td>
-                    </tr>
-                }
-            </tbody>
-        </table>*@
+        </table>
     </div>
 </div>

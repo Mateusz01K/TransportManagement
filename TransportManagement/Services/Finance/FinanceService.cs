@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransportManagement.Models.Finance;
-using TransportManagement.Models.FinanceReport;
 
 namespace TransportManagement.Services.Finance
 {
@@ -82,21 +81,6 @@ namespace TransportManagement.Services.Finance
             _context.Finances.Add(expense);
             await _context.SaveChangesAsync();
         }
-
-        //public async Task<List<FinanceReportModel>> GetFinanceReport()
-        //{
-        //    var reports = await _context.Drivers.Select(driver=>new FinanceReportModel
-        //    {
-        //        DriverEmail = driver.Email,
-        //        Year = DateTime.Now.Year,
-        //        Month = DateTime.Now.Month,
-        //        TotalSalary = driver.Salary,
-        //        TotalRevenue = _context.Orders.Where(o=>o.DriverEmail==driver.Email).Sum(o=>o.Revenue),
-        //        TotalExpenses = driver.Salary
-        //    }).ToListAsync();
-
-        //    return reports;
-        //}
 
 
 

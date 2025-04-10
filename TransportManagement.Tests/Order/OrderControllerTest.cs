@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +8,6 @@ using TransportManagement.Controllers;
 using TransportManagement.Models.Orders;
 using TransportManagement.Models.User;
 using TransportManagement.Services.Order;
-using Xunit;
 
 namespace TransportManagement.Tests
 {

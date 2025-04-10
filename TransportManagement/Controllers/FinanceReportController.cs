@@ -1,12 +1,6 @@
-﻿using DinkToPdf.Contracts;
-using IronPdf;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using TransportManagement.Models.FinanceReport;
-using TransportManagement.Services.FinanceReport;
-using Microsoft.EntityFrameworkCore;
-using TransportManagement.Models.Finance;
-using TransportManagement.Models.Orders;
 using TransportManagement.Services.Finance;
 
 namespace TransportManagement.Controllers
@@ -14,12 +8,9 @@ namespace TransportManagement.Controllers
     public class FinanceReportController : Controller
     {
         private readonly IFinanceService _financeService;
-        private readonly IConverter _pdfConverter;
-
-        public FinanceReportController(IFinanceService financeService, IConverter pdfConverter)
+        public FinanceReportController(IFinanceService financeService)
         {
             _financeService = financeService;
-            _pdfConverter = pdfConverter;
         }
 
         public IActionResult GenerateReport()
@@ -62,11 +53,6 @@ namespace TransportManagement.Controllers
             var reports = new List<FinanceReportModel>();
             for (int month = 1; month <= 12; month++)
             {
-                //var revenue = await _financeService.CalculateYearTotalRevenueForUser(employeeEmail, year);
-                //var expenses = await _financeService.CalculateYearTotalExpensesForUser(employeeEmail, year);
-                //var salary = await _financeService.CalculateYearTotalSalariesForUser(employeeEmail, year);
-                //var grossProfit = await _financeService.CalculateYearGrossProfitForUser(employeeEmail, year);
-                //var netProfit = await _financeService.CalculateYearNetProfitForUser(employeeEmail, year);
                 var revenue = await _financeService.CalculateMonthlyTotalRevenueForUser(employeeEmail, year, month);
                 var expenses = await _financeService.CalculateMonthlyTotalExpensesForUser(employeeEmail, year, month);
                 var salary = await _financeService.CalculateMonthlyTotalSalariesForUser(employeeEmail, year, month);
@@ -74,11 +60,8 @@ namespace TransportManagement.Controllers
                 var netProfit = await _financeService.CalculateMonthlyNetProfitForUser(employeeEmail, year, month);
 
 
-                //var reports = new List<FinanceReportModel>
                 reports.Add(new FinanceReportModel
                 {
-                    //    new FinanceReportModel
-                    //    {
                     EmployeeEmail = employeeEmail,
                     Year = year,
                     Month = month,
@@ -86,7 +69,6 @@ namespace TransportManagement.Controllers
                     TotalExpenses = expenses,
                     TotalSalary = salary,
                     NetProfit = netProfit
-                    //}
                 });
             }
             string htmlContent = GenerateAnnualFinanceReportHtml(reports, year);
@@ -102,26 +84,6 @@ namespace TransportManagement.Controllers
             var pdf = renderer.RenderHtmlAsPdf(htmlContent);
             return pdf.BinaryData;
         }
-
-        //public async Task<IActionResult> DownloadMonthlyReport(string employeeEmail, int year, int month)
-        //{
-        //    var reports = await _financeReportService.GenerateMonthlyReport(year, month, employeeEmail);
-        //    string htmlContent = GenerateFinanceReportHtml(reports, year, month);
-
-        //    var pdf = ConvertHtmlToPdf(htmlContent);
-
-        //    return File(pdf, "application/pdf", $"Raport_{employeeEmail}_{year}_{month}.pdf");
-        //}
-
-        //public async Task<IActionResult> DownloadAnnualReport(string employeeEmail, int year)
-        //{
-        //    var reports = await _financeReportService.GenerateAnnualReport(year, employeeEmail);
-        //    string htmlContent = GenerateFinanceReportHtml(reports, year, 0);
-
-        //    var pdf = ConvertHtmlToPdf(htmlContent);
-
-        //    return File(pdf, "application/pdf", $"Raport_{employeeEmail}_{year}.pdf");
-        //}
 
         private string GenerateFinanceReportHtml(List<FinanceReportModel> reports, int year, int month = 0)
         {
@@ -227,27 +189,5 @@ namespace TransportManagement.Controllers
 
             return html.ToString();
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> FinanceMonthlyReport(int year, int month)
-        //{
-        //    var reports = await _financeReportService.GenerateMonthlyReport(year, month);
-        //    var viewModel = new FinanceReportViewModel
-        //    {
-        //        FinanceReports = reports
-        //    };
-        //    return View(viewModel);
-        //}
-
-        //[HttpGet]
-        //public async Task<IActionResult> FinanceAnnualReport(int year)
-        //{
-        //    var reports = await _financeReportService.GenerateAnnualReport(year);
-        //    var viewModel = new FinanceReportViewModel
-        //    {
-        //        FinanceReports = reports
-        //    };
-        //    return View(viewModel);
-        //}
     }
 }

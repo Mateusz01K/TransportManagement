@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using TransportManagement.Models.AssignTrailer;
 
 namespace TransportManagement.Services.AssignTrailer
@@ -54,21 +53,6 @@ namespace TransportManagement.Services.AssignTrailer
             }
             _context.AssignTrailers.Remove(assign);
             await _context.SaveChangesAsync();
-
-            /*
-            if (assign != null)
-            {
-                var truck = _context.Trucks.FirstOrDefault(x => x.Id == assign.TruckId);
-                var trailer = _context.Trailers.FirstOrDefault(x => x.Id == assign.TrailerId);
-                if (truck != null && trailer != null)
-                {
-                    truck.IsAssignedTrailer = false;
-                    trailer.IsAssigned = false;
-                }
-                _context.AssignTrailers.Remove(assign);
-                _context.SaveChanges();
-            }
-            */
         }
 
         public async Task<AssignTrailerModel> GetAssignment(int id)
@@ -100,23 +84,6 @@ namespace TransportManagement.Services.AssignTrailer
                 trailer.IsAssigned = false;
             }
             await _context.SaveChangesAsync();
-
-
-            /*
-            if (assign != null)
-            {
-                assign.IsReturned = true;
-                assign.ReturnDate = DateTime.Now;
-                var truck = _context.Trucks.FirstOrDefault(x => x.Id == assign.TruckId);
-                var trailer = _context.Trailers.FirstOrDefault(x => x.Id == assign.TrailerId);
-                if (truck != null && trailer != null)
-                {
-                    truck.IsAssignedTrailer = false;
-                    trailer.IsAssigned = false;
-                }
-                _context.SaveChanges();
-            }
-            */
         }
     }
 }

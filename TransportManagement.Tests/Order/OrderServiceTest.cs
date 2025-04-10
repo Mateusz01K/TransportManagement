@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using TransportManagement;
 using TransportManagement.Models.Orders;
 using TransportManagement.Models.User;
 using TransportManagement.Services.Order;
-using Xunit;
 
 namespace TransportManagement.Tests
 {
@@ -22,7 +16,7 @@ namespace TransportManagement.Tests
         public OrderServiceTests()
         {
             var options = new DbContextOptionsBuilder<TransportManagementDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Unikalna baza dla każdego testu
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
             _context = new TransportManagementDbContext(options);

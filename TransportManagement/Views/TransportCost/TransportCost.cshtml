@@ -3,10 +3,6 @@
 @{
     ViewData["Title"] = "Kalkulator";
 }
-@*
-@section Styles{
-    <link rel="stylesheet" href="~/css/finance.css" />
-}*@
 
 
 <div class="text-center">
@@ -52,7 +48,6 @@
         </div>
         <div class="text-center mt-4">
             <button class="btn btn-primary mt-3" type="button" id="calculateButton">Oblicz</button>
-            @*<button class="btn btn-primary mt-3" type="button" id="fetchRatesButton">Pobierz kursy walut</button>*@
         </div>
     </form>
     <div class="mt-3 d-none" id="result">
@@ -60,10 +55,6 @@
         <strong>Szacowany zysk:</strong><span id="profitAmount"></span>
     </div>
 </div>
-@*<div class="mt-3 d-none" id="exchangeRates">
-    <h4>Kursy walut:</h4>
-    <ul id="currencyRateList"></ul>
-</div>*@
 
 
 <script>
@@ -118,13 +109,13 @@
 
         if (inputCurrency !== "USD" && exchangeRates[inputCurrency]) {
             const rateInput = exchangeRates[inputCurrency].value;
-            totalCost = totalCost / rateInput; // przeliczamy z waluty wejściowej na USD
+            totalCost = totalCost / rateInput;
             profit = profit / rateInput;
         }
 
         if (outputCurrency !== "USD" && exchangeRates[outputCurrency]) {
             const rateOutput = exchangeRates[outputCurrency].value;
-            totalCost = totalCost * rateOutput; // przeliczamy z USD na walutę wyjściową
+            totalCost = totalCost * rateOutput;
             profit = profit * rateOutput;
         }
 

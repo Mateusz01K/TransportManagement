@@ -2,12 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using TransportManagement.Controllers;
 using TransportManagement.Models.Trailer;
 using TransportManagement.Services.Trailer;
-using Xunit;
 
 namespace TransportManagement.Tests
 {
@@ -21,10 +18,9 @@ namespace TransportManagement.Tests
             _mockTrailerService = new Mock<ITrailerService>();
             _controller = new TrailerController(Mock.Of<ILogger<TrailerController>>(), _mockTrailerService.Object);
 
-            // Ustawienie ControllerContext, aby mieć dostęp do ModelState
             _controller.ControllerContext = new ControllerContext
             {
-                HttpContext = new DefaultHttpContext() // Inicjalizacja kontekstu HTTP
+                HttpContext = new DefaultHttpContext()
             };
         }
 

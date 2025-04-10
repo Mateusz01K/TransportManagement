@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using TransportManagement.Models.AssignTrailer;
 using TransportManagement.Services.AssignTrailer;
 using TransportManagement.Services.Trailer;
@@ -82,20 +81,6 @@ namespace TransportManagement.Controllers
                 TempData["message"] = e.Message;
             }
             return RedirectToAction("Index");
-
-
-            /*
-            var items = _assignTrailerService.GetAssignments().Count();
-            
-            if (id != 0)
-            {
-                _assignTrailerService.DeleteAssignment(id);
-                return RedirectToAction("Index");
-            }
-
-            TempData["message"] = "Popraw dane.";
-            return RedirectToAction("Index");
-            */
         }
 
         public async Task<IActionResult> ReturnAssignment()
@@ -121,17 +106,6 @@ namespace TransportManagement.Controllers
                 TempData["message"] = e.Message;
             }
             return RedirectToAction("Index");
-
-            /*
-            if (id != 0)
-            {
-                _assignTrailerService.ReturnTrailer(id);
-                return RedirectToAction("Index");
-            }
-
-            TempData["message"] = "Popraw dane.";
-            return RedirectToAction("Index");
-            */
         }
     }
 }
